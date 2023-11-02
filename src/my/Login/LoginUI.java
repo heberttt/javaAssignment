@@ -48,7 +48,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         lblResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        lblResult1.setText("Username");
+        lblResult1.setText("UserID");
 
         lblResult2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         lblResult2.setText("LOGIN");

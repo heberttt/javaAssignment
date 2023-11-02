@@ -94,7 +94,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblResult1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Username"/>
+        <Property name="text" type="java.lang.String" value="UserID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblResult2">
