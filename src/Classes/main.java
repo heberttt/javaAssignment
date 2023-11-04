@@ -8,14 +8,9 @@ package Classes;
  *
  * @author himagi
  */
-abstract class User implements UserInterface {
-    protected String id;
-    protected String fullName;
-    protected String password;
-    protected String contactNum;
-    
-    abstract void createAccount();
-    
-    
-
+public class main {
+    public static void main(String[] args){
+        Customer c = new Customer("a", "p","b");
+        c.createAccount();
+    }
 }
