@@ -11,6 +11,8 @@ package Classes;
 public class main {
     public static void main(String[] args){
         Customer c = new Customer("a", "p","b");
+        c.createAccount();
+        
         System.out.println();
       
     }

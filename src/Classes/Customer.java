@@ -30,6 +30,7 @@ public class Customer extends User{
         this.contactNum = contactNum;
     }
     
+    @Override
     public void createAccount(){
         String accName = this.fullName;
         String accPassword = this.password;
@@ -37,13 +38,13 @@ public class Customer extends User{
         
         String accId = String.valueOf(availableId());
         
-        String accountData = accId + "," + //continue
+        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Customer";//continue
         
         try {
             // Create a BufferedWriter in append mode to write to the file
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/himagi/javaAssignment/src/Classes/Users.txt", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\javaAssignment\\src\\Classes\\Users.txt", true));
 
-            writer.write("this is a test\n");
+            writer.write(accountData + "\n");
 
             writer.close();
 
