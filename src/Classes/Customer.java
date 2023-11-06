@@ -4,8 +4,11 @@
  */
 package Classes;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;  
 import java.io.IOException;
+import java.util.Scanner;
 /**
  *
  * @author himagi
@@ -32,11 +35,15 @@ public class Customer extends User{
         String accPassword = this.password;
         String contactNum = this.contactNum;
         
+        String accId = String.valueOf(availableId());
+        
+        String accountData = accId + "," + //continue
+        
         try {
             // Create a BufferedWriter in append mode to write to the file
             BufferedWriter writer = new BufferedWriter(new FileWriter("/home/himagi/javaAssignment/src/Classes/Users.txt", true));
 
-            writer.write("This is a new line of text\n");
+            writer.write("this is a test\n");
 
             writer.close();
 
@@ -47,6 +54,9 @@ public class Customer extends User{
         
         
     }
+    
+    
+
     
     
     
