@@ -24,7 +24,7 @@ abstract class User implements UserInterface {
     protected int availableId(){
        int biggestNum = 0;
        try {
-        File myObj = new File("/home/himagi/javaAssignment/src/Classes/Users.txt");
+        File myObj = new File("C:\\javaAssignment\\src\\Classes\\Users.txt");
         Scanner myReader = new Scanner(myObj);
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();

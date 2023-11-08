@@ -13,5 +13,5 @@ import java.util.Scanner;
  * @author himagi
  */
 public interface UserInterface {
-    public int availableID();
+    
 }
