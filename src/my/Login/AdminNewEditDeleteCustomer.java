@@ -14,6 +14,7 @@ import my.Classes.*;
 public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private String[] column = {"UserId", "Full Name", "Password","Contact Number"};
+    private Administrator adminAcc;
     /**
      * Creates new form AdminNewEditDeleteCustomer
      */
@@ -21,8 +22,13 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     
     public AdminNewEditDeleteCustomer() {
         initComponents();
+    }
+    
+    public AdminNewEditDeleteCustomer(Administrator adminAcc) {
+        initComponents();
+        this.adminAcc = adminAcc;
         model.setColumnIdentifiers(column);
-        displayUser(model, "Customer");  // change 
+        adminAcc.displayUser(model, "Customer");  // change 
     }
 
     /**
