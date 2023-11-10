@@ -2,16 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package login;
+package my.Login;
 import java.util.*;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import my.Classes.*;
 
 /**
  *
  * @author heber
  */
-public class LoginUI extends javax.swing.JFrame {
+public class LoginUI extends javax.swing.JFrame implements UserInterface {
 
     /**
      * Creates new form LoginUI
@@ -113,38 +114,43 @@ public class LoginUI extends javax.swing.JFrame {
          //   lblResult.setText("Fail");
         //}
         try{
-            File user = new File("C:\\DeliverySystem\\src\\my\\Login\\Users.txt");
+            File user = new File(userFilePath);
             Scanner myReader = new Scanner(user);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
                 String[] dataArr = data.split(",");
             
-                if(TextBoxUsername.getText().equals(dataArr[0]) && TextBoxPassword.getText().equals(dataArr[1])){
+                if(TextBoxUsername.getText().equals(dataArr[0]) && TextBoxPassword.getText().equals(dataArr[2])){
                     myReader.close();
                     lblResult.setText("Success!");
-                    if (dataArr[2].equals("Customer")){
-                        FormDemo frame = new FormDemo();
-                        frame.setVisible(true);
+                    if (dataArr[3].equals("Customer")){
+                        //FormDemo frame = new FormDemo();
+                        //frame.setVisible(true);
                         this.dispose();
                         break;
                     }
-                    else if (dataArr[2].equals("Admin")){
-                        AdminFrame admin = new AdminFrame();
+                    else if (dataArr[4].equals("Admin")){
+                        Administrator adminAccount = new Administrator(dataArr[0],dataArr[1],dataArr[2],dataArr[3]);
+                        AdministratorHomepage admin = new AdministratorHomepage(adminAccount);
                         admin.setVisible(true);
                         this.dispose();
                         break;
                     }
-                    else if (dataArr[2].equals("Vendor")){
-                        VendorFrame vendor = new VendorFrame();
-                        vendor.setVisible(true);
+                    else if (dataArr[3].equals("Vendor")){
+                        //VendorFrame vendor = new VendorFrame();
+                       // vendor.setVisible(true);
+                        this.dispose();
+                        break;
+                    }
+                    else if (dataArr[3].equals("Runner")){
+                        //VendorFrame vendor = new VendorFrame();
+                        //vendor.setVisible(true);
                         this.dispose();
                         break;
                     }
                 }
-                else{
-                    lblResult.setText("Wrong Username or passcode");
-                }
             }
+            lblResult.setText("Wrong Username or passcode");
             myReader.close();
         }catch(FileNotFoundException e){
             e.printStackTrace();
