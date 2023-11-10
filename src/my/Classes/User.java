@@ -30,6 +30,9 @@ abstract class User implements UserInterface {
         Scanner myReader = new Scanner(myObj);
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
+            if(data.equals("")){
+                continue;
+            }
             String[] dataArr = data.split(",");
             data = dataArr[0];
             
