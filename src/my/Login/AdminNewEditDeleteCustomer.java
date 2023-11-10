@@ -22,7 +22,7 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     public AdminNewEditDeleteCustomer() {
         initComponents();
         model.setColumnIdentifiers(column);
-        displayUser(model, "Customer");  // change
+        displayUser(model, "Customer");  // change 
     }
 
     /**
