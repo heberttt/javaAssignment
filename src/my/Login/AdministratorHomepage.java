@@ -107,7 +107,9 @@ public class AdministratorHomepage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReadUpdateActionPerformed
 
     private void btnUserRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistrationActionPerformed
-        // TODO add your handling code here:
+        AdminUserRegistration admin = new AdminUserRegistration(adminAccount);
+        admin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnUserRegistrationActionPerformed
 
     private void btnTopUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTopUpActionPerformed

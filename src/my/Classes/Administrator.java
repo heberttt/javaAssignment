@@ -51,7 +51,13 @@ public class Administrator extends User implements UserInterface {
         File myObj = new File(userFilePath);
         Scanner myReader = new Scanner(myObj);
         while (myReader.hasNextLine()) {
+            
             String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
             String[] dataArr = data.split(",");
             if(dataArr[4].equals(role)){
                 ArrayList<String> dataList = new ArrayList<String>();

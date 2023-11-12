@@ -2,4 +2,6 @@
 2,michael,123,062,Customer
 3,flav,123,062,Customer
 4,Hebert,thepass,062,Admin
-5,Aav,123,062,Vendor
+5,ric,123455,2646,Customer
+6,june,uasdnj12,839493,Customer
+7,des,456,2231,Customer

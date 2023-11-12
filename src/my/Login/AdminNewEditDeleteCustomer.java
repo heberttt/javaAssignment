@@ -14,6 +14,7 @@ import my.Classes.*;
 public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private String[] column = {"UserId", "Full Name", "Password","Contact Number"};
+    private Administrator adminAcc;
     /**
      * Creates new form AdminNewEditDeleteCustomer
      */
@@ -21,8 +22,17 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     
     public AdminNewEditDeleteCustomer() {
         initComponents();
+    }
+    
+    public AdminNewEditDeleteCustomer(Administrator adminAcc) {
+        initComponents();
+        this.adminAcc = adminAcc;
+        displayCustomer();
+    }
+    
+    public void displayCustomer(){
         model.setColumnIdentifiers(column);
-        displayUser(model, "Customer");  // change 
+        adminAcc.displayUser(model, "Customer"); 
     }
 
     /**
@@ -42,8 +52,8 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         tfFullName = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        tfContact = new javax.swing.JTextField();
+        tfPassword = new javax.swing.JTextField();
         tpID = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         btnCreateCust = new javax.swing.JButton();
@@ -99,8 +109,8 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfFullName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                                     .addComponent(tpID, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(tfPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfContact, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCreateCust)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
@@ -135,11 +145,11 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateCust)
@@ -152,7 +162,15 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateCustActionPerformed
+        String custName = tfFullName.getText();
+        String custPass = tfPassword.getText();
+        String custContact = tfContact.getText();
         
+        Customer customerNewAcc = new Customer(custName,custPass,custContact);
+        customerNewAcc.createAccount();
+        model.setRowCount(0);
+        displayCustomer();
+       
     }//GEN-LAST:event_btnCreateCustActionPerformed
 
     /**
@@ -200,11 +218,11 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTable tableCustomer;
+    private javax.swing.JTextField tfContact;
     private javax.swing.JTextField tfFullName;
+    private javax.swing.JTextField tfPassword;
     private javax.swing.JScrollPane tpID;
     // End of variables declaration//GEN-END:variables
 }

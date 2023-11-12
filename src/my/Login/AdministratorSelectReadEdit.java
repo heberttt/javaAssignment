@@ -37,7 +37,7 @@ public class AdministratorSelectReadEdit extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Select User");
+        jLabel3.setText("Select User //unused");
         jLabel3.setToolTipText("");
 
         jButton1.setText("Read");

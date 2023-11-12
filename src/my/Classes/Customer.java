@@ -50,7 +50,6 @@ public class Customer extends User{
 
             writer.close();
 
-            System.out.println("Data appended to the file.");
         } catch (IOException e) {
             e.printStackTrace();
         }
