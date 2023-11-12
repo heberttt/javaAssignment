@@ -1,4 +1,0 @@
-Hebert,passcode,Admin
-Bob,1234,Customer
-Todd,thisisacode123,Vendor
-test,thistest,Vendor

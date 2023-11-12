@@ -80,4 +80,13 @@ public class Administrator extends User implements UserInterface {
     }
     
     public void createAccount(){};
+    
+    @Override
+    public void editAccount(){
+        
+    }
+    @Override
+    public void deleteAccount(){
+        
+    }
 }
