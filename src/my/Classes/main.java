@@ -11,7 +11,7 @@ package my.Classes;
 public class main {
     public static void main(String[] args){
         Customer c = new Customer("flav", "123","062");
-        c.createAccount();
+        System.out.println(c.getUserTextLine("4"));
         
         System.out.println();
       

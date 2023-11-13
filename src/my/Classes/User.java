@@ -21,7 +21,34 @@ abstract class User implements UserInterface {
     protected String contactNum;
     
     abstract void createAccount();
+    abstract void editAccount();
+    abstract void deleteAccount();
     
+    protected int getUserTextLine(String UserID){
+       try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            int location = 0;
+            while (reader.hasNextLine()) {
+                location++;
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(UserID)){
+                    reader.close();
+                    return location;
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        return 1;
+    }
     
     protected int availableId(){
        int biggestNum = 0;

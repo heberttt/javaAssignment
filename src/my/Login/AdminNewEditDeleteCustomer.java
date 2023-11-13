@@ -12,7 +12,12 @@ import my.Classes.*;
  * @author himagi
  */
 public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
-    private DefaultTableModel model = new DefaultTableModel();
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
     private String[] column = {"UserId", "Full Name", "Password","Contact Number"};
     private Administrator adminAcc;
     /**
@@ -55,16 +60,21 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         tfContact = new javax.swing.JTextField();
         tfPassword = new javax.swing.JTextField();
         tpID = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        tpUserId = new javax.swing.JTextPane();
         btnCreateCust = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Customer Create/Edit/Delete");
 
         tableCustomer.setModel(model);
+        tableCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableCustomerMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableCustomer);
 
         jLabel2.setText("Full name");
@@ -75,8 +85,9 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
 
         jLabel5.setText("Contact Number");
 
-        jTextPane1.setEditable(false);
-        tpID.setViewportView(jTextPane1);
+        tpUserId.setEditable(false);
+        tpUserId.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tpID.setViewportView(tpUserId);
 
         btnCreateCust.setText("Create");
         btnCreateCust.addActionListener(new java.awt.event.ActionListener() {
@@ -85,9 +96,19 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Edit");
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Delete");
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,9 +135,9 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCreateCust)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                                .addComponent(jButton2)
+                                .addComponent(btnEdit)
                                 .addGap(46, 46, 46)
-                                .addComponent(jButton3)
+                                .addComponent(btnDelete)
                                 .addGap(20, 20, 20)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,8 +174,8 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateCust)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnEdit)
+                    .addComponent(btnDelete))
                 .addGap(62, 62, 62))
         );
 
@@ -170,9 +191,63 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         customerNewAcc.createAccount();
         model.setRowCount(0);
         displayCustomer();
-       
+        clearText();
     }//GEN-LAST:event_btnCreateCustActionPerformed
 
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        String custId = tpUserId.getText();
+        
+        String newName = tfFullName.getText();
+        String newPass = tfPassword.getText();
+        String newContact = tfContact.getText();
+        
+        Customer editedCust = new Customer(custId, newName, newPass, newContact);
+        
+        editedCust.editAccount();
+        
+        model.setRowCount(0);
+        displayCustomer();
+    }//GEN-LAST:event_btnEditActionPerformed
+    int row = -1;
+    private void tableCustomerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseReleased
+        this.row = tableCustomer.getSelectedRow();
+        
+        String selectedId = String.valueOf(model.getValueAt(row,0));
+        String selectedName = String.valueOf(model.getValueAt(row, 1));
+        String selectedPassword = String.valueOf(model.getValueAt(row, 2));
+        String selectedContact = String.valueOf(model.getValueAt(row, 3));
+        
+        tpUserId.setText(selectedId);
+        tfFullName.setText(selectedName);
+        tfPassword.setText(selectedPassword);
+        tfContact.setText(selectedContact);
+        
+    }//GEN-LAST:event_tableCustomerMouseReleased
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String custId = tpUserId.getText();
+        
+        String delName = tfFullName.getText();
+        String delPass = tfPassword.getText();
+        String delContact = tfContact.getText();
+        
+        Customer deletedCust = new Customer(custId, delName, delPass, delContact);
+        
+        deletedCust.deleteAccount();
+        
+        model.setRowCount(0);
+        displayCustomer();
+        clearText();
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+    
+    private void clearText(){
+        tpUserId.setText("");
+        tfFullName.setText("");
+        tfPassword.setText("");
+        tfContact.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -210,19 +285,19 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateCust;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTable tableCustomer;
     private javax.swing.JTextField tfContact;
     private javax.swing.JTextField tfFullName;
     private javax.swing.JTextField tfPassword;
     private javax.swing.JScrollPane tpID;
+    private javax.swing.JTextPane tpUserId;
     // End of variables declaration//GEN-END:variables
 }
