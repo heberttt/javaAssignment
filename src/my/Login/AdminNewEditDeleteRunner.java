@@ -3,18 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
-
+import my.Classes.*;
 /**
  *
  * @author himagi
  */
 public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
-
+    Administrator adminAcc;
     /**
      * Creates new form AdminNewEditDeleteCustomer
      */
     public AdminNewEditDeleteRunner() {
         initComponents();
+    }
+    
+    public AdminNewEditDeleteRunner(Administrator adminAcc) {
+        initComponents();
+        this.adminAcc = adminAcc;
     }
 
     /**

@@ -14,5 +14,5 @@ import javax.swing.table.DefaultTableModel;
  * @author himagi
  */
 public interface UserInterface {
-    public final String userFilePath = "C:\\javaAssignment\\src\\my\\Classes\\Users.txt";
+    public final String userFilePath = "/home/himagi/javaAssignment/src/my/Classes/Users.txt";
 }   
