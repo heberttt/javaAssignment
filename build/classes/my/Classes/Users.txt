@@ -1,15 +1,12 @@
-1,gshasj,acacsabc,saca ,Customer
+
 2,michael,123,062,Customer
 3,flavian,123,062,Customer
 4,Hebert,thepass,062,Admin
 5,ricardo,12345566,2646,Customer
-6,january,uasdnj12,839493,Customer
+
 7,a,a,a,Vendor,Chinese
-
-
-10,davesss,nskadnldnsal,12321,Customer
+8,reee,r,r,Runner
 
 
 
-12,sdvsfs,ssvsvsd,d s s s,Admin
-13,asbsfb,afbfadb,ab,Admin
+10,idkdidk,diaksdnakn,vnsj vka,Runner

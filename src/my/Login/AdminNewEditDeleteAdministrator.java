@@ -232,9 +232,9 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
         String delPass = tfPassword.getText();
         String delContact = tfContact.getText();
         
-        Administrator deletedCust = new Administrator(admId, delName, delPass, delContact);
+        Administrator deletedAdm = new Administrator(admId, delName, delPass, delContact);
         
-        deletedCust.deleteAccount();
+        deletedAdm.deleteAccount();
         
         model.setRowCount(0);
         displayAdministrator();
