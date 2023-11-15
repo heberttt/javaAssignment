@@ -113,7 +113,9 @@ public class AdministratorHomepage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUserRegistrationActionPerformed
 
     private void btnTopUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTopUpActionPerformed
-        
+        AdminTopUp admin = new AdminTopUp(adminAccount);
+        admin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTopUpActionPerformed
 
     /**

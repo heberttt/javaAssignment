@@ -4,15 +4,16 @@
  */
 package my.Classes;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author himagi
  */
 public class main {
     public static void main(String[] args){
-        Customer c = new Customer("flav", "123","062");
-        System.out.println(c.getUserTextLine("4"));
-        
+       
+        JOptionPane.showMessageDialog(null, "Hello, this is a message dialog!");
         System.out.println();
       
     }

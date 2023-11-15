@@ -3,18 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import my.Classes.*;
 /**
  *
  * @author heber
  */
 public class AdminTopUp extends javax.swing.JFrame {
-
+    Administrator adminAcc;
     /**
      * Creates new form AdminTopUp
      */
     public AdminTopUp() {
         initComponents();
+    }
+    
+    public AdminTopUp(Administrator adminAcc) {
+        initComponents();
+        this.adminAcc = adminAcc;
     }
 
     /**
@@ -28,8 +36,8 @@ public class AdminTopUp extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        tfUserID = new javax.swing.JTextField();
+        btnTopUp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,16 +46,16 @@ public class AdminTopUp extends javax.swing.JFrame {
 
         jLabel3.setText("UserID");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tfUserID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tfUserIDActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Top-Up");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTopUp.setText("Top-Up");
+        btnTopUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnTopUpActionPerformed(evt);
             }
         });
 
@@ -64,10 +72,10 @@ public class AdminTopUp extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(109, 109, 109)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnTopUp, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,22 +86,30 @@ public class AdminTopUp extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(btnTopUp)
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tfUserIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUserIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tfUserIDActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnTopUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTopUpActionPerformed
+        String custId = tfUserID.getText();
+        Customer searchedCust = new Customer(custId);
+        int success = searchedCust.getCustDataFromId();
+        if (success == 0){
+            AdminTopUpAmount topupForm = new AdminTopUpAmount(adminAcc, searchedCust);
+            topupForm.setVisible(true);
+            this.dispose();
+        }
+        
+    }//GEN-LAST:event_btnTopUpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,9 +147,9 @@ public class AdminTopUp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnTopUp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField tfUserID;
     // End of variables declaration//GEN-END:variables
 }
