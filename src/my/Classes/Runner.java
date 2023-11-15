@@ -3,32 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package my.Classes;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;  
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import javax.swing.table.DefaultTableModel;
+import static my.Classes.UserInterface.userFilePath;
+
 /**
  *
  * @author himagi
  */
-public class Customer extends User{
+public class Runner extends User{
     
-    protected int credit;
-    
-    public Customer(String id, String fullName, String password, String contactNum){
+    public Runner(String id, String fullName, String password, String contactNum){
         this.id = id;
         this.fullName = fullName;
         this.password = password;
         this.contactNum = contactNum;
     }
     
-    public Customer(String fullName, String password, String contactNum){
+    public Runner(String fullName, String password, String contactNum){
         this.fullName = fullName;
         this.password = password;
         this.contactNum = contactNum;
@@ -42,7 +38,7 @@ public class Customer extends User{
         
         String accId = String.valueOf(availableId());
         
-        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Customer";//continue
+        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Runner";//continue
         
         try {
             // Create a BufferedWriter in append mode to write to the file
@@ -63,7 +59,7 @@ public class Customer extends User{
     @Override
     public void editAccount(){
        int lineNum = getUserTextLine(this.id);
-       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Customer";
+       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Runner";
        
 
 
@@ -95,5 +91,4 @@ public class Customer extends User{
        
        
     }
-    
 }

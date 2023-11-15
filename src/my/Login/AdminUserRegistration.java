@@ -89,8 +89,21 @@ public class AdminUserRegistration extends javax.swing.JFrame {
     private void btnEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterActionPerformed
         String selectedRole = String.valueOf(cbRole.getSelectedItem());;
         if (selectedRole.equals("Customer")){
-            AdminNewEditDeleteCustomer admin = new AdminNewEditDeleteCustomer(adminAcc);
-            admin.setVisible(true);
+            AdminNewEditDeleteCustomer custForm = new AdminNewEditDeleteCustomer(adminAcc);
+            custForm.setVisible(true);
+            this.dispose();
+        }
+        else if (selectedRole.equals("Runner")){
+            AdminNewEditDeleteRunner runnerForm = new AdminNewEditDeleteRunner(adminAcc);
+            runnerForm.setVisible(true);
+            this.dispose();
+        }
+        else if (selectedRole.equals("Vendor")){
+            AdminNewEditDeleteVendor vendorForm = new AdminNewEditDeleteVendor();
+        }
+        else if (selectedRole.equals("Administrator")){
+            AdminNewEditDeleteAdministrator adminForm = new AdminNewEditDeleteAdministrator(adminAcc);
+            adminForm.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnEnterActionPerformed

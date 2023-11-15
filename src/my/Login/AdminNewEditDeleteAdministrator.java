@@ -9,7 +9,7 @@ import my.Classes.*;
  *
  * @author himagi
  */
-public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
+public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
@@ -21,29 +21,20 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
     /**
      * Creates new form AdminNewEditDeleteCustomer
      */
-    public AdminNewEditDeleteRunner() {
+    public AdminNewEditDeleteAdministrator() {
         initComponents();
     }
     
-    public AdminNewEditDeleteRunner(Administrator adminAcc) {
+    public AdminNewEditDeleteAdministrator(Administrator adminAcc) {
         initComponents();
         this.adminAcc = adminAcc;
-        displayRunner();
+        displayAdministrator();
     }
     
-    public void displayRunner(){
+    public void displayAdministrator(){
         model.setColumnIdentifiers(column);
-        adminAcc.displayUser(model, "Runner"); 
+        adminAcc.displayUser(model, "Admin"); 
     }
-    
-    private void clearText(){
-        tpUserID.setText("");
-        tfFullName.setText("");
-        tfPassword.setText("");
-        tfContact.setText("");
-    }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,7 +47,7 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableRunner = new javax.swing.JTable();
+        tableAdmin = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -72,15 +63,15 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Runner Create/Edit/Delete");
+        jLabel1.setText("Administrator Create/Edit/Delete");
 
-        tableRunner.setModel(model);
-        tableRunner.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableAdmin.setModel(model);
+        tableAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tableRunnerMouseReleased(evt);
+                tableAdminMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tableRunner);
+        jScrollPane1.setViewportView(tableAdmin);
 
         jLabel2.setText("Full name");
 
@@ -159,7 +150,7 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(57, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +168,7 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(tfContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCreate)
                             .addComponent(btnEdit)
@@ -187,52 +178,41 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void clearText(){
+        tpUserID.setText("");
+        tfFullName.setText("");
+        tfPassword.setText("");
+        tfContact.setText("");
+    }
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        String rnrName = tfFullName.getText();
-        String rnrPass = tfPassword.getText();
-        String rnrContact = tfContact.getText();
+        String admName = tfFullName.getText();
+        String admPass = tfPassword.getText();
+        String admContact = tfContact.getText();
         
-        Runner runnerAcc = new Runner(rnrName,rnrPass,rnrContact);
-        runnerAcc.createAccount();
+        Administrator adminNewAcc = new Administrator(admName,admPass,admContact);
+        adminNewAcc.createAccount();
         model.setRowCount(0);
-        displayRunner();
+        displayAdministrator();
         clearText();
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        String rnrId = tpUserID.getText();
+        String admId = tpUserID.getText();
         
         String newName = tfFullName.getText();
         String newPass = tfPassword.getText();
         String newContact = tfContact.getText();
         
-        Runner editedRnr = new Runner(rnrId, newName, newPass, newContact);
+        Administrator editedAdm = new Administrator(admId, newName, newPass, newContact);
         
-        editedRnr.editAccount();
+        editedAdm.editAccount();
         
         model.setRowCount(0);
-        displayRunner();
+        displayAdministrator();
     }//GEN-LAST:event_btnEditActionPerformed
-    
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        String rnrId = tpUserID.getText();
-        
-        String delName = tfFullName.getText();
-        String delPass = tfPassword.getText();
-        String delContact = tfContact.getText();
-        
-        Runner deletedRnr = new Runner(rnrId, delName, delPass, delContact);
-        
-        deletedRnr.deleteAccount();
-        
-        model.setRowCount(0);
-        displayRunner();
-        clearText();
-    }//GEN-LAST:event_btnDeleteActionPerformed
-    int row = -1;
-    private void tableRunnerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRunnerMouseReleased
-        this.row = tableRunner.getSelectedRow();
+        int row = -1;
+    private void tableAdminMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAdminMouseReleased
+        this.row = tableAdmin.getSelectedRow();
         
         String selectedId = String.valueOf(model.getValueAt(row,0));
         String selectedName = String.valueOf(model.getValueAt(row, 1));
@@ -243,7 +223,23 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
         tfFullName.setText(selectedName);
         tfPassword.setText(selectedPassword);
         tfContact.setText(selectedContact);
-    }//GEN-LAST:event_tableRunnerMouseReleased
+    }//GEN-LAST:event_tableAdminMouseReleased
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String admId = tpUserID.getText();
+        
+        String delName = tfFullName.getText();
+        String delPass = tfPassword.getText();
+        String delContact = tfContact.getText();
+        
+        Administrator deletedAdm = new Administrator(admId, delName, delPass, delContact);
+        
+        deletedAdm.deleteAccount();
+        
+        model.setRowCount(0);
+        displayAdministrator();
+        clearText();
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,21 +258,23 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminNewEditDeleteRunner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminNewEditDeleteAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminNewEditDeleteRunner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminNewEditDeleteAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminNewEditDeleteRunner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminNewEditDeleteAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminNewEditDeleteRunner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminNewEditDeleteAdministrator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminNewEditDeleteRunner().setVisible(true);
+                new AdminNewEditDeleteAdministrator().setVisible(true);
             }
         });
     }
@@ -292,7 +290,7 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tableRunner;
+    private javax.swing.JTable tableAdmin;
     private javax.swing.JTextField tfContact;
     private javax.swing.JTextField tfFullName;
     private javax.swing.JTextField tfPassword;

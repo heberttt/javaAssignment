@@ -4,11 +4,17 @@
  */
 package my.Classes;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
+import static my.Classes.UserInterface.userFilePath;
 
 /**
  *
@@ -18,6 +24,12 @@ public class Administrator extends User implements UserInterface {
     
     public Administrator(String id, String username, String password, String contactNum){
         this.id = id;
+        this.fullName= username;
+        this.password = password;
+        this.contactNum = contactNum;
+    }
+    
+    public Administrator(String username, String password, String contactNum){
         this.fullName= username;
         this.password = password;
         this.contactNum = contactNum;
@@ -79,14 +91,61 @@ public class Administrator extends User implements UserInterface {
         return finalInfo;
     }
     
-    public void createAccount(){};
+    public void createAccount(){
+        String accName = this.fullName;
+        String accPassword = this.password;
+        String contactNum = this.contactNum;
+        
+        String accId = String.valueOf(availableId());
+        
+        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Admin";//continue
+        
+        try {
+            // Create a BufferedWriter in append mode to write to the file
+            BufferedWriter writer = new BufferedWriter(new FileWriter(userFilePath, true));
+
+            writer.write(accountData + "\n");
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
     
     @Override
     public void editAccount(){
-        
+        int lineNum = getUserTextLine(this.id);
+       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Admin";
+       
+
+
+       try {
+           BufferedReader reader = new BufferedReader(new FileReader(userFilePath));
+           String line;
+           int lineNumber = 1;
+
+           StringBuilder modifiedContent = new StringBuilder();
+           while ((line = reader.readLine()) != null) {
+               if (lineNumber == lineNum) {
+                   modifiedContent.append(newText).append(System.lineSeparator());
+               } else {
+                   modifiedContent.append(line).append(System.lineSeparator());
+               }
+               lineNumber++;
+           }
+
+           BufferedWriter writer = new BufferedWriter(new FileWriter(userFilePath));
+
+           writer.write(modifiedContent.toString());
+
+           reader.close();
+           writer.close();
+
+       } catch (IOException e) {
+          e.printStackTrace();
+       }
+       
     }
-    @Override
-    public void deleteAccount(){
-        
-    }
+    
 }

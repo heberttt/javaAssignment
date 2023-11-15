@@ -18,7 +18,7 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
             return false;
         }
     };
-    private String[] column = {"UserId", "Full Name", "Password","Contact Number"};
+    private final String[] column = {"UserId", "Full Name", "Password","Contact Number"};
     private Administrator adminAcc;
     /**
      * Creates new form AdminNewEditDeleteCustomer
