@@ -56,6 +56,18 @@ public class Administrator extends User implements UserInterface {
       }   	
     }
     
+    public void displayVendor(DefaultTableModel table){
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getVendor();
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3),eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
+    
     
     protected ArrayList<ArrayList<String>> getUser(String role){
         ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
@@ -74,6 +86,41 @@ public class Administrator extends User implements UserInterface {
             if(dataArr[4].equals(role)){
                 ArrayList<String> dataList = new ArrayList<String>();
                 dataList.add(dataArr[0]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[2]);
+                dataList.add(dataArr[3]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
+    protected ArrayList<ArrayList<String>> getVendor(){
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(userFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            if(dataArr[4].equals("Vendor")){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[5]);
                 dataList.add(dataArr[1]);
                 dataList.add(dataArr[2]);
                 dataList.add(dataArr[3]);

@@ -1,12 +1,6 @@
+1,h,p,123,Admin
+2,sore,rendang,111112323,Vendor,pagi
+3,satqq,qvd,av,Vendor,tesss
+4,cccc,Chinese,cccass,Vendor,null
+5,acasc,ascasc,acac,Vendor,waasss
 
-2,michael,123,062,Customer
-3,flavian,123,062,Customer
-4,Hebert,thepass,062,Admin
-5,ricardo,12345566,2646,Customer
-
-7,a,a,a,Vendor,Chinese
-8,reee,r,r,Runner
-
-
-
-10,idkdidk,diaksdnakn,vnsj vka,Runner

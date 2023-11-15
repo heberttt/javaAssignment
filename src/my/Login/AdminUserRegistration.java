@@ -99,7 +99,9 @@ public class AdminUserRegistration extends javax.swing.JFrame {
             this.dispose();
         }
         else if (selectedRole.equals("Vendor")){
-            AdminNewEditDeleteVendor vendorForm = new AdminNewEditDeleteVendor();
+            AdminNewEditDeleteVendor vendorForm = new AdminNewEditDeleteVendor(adminAcc);
+            vendorForm.setVisible(true);
+            this.dispose();
         }
         else if (selectedRole.equals("Administrator")){
             AdminNewEditDeleteAdministrator adminForm = new AdminNewEditDeleteAdministrator(adminAcc);

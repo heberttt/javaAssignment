@@ -3,20 +3,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
-
+import javax.swing.table.DefaultTableModel;
+import my.Classes.*;
 /**
  *
  * @author himagi
  */
 public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
-
+    Administrator adminAcc;
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
+    private final String[] column = {"UserId", "Restaurant Name", "Full Name", "Password","Contact Number"};
     /**
      * Creates new form AdminNewEditDeleteCustomer
      */
     public AdminNewEditDeleteVendor() {
         initComponents();
     }
+    
+    public AdminNewEditDeleteVendor(Administrator adminAcc) {
+        initComponents();
+        this.adminAcc = adminAcc;
+        tableDisplayVendor();
+    }
 
+    public void tableDisplayVendor(){
+        model.setColumnIdentifiers(column);
+        adminAcc.displayVendor(model); 
+    }
+    
+    private void clearText(){
+        tpUserID.setText("");
+        tfFullName.setText("");
+        tfPassword.setText("");
+        tfContact.setText("");
+        tfRestaurantName.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,50 +54,33 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableCustomer = new javax.swing.JTable();
+        tableVendor = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        tfFullName = new javax.swing.JTextField();
+        tfContact = new javax.swing.JTextField();
+        tfPassword = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        tpUserID = new javax.swing.JTextPane();
+        btnCreate = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        tfRestaurantName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Vendor Create/Edit/Delete");
 
-        tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "UserID", "Restaurant Name", "Full name", "Password", "Contact Number"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        tableVendor.setModel(model);
+        tableVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableVendorMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tableCustomer);
+        jScrollPane1.setViewportView(tableVendor);
 
         jLabel2.setText("Full name");
 
@@ -81,14 +90,29 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
 
         jLabel5.setText("Contact Number");
 
-        jTextPane1.setEditable(false);
-        jScrollPane2.setViewportView(jTextPane1);
+        tpUserID.setEditable(false);
+        jScrollPane2.setViewportView(tpUserID);
 
-        jButton1.setText("Create");
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Edit");
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Delete");
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("RestaurantName");
 
@@ -102,11 +126,11 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btnCreate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2)
-                                .addGap(46, 46, 46)
-                                .addComponent(jButton3)
+                                .addComponent(btnEdit)
+                                .addGap(64, 64, 64)
+                                .addComponent(btnDelete)
                                 .addGap(26, 26, 26))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -116,7 +140,7 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
                                             .addComponent(jLabel3))
                                         .addGap(53, 53, 53)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField4)
+                                            .addComponent(tfRestaurantName)
                                             .addComponent(jScrollPane2)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,9 +149,9 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
                                             .addComponent(jLabel5))
                                         .addGap(53, 53, 53)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfContact, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(35, 35, 35)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))
@@ -144,7 +168,7 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(32, Short.MAX_VALUE))
+                        .addContainerGap(57, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -153,29 +177,90 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
+                            .addComponent(btnCreate)
+                            .addComponent(btnEdit)
+                            .addComponent(btnDelete))
                         .addGap(62, 62, 62))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        String vdrName = tfFullName.getText();
+        String vdrPass = tfPassword.getText();
+        String vdrContact = tfContact.getText();
+        String vdrRestaurantName = tfRestaurantName.getText();
+        
+        Vendor vendorAcc = new Vendor(vdrName,vdrPass,vdrContact, vdrRestaurantName);
+        vendorAcc.createAccount();
+        model.setRowCount(0);
+        tableDisplayVendor();
+        clearText();
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        String rnrId = tpUserID.getText();
+        String rnrRestaurantName = tfRestaurantName.getText();
+        String newName = tfFullName.getText();
+        String newPass = tfPassword.getText();
+        String newContact = tfContact.getText();
+        
+        Vendor editedVdr = new Vendor(rnrId, newName, newPass, newContact, rnrRestaurantName);
+        
+        editedVdr.editAccount();
+        
+        model.setRowCount(0);
+        tableDisplayVendor();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String vdrId = tpUserID.getText();
+        
+        String delName = tfFullName.getText();
+        String delPass = tfPassword.getText();
+        String delContact = tfContact.getText();
+        String delRestaurantName = tfRestaurantName.getText();
+        
+        Vendor deletedVdr = new Vendor(vdrId, delName, delPass, delContact,delRestaurantName);
+        
+        deletedVdr.deleteAccount();
+        
+        model.setRowCount(0);
+        tableDisplayVendor();
+        clearText();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+    int row = -1;
+    private void tableVendorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVendorMouseReleased
+        this.row = tableVendor.getSelectedRow();
+        
+        String selectedRestaurantName = String.valueOf(model.getValueAt(row,1));
+        String selectedId = String.valueOf(model.getValueAt(row,0));
+        String selectedName = String.valueOf(model.getValueAt(row, 2));
+        String selectedPassword = String.valueOf(model.getValueAt(row, 3));
+        String selectedContact = String.valueOf(model.getValueAt(row, 4));
+        
+        tfRestaurantName.setText(selectedRestaurantName);
+        tpUserID.setText(selectedId);
+        tfFullName.setText(selectedName);
+        tfPassword.setText(selectedPassword);
+        tfContact.setText(selectedContact);
+    }//GEN-LAST:event_tableVendorMouseReleased
 
     /**
      * @param args the command line arguments
@@ -214,9 +299,9 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -225,11 +310,11 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTable tableCustomer;
+    private javax.swing.JTable tableVendor;
+    private javax.swing.JTextField tfContact;
+    private javax.swing.JTextField tfFullName;
+    private javax.swing.JTextField tfPassword;
+    private javax.swing.JTextField tfRestaurantName;
+    private javax.swing.JTextPane tpUserID;
     // End of variables declaration//GEN-END:variables
 }
