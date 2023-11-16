@@ -55,7 +55,7 @@ public class Customer extends User{
         
         String accId = String.valueOf(availableId());
         
-        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Customer";//continue
+        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Customer,0";//continue
         
         try {
             // Create a BufferedWriter in append mode to write to the file
@@ -76,7 +76,7 @@ public class Customer extends User{
     @Override
     public void editAccount(){
        int lineNum = getUserTextLine(this.id);
-       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Customer";
+       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Customer," + String.valueOf(credit);
        
 
 
@@ -203,6 +203,17 @@ public class Customer extends User{
        } catch (IOException e) {
           e.printStackTrace();
        }
+    }
+    
+    public void setFullName(String newName){
+        this.fullName = newName;
+    }
+    public void setPassword(String newPassword){
+        this.password = newPassword;
+    }
+    
+    public void setContact(String newContact){
+        this.contactNum = newContact;
     }
     
 }
