@@ -146,6 +146,8 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Top-Up successful");
         }
         displayDetail();
+        TopUpTransaction receipt = new TopUpTransaction(searchedCust, amount);
+        receipt.generateTransactionReceipt();
     }//GEN-LAST:event_btnTopUpActionPerformed
 
     private void tfTopUpAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTopUpAmountActionPerformed

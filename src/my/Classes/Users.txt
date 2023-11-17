@@ -4,7 +4,7 @@
 4,cccc,Chinese,cccass,Vendor,ayam pak ali
 5,acasc,ascasc,acac,Vendor,waasss
 
-6,michelaaa,111222,062,Customer,277
+6,michelaaa,111222,062,Customer,298
 
 7,1,1,1,Admin
 
