@@ -12,7 +12,7 @@ import my.Classes.*;
  *
  * @author heber
  */
-public class LoginUI extends javax.swing.JFrame implements UserInterface {
+public class LoginUI extends javax.swing.JFrame implements FileLocationInterface {
 
     /**
      * Creates new form LoginUI

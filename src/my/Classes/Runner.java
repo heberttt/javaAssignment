@@ -9,7 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import static my.Classes.UserInterface.userFilePath;
+import static my.Classes.FileLocationInterface.userFilePath;
 
 /**
  *
