@@ -82,7 +82,7 @@ abstract class User implements FileLocationInterface {
     }
     
     
-    protected void deleteAccount(){
+    public void deleteAccount(){
        int lineNum = getUserTextLine(this.id);
        String newText = "";
      
