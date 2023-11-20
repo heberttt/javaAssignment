@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
  * @author himagi
  */
 public interface FileLocationInterface {
-    public final String userFilePath = "/home/himagi/javaAssignment/src/my/Classes/Users.txt";
-    public final String transactionReceiptFilePath = "/home/himagi/javaAssignment/src/my/Classes/transactionReceipt.txt";
+    final String path = "/home/himagi/javaAssignment/src/my/Classes/";
+    public final String userFilePath = path + "Users.txt";
+    public final String transactionReceiptFilePath = path + "transactionReceipt.txt";
+    public final String CustomerNotificationsFilePath = path + "CustomerNotifications.txt";
 }   

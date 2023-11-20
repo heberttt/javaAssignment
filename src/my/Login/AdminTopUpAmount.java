@@ -148,6 +148,10 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         displayDetail();
         TopUpTransaction receipt = new TopUpTransaction(searchedCust, amount);
         receipt.generateTransactionReceipt();
+        String notificationText = String.valueOf(amount) + " RM is added to your credit";
+        Notification notification = new Notification(adminAcc.getId(), searchedCust.getId(), notificationText);
+        notification.sendCustomer();
+        tfTopUpAmount.setText("");
     }//GEN-LAST:event_btnTopUpActionPerformed
 
     private void tfTopUpAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTopUpAmountActionPerformed
