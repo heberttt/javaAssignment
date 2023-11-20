@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
@@ -70,7 +71,7 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Runner Create/Edit/Delete");
 
@@ -203,32 +204,44 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         String rnrId = tpUserID.getText();
         
-        String newName = tfFullName.getText();
-        String newPass = tfPassword.getText();
-        String newContact = tfContact.getText();
+        if(!rnrId.equals("")){
+            String newName = tfFullName.getText();
+            String newPass = tfPassword.getText();
+            String newContact = tfContact.getText();
         
-        Runner editedRnr = new Runner(rnrId, newName, newPass, newContact);
+            Runner editedRnr = new Runner(rnrId, newName, newPass, newContact);
         
-        editedRnr.editAccount();
+            editedRnr.editAccount();
         
-        model.setRowCount(0);
-        displayRunner();
+            model.setRowCount(0);
+            displayRunner();  
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnEditActionPerformed
     
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String rnrId = tpUserID.getText();
         
-        String delName = tfFullName.getText();
-        String delPass = tfPassword.getText();
-        String delContact = tfContact.getText();
+        if(!rnrId.equals("")){
+            String delName = tfFullName.getText();
+            String delPass = tfPassword.getText();
+            String delContact = tfContact.getText();
         
-        Runner deletedRnr = new Runner(rnrId, delName, delPass, delContact);
+            Runner deletedRnr = new Runner(rnrId, delName, delPass, delContact);
         
-        deletedRnr.deleteAccount();
+            deletedRnr.deleteAccount();
         
-        model.setRowCount(0);
-        displayRunner();
-        clearText();
+            model.setRowCount(0);
+            displayRunner();
+            clearText();  
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
     int row = -1;
     private void tableRunnerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRunnerMouseReleased

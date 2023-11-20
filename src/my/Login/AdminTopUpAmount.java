@@ -69,7 +69,7 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableReceipt = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Top-Up");
@@ -129,8 +129,7 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnTopUp)
                         .addGap(92, 92, 92)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
