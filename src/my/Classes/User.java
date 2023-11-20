@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
-import static my.Classes.UserInterface.userFilePath;
+import static my.Classes.FileLocationInterface.userFilePath;
 
 /**
  *
  * @author himagi
  */
-abstract class User implements UserInterface {
+abstract class User implements FileLocationInterface {
     protected String id;
     protected String fullName;
     protected String password;

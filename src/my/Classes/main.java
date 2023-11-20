@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package my.Classes;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,10 +12,17 @@ package my.Classes;
  */
 public class main {
     public static void main(String[] args){
-        Customer c = new Customer("flav", "123","062");
-        System.out.println(c.getUserTextLine("4"));
+       
+        JOptionPane.showMessageDialog(null, "Hello, this is a message dialog!");
+        java.util.Date date = new java.util.Date();
+        String dates = date.toString();
+        System.out.println(dates);
         
-        System.out.println();
+        Customer cust = new Customer("1");
       
+        TopUpTransaction receipt = new TopUpTransaction(cust, 20);
+        
+        int a = receipt.availableId();
+        System.out.println(a);
     }
 }

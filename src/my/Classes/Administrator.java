@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
-import static my.Classes.UserInterface.userFilePath;
+import static my.Classes.FileLocationInterface.userFilePath;
 
 /**
  *
  * @author himagi
  */
-public class Administrator extends User implements UserInterface {
+public class Administrator extends User implements FileLocationInterface {
     
     public Administrator(String id, String username, String password, String contactNum){
         this.id = id;
@@ -44,7 +44,7 @@ public class Administrator extends User implements UserInterface {
     
     
     
-    public void displayUser(DefaultTableModel table, String role){
+    public void displayUser(DefaultTableModel table, String role){    // takes the table model and role and add the role info in the table
         ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
         fullData = getUser(role);
         
@@ -56,8 +56,20 @@ public class Administrator extends User implements UserInterface {
       }   	
     }
     
+    public void displayVendor(DefaultTableModel table){  // same as displayUser() but only for vendor as it has an extra attribute (restaurantName)
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getVendor();
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3),eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
     
-    protected ArrayList<ArrayList<String>> getUser(String role){
+    
+    protected ArrayList<ArrayList<String>> getUser(String role){  // gets all user for a specific role and put it inside a nested arraylist<String>
         ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
         try {
         File myObj = new File(userFilePath);
@@ -91,7 +103,42 @@ public class Administrator extends User implements UserInterface {
         return finalInfo;
     }
     
-    public void createAccount(){
+    protected ArrayList<ArrayList<String>> getVendor(){ // same as getUser() but for vendor
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(userFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            if(dataArr[4].equals("Vendor")){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[5]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[2]);
+                dataList.add(dataArr[3]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
+    public void createAccount(){ //used to create account for an user. Takes all the attributes inside the created class and put it into the text file.
         String accName = this.fullName;
         String accPassword = this.password;
         String contactNum = this.contactNum;
@@ -114,7 +161,7 @@ public class Administrator extends User implements UserInterface {
     };
     
     @Override
-    public void editAccount(){
+    public void editAccount(){ //edits the account info through the ID
         int lineNum = getUserTextLine(this.id);
        String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Admin";
        
@@ -146,6 +193,55 @@ public class Administrator extends User implements UserInterface {
           e.printStackTrace();
        }
        
+    }
+    
+    public void displayTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getTopUpReceipt(custAcc);
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3), eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
+    
+    
+    
+    public ArrayList<ArrayList<String>> getTopUpReceipt(Customer custAcc){
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(transactionReceiptFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            if(dataArr[4].equals(custAcc.getId())){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[2]);
+                dataList.add(dataArr[3]);
+                dataList.add(dataArr[5]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
     }
     
 }

@@ -15,19 +15,23 @@ import static my.Classes.FileLocationInterface.userFilePath;
  *
  * @author himagi
  */
-public class Runner extends User{
+public class Vendor extends User {
     
-    public Runner(String id, String fullName, String password, String contactNum){
+    String restaurantName;
+    
+    public Vendor(String id, String fullName, String password, String contactNum, String restaurantName){
         this.id = id;
         this.fullName = fullName;
         this.password = password;
         this.contactNum = contactNum;
+        this.restaurantName = restaurantName;
     }
     
-    public Runner(String fullName, String password, String contactNum){
+    public Vendor(String fullName, String password, String contactNum, String restaurantName){
         this.fullName = fullName;
         this.password = password;
         this.contactNum = contactNum;
+        this.restaurantName = restaurantName;
     }
     
     @Override
@@ -35,10 +39,11 @@ public class Runner extends User{
         String accName = this.fullName;
         String accPassword = this.password;
         String contactNum = this.contactNum;
+        String restaurantName = this.restaurantName;
         
         String accId = String.valueOf(availableId());
         
-        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Runner";//continue
+        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Vendor," + restaurantName;//continue
         
         try {
             // Create a BufferedWriter in append mode to write to the file
@@ -55,11 +60,10 @@ public class Runner extends User{
         
     }
     
-    
     @Override
     public void editAccount(){
        int lineNum = getUserTextLine(this.id);
-       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Runner";
+       String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Vendor," + this.restaurantName;
        
 
 

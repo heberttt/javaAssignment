@@ -201,7 +201,13 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         String newPass = tfPassword.getText();
         String newContact = tfContact.getText();
         
-        Customer editedCust = new Customer(custId, newName, newPass, newContact);
+        
+        
+        Customer editedCust = new Customer(custId);
+        editedCust.getCustDataFromId();
+        editedCust.setFullName(newName);
+        editedCust.setPassword(newPass);
+        editedCust.setContact(newContact);
         
         editedCust.editAccount();
         
