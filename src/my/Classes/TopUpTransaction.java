@@ -31,7 +31,7 @@ public class TopUpTransaction implements FileLocationInterface{
         time = c.getCurrentTime();
     }
     
-    public void generateTransactionReceipt(){
+    public void generateTransactionReceipt(Administrator adminAcc){
         this.topUpTransactionID = availableId();
         
         String receiptId = String.valueOf(this.topUpTransactionID);
@@ -40,7 +40,7 @@ public class TopUpTransaction implements FileLocationInterface{
         String receiptTime = this.time;
         String receiptAmount = String.valueOf(topUpAmount);
         
-        String receiptData = receiptId + "," + receiptDate + "," + receiptTime + "," + custId + "," + receiptAmount;//continue
+        String receiptData = receiptId + "," + receiptDate + "," + receiptTime + "," + adminAcc.getId() + "," + custId + "," + receiptAmount;//continue
         
         try {
             // Create a BufferedWriter in append mode to write to the file

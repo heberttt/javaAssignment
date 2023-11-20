@@ -4,6 +4,7 @@
  */
 package my.Login;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
  *
@@ -12,6 +13,14 @@ import my.Classes.*;
 public class AdminTopUpAmount extends javax.swing.JFrame {
     Administrator adminAcc;
     Customer searchedCust;
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
+    
+    private final String[] column = {"TransactionID","date", "time", "AdminID", "Top-Up Amount"};
     /**
      * Creates new form AdminTopUp
      */
@@ -25,6 +34,7 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         this.searchedCust = searchedCust;
         
         displayDetail();
+        tableDisplayReceipt();
     }
     
     public void displayDetail(){
@@ -32,6 +42,10 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         lblCreditAmount.setText("RM " + String.valueOf(searchedCust.getCredit()));
     }
     
+    public void tableDisplayReceipt(){
+        model.setColumnIdentifiers(column);
+        adminAcc.displayTopUpReceipt(model, searchedCust); 
+    }
     
 
     /**
@@ -52,6 +66,8 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         tfTopUpAmount = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableReceipt = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +99,9 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
 
         jLabel7.setText("RM");
 
+        tableReceipt.setModel(model);
+        jScrollPane1.setViewportView(tableReceipt);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,29 +129,36 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnTopUp)
                         .addGap(92, 92, 92)))
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblUserID)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(lblCreditAmount))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(tfTopUpAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
-                .addComponent(btnTopUp)
-                .addGap(64, 64, 64))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUserID)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblCreditAmount))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(tfTopUpAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                        .addComponent(btnTopUp)
+                        .addGap(64, 64, 64))))
         );
 
         pack();
@@ -147,11 +173,14 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         }
         displayDetail();
         TopUpTransaction receipt = new TopUpTransaction(searchedCust, amount);
-        receipt.generateTransactionReceipt();
+        receipt.generateTransactionReceipt(adminAcc);
         String notificationText = String.valueOf(amount) + " RM is added to your credit";
         Notification notification = new Notification(adminAcc.getId(), searchedCust.getId(), notificationText);
         notification.sendCustomer();
         tfTopUpAmount.setText("");
+        model.setRowCount(0);
+        tableDisplayReceipt();
+ 
     }//GEN-LAST:event_btnTopUpActionPerformed
 
     private void tfTopUpAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTopUpAmountActionPerformed
@@ -201,8 +230,10 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCreditAmount;
     private javax.swing.JLabel lblUserID;
+    private javax.swing.JTable tableReceipt;
     private javax.swing.JTextField tfTopUpAmount;
     // End of variables declaration//GEN-END:variables
 }

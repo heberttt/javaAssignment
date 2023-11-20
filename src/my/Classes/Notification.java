@@ -18,19 +18,22 @@ import static my.Classes.FileLocationInterface.transactionReceiptFilePath;
  */
 public class Notification implements FileLocationInterface {
     String senderID,receiverID,content;
-    currentDate date;
+    String date;
+    String time;
     
     public Notification(String senderID, String receiverID, String content){
         this.senderID = senderID;
         this.receiverID = receiverID;
         this.content = content;
-        date = new currentDate();
+        currentDate c = new currentDate();
+        this.date = c.getDate()+"/"+c.getMonth()+"/"+c.getYear();
+        this.time = c.getCurrentTime();
     }
     
     public void sendCustomer(){
         int notificationId = availableId();
         
-        String finalNotification = String.valueOf(notificationId) + "," + senderID + "," + receiverID + "," + content;
+        String finalNotification = String.valueOf(notificationId) + "," + senderID + "," + receiverID + "," + date + "," + time + "," + content;
         
         try {
             // Create a BufferedWriter in append mode to write to the file
