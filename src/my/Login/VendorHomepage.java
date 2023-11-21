@@ -1,5 +1,5 @@
 package my.Login;
-
+import my.Classes.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,12 +10,17 @@ package my.Login;
  * @author dvdmi
  */
 public class VendorHomepage extends javax.swing.JFrame {
-
+    Vendor vendorAcc;
     /**
      * Creates new form Menu
      */
     public VendorHomepage() {
         initComponents();
+    }
+    
+    public VendorHomepage(Vendor vendorAcc) {
+        initComponents();
+        this.vendorAcc = vendorAcc;
     }
 
     /**

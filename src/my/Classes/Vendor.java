@@ -39,6 +39,15 @@ public class Vendor extends User {
         this.restaurantName = restaurantName;
     }
     
+    public Vendor(String id, String fullName, String password, String contactNum, String restaurantName, String revenue){
+        this.id = id;
+        this.fullName = fullName;
+        this.password = password;
+        this.contactNum = contactNum;
+        this.restaurantName = restaurantName;
+        this.revenue = Integer.parseInt(revenue);
+    }
+    
     public Vendor(String id){
         this.id = id;
     }

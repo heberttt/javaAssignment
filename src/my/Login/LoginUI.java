@@ -137,8 +137,9 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
                         break;
                     }
                     else if (dataArr[4].equals("Vendor")){
-                        //VendorFrame vendor = new VendorFrame();
-                       // vendor.setVisible(true);
+                        Vendor vendorAccount = new Vendor(dataArr[0],dataArr[1],dataArr[2],dataArr[3],dataArr[5],dataArr[6]);
+                        VendorHomepage vendor = new VendorHomepage(vendorAccount); 
+                        vendor.setVisible(true);
                         this.dispose();
                         break;
                     }
