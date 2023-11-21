@@ -5,6 +5,7 @@
 package my.Login;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
@@ -65,7 +66,7 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Customer Create/Edit/Delete");
 
@@ -196,23 +197,28 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         String custId = tpUserId.getText();
+        if (!custId.equals("")){
+            String newName = tfFullName.getText();
+            String newPass = tfPassword.getText();
+            String newContact = tfContact.getText();
         
-        String newName = tfFullName.getText();
-        String newPass = tfPassword.getText();
-        String newContact = tfContact.getText();
         
         
+            Customer editedCust = new Customer(custId);
+            editedCust.getCustDataFromId();
+            editedCust.setFullName(newName);
+            editedCust.setPassword(newPass);
+            editedCust.setContact(newContact);
         
-        Customer editedCust = new Customer(custId);
-        editedCust.getCustDataFromId();
-        editedCust.setFullName(newName);
-        editedCust.setPassword(newPass);
-        editedCust.setContact(newContact);
+            editedCust.editAccount();
         
-        editedCust.editAccount();
+            model.setRowCount(0);
+            displayCustomer();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
         
-        model.setRowCount(0);
-        displayCustomer();
     }//GEN-LAST:event_btnEditActionPerformed
     int row = -1;
     private void tableCustomerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseReleased
@@ -233,17 +239,23 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String custId = tpUserId.getText();
         
-        String delName = tfFullName.getText();
-        String delPass = tfPassword.getText();
-        String delContact = tfContact.getText();
+        if (!custId.equals("")){
+            String delName = tfFullName.getText();
+            String delPass = tfPassword.getText();
+            String delContact = tfContact.getText();
         
-        Customer deletedCust = new Customer(custId, delName, delPass, delContact);
+            Customer deletedCust = new Customer(custId, delName, delPass, delContact);
         
-        deletedCust.deleteAccount();
+            deletedCust.deleteAccount();
         
-        model.setRowCount(0);
-        displayCustomer();
-        clearText();
+            model.setRowCount(0);
+            displayCustomer();
+            clearText();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
         
     }//GEN-LAST:event_btnDeleteActionPerformed
     

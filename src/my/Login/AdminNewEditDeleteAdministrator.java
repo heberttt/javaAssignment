@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
@@ -61,7 +62,7 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Administrator Create/Edit/Delete");
 
@@ -198,17 +199,21 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         String admId = tpUserID.getText();
+        if(!admId.equals("")){
+            String newName = tfFullName.getText();
+            String newPass = tfPassword.getText();
+            String newContact = tfContact.getText();
         
-        String newName = tfFullName.getText();
-        String newPass = tfPassword.getText();
-        String newContact = tfContact.getText();
+            Administrator editedAdm = new Administrator(admId, newName, newPass, newContact);
         
-        Administrator editedAdm = new Administrator(admId, newName, newPass, newContact);
+            editedAdm.editAccount();
         
-        editedAdm.editAccount();
-        
-        model.setRowCount(0);
-        displayAdministrator();
+            model.setRowCount(0);
+            displayAdministrator();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
         int row = -1;
     private void tableAdminMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAdminMouseReleased
@@ -228,17 +233,23 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String admId = tpUserID.getText();
         
-        String delName = tfFullName.getText();
-        String delPass = tfPassword.getText();
-        String delContact = tfContact.getText();
+        if(!admId.equals("")){
+            String delName = tfFullName.getText();
+            String delPass = tfPassword.getText();
+            String delContact = tfContact.getText();
         
-        Administrator deletedAdm = new Administrator(admId, delName, delPass, delContact);
+            Administrator deletedAdm = new Administrator(admId, delName, delPass, delContact);
         
-        deletedAdm.deleteAccount();
+            deletedAdm.deleteAccount();
         
-        model.setRowCount(0);
-        displayAdministrator();
-        clearText();
+            model.setRowCount(0);
+            displayAdministrator();
+            clearText();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**

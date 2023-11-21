@@ -1,13 +1,20 @@
-1,Hebert,1,123,Admin
-2,sore,rendang,111112323,Vendor,pagi
+1,idkk,1,idk,Admin
+
 3,satqq,qvd,av,Vendor,tesss
 4,cccc,Chinese,cccass,Vendor,ayam pak ali
 5,acasc,ascasc,acac,Vendor,waasss
 
-6,michelaaa,111222,062,Customer,499
-
-7,1,1,1,Admin
 
 
 
-8,michellea,11122211,06211,Customer,0
+
+
+
+
+9,jovin gazani,rounding,11122233455,Customer,1379
+
+
+12,runnerDummya,1112,1212,Runner
+13,dasdad,adad,dsda,Vendor,sada
+
+

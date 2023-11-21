@@ -34,7 +34,7 @@ public class AdminUserRegistration extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnEnter = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Customer", "Administrator", "Vendor", "Runner", " " }));
         cbRole.addActionListener(new java.awt.event.ActionListener() {

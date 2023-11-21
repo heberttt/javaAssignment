@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
@@ -70,7 +71,7 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
         tfRestaurantName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Vendor Create/Edit/Delete");
 
@@ -215,35 +216,47 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        String rnrId = tpUserID.getText();
-        String rnrRestaurantName = tfRestaurantName.getText();
-        String newName = tfFullName.getText();
-        String newPass = tfPassword.getText();
-        String newContact = tfContact.getText();
+        String vdrId = tpUserID.getText();
+        if (!vdrId.equals("")){
+           String vdrRestaurantName = tfRestaurantName.getText();
+            String newName = tfFullName.getText();
+            String newPass = tfPassword.getText();
+            String newContact = tfContact.getText();
         
-        Vendor editedVdr = new Vendor(rnrId, newName, newPass, newContact, rnrRestaurantName);
+            Vendor editedVdr = new Vendor(vdrId, newName, newPass, newContact, vdrRestaurantName);
         
-        editedVdr.editAccount();
+            editedVdr.editAccount();
         
-        model.setRowCount(0);
-        tableDisplayVendor();
+            model.setRowCount(0);
+            tableDisplayVendor(); 
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String vdrId = tpUserID.getText();
+        if (!vdrId.equals("")){
+            String delName = tfFullName.getText();
+            String delPass = tfPassword.getText();
+            String delContact = tfContact.getText();
+            String delRestaurantName = tfRestaurantName.getText();
         
-        String delName = tfFullName.getText();
-        String delPass = tfPassword.getText();
-        String delContact = tfContact.getText();
-        String delRestaurantName = tfRestaurantName.getText();
+            Vendor deletedVdr = new Vendor(vdrId, delName, delPass, delContact,delRestaurantName);
         
-        Vendor deletedVdr = new Vendor(vdrId, delName, delPass, delContact,delRestaurantName);
+            deletedVdr.deleteAccount();
         
-        deletedVdr.deleteAccount();
+            model.setRowCount(0);
+            tableDisplayVendor();
+            clearText();
+        }
+        else{
+           JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE); 
+        }
         
-        model.setRowCount(0);
-        tableDisplayVendor();
-        clearText();
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
     int row = -1;
     private void tableVendorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVendorMouseReleased
