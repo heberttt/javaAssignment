@@ -1,20 +1,8 @@
 1,idkk,1,idk,Admin
-
-3,satqq,qvd,av,Vendor,tesss
-4,cccc,Chinese,cccass,Vendor,ayam pak ali
-5,acasc,ascasc,acac,Vendor,waasss
-
-
-
-
-
-
-
-
 9,jovin gazani,rounding,11122233455,Customer,1379
 
+14,akil,passworcc,12,Vendor,kebeb,20
+15,nana,a23,12223,Vendor,nasi bakaraa,0
 
-12,runnerDummya,1112,1212,Runner
-13,dasdad,adad,dsda,Vendor,sada
 
-
+16,grabbb,googo,12212,Runner,213
