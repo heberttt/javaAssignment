@@ -1,5 +1,5 @@
 package my.Login;
-
+import my.Classes.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,12 +10,17 @@ package my.Login;
  * @author Shenlung
  */
 public class Runner_Menu extends javax.swing.JFrame {
-
+    Runner runnerAcc;
     /**
      * Creates new form menu
      */
     public Runner_Menu() {
         initComponents();
+    }
+    
+    public Runner_Menu(Runner runnerAcc) {
+        initComponents();
+        this.runnerAcc = runnerAcc; 
     }
 
     /**
