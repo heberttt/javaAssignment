@@ -123,7 +123,7 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
                 if(TextBoxUsername.getText().equals(dataArr[0]) && TextBoxPassword.getText().equals(dataArr[2])){
                     myReader.close();
                     lblResult.setText("Success!");
-                    if (dataArr[3].equals("Customer")){
+                    if (dataArr[4].equals("Customer")){
                         //FormDemo frame = new FormDemo();
                         //frame.setVisible(true);
                         this.dispose();
@@ -136,15 +136,16 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
                         this.dispose();
                         break;
                     }
-                    else if (dataArr[3].equals("Vendor")){
+                    else if (dataArr[4].equals("Vendor")){
                         //VendorFrame vendor = new VendorFrame();
                        // vendor.setVisible(true);
                         this.dispose();
                         break;
                     }
-                    else if (dataArr[3].equals("Runner")){
-                        //VendorFrame vendor = new VendorFrame();
-                        //vendor.setVisible(true);
+                    else if (dataArr[4].equals("Runner")){
+                        Runner runnerAccount = new Runner(dataArr[0], dataArr[1], dataArr[2], dataArr[3]);
+                        Runner_Menu runner = new Runner_Menu(runnerAccount);
+                        runner.setVisible(true);
                         this.dispose();
                         break;
                     }
