@@ -218,17 +218,27 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         String vdrId = tpUserID.getText();
         if (!vdrId.equals("")){
-           String vdrRestaurantName = tfRestaurantName.getText();
+            String vdrRestaurantName = tfRestaurantName.getText();
             String newName = tfFullName.getText();
             String newPass = tfPassword.getText();
             String newContact = tfContact.getText();
         
-            Vendor editedVdr = new Vendor(vdrId, newName, newPass, newContact, vdrRestaurantName);
+            Vendor editedVdr = new Vendor(vdrId);
+            
+            int i = editedVdr.getVdrDatafromID();
+            if(i==0){
+                editedVdr.setFullName(newName);
+                editedVdr.setPassword(newPass);
+                editedVdr.setContact(newContact);
+                editedVdr.setRestaurantName(vdrRestaurantName);
+                editedVdr.editAccount();
         
-            editedVdr.editAccount();
-        
-            model.setRowCount(0);
-            tableDisplayVendor(); 
+                model.setRowCount(0);
+                tableDisplayVendor(); 
+            }
+            
+            
+            
         }
         else{
             JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);

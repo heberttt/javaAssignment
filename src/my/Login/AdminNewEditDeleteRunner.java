@@ -209,8 +209,11 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
             String newPass = tfPassword.getText();
             String newContact = tfContact.getText();
         
-            Runner editedRnr = new Runner(rnrId, newName, newPass, newContact);
-        
+            Runner editedRnr = new Runner(rnrId);
+            editedRnr.getRunnerDataFromID();
+            editedRnr.setFullName(newName);
+            editedRnr.setPassword(newPass);
+            editedRnr.setContact(newContact);
             editedRnr.editAccount();
         
             model.setRowCount(0);
