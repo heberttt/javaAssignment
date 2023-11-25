@@ -216,4 +216,8 @@ public class Customer extends User{
         this.contactNum = newContact;
     }
     
+    public String getFullName(){
+        return this.fullName;
+    }
+    
 }
