@@ -1,0 +1,5 @@
+#######
+##ignore private xml
+#######
+
+nbproject/private/private.xml
