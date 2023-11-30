@@ -52,6 +52,7 @@ public class Vendor extends User {
         this.id = id;
     }
     
+    
     @Override
     public void createAccount(){
         String accName = this.fullName;
@@ -174,7 +175,7 @@ public class Vendor extends User {
     public void setFullName(String FullName){
         this.fullName = FullName;
     }
-    
+
     public void setPassword(String Password){
         this.password = Password;
     }
@@ -185,5 +186,9 @@ public class Vendor extends User {
     
     public void setRestaurantName(String RestaurantName){
         this.restaurantName = RestaurantName;
+    }
+    
+    public String getFullName(){
+        return this.fullName;
     }
 }

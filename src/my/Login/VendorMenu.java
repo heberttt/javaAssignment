@@ -177,6 +177,7 @@ public class VendorMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         VendorHomepage hp = new VendorHomepage(); // go to the VendorMenu
         hp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
 
