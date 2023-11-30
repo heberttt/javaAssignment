@@ -4,18 +4,23 @@ package my.Login;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import my.Classes.*;
 /**
  *
  * @author dvdmi
  */
 public class VendorMenu extends javax.swing.JFrame {
-
+    Vendor vendorAcc;
     /**
      * Creates new form Menu
      */
     public VendorMenu() {
         initComponents();
+    }
+    
+    public VendorMenu(Vendor vendorAccount) {
+        initComponents();
+        this.vendorAcc = vendorAccount;
     }
 
     /**
@@ -175,9 +180,9 @@ public class VendorMenu extends javax.swing.JFrame {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
-        VendorHomepage hp = new VendorHomepage(); // go to the VendorMenu
+        VendorHomepage hp = new VendorHomepage(vendorAcc); // go to the VendorMenu
         hp.setVisible(true);
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
 

@@ -148,7 +148,7 @@ public class VendorHomepage extends javax.swing.JFrame {
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
         // TODO add your handling code here:
-        VendorMenu menu = new VendorMenu(); // to go to the VendorMenu
+        VendorMenu menu = new VendorMenu(vendorAcc); // to go to the VendorMenu
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_MenuButtonActionPerformed
