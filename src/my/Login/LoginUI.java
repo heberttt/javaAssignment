@@ -40,6 +40,12 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        TextBoxUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextBoxUsernameActionPerformed(evt);
+            }
+        });
+
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +149,7 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
                         break;
                     }
                     else if (dataArr[4].equals("Runner")){
-                        Runner runnerAccount = new Runner(dataArr[0], dataArr[1], dataArr[2], dataArr[3]);
+                        Runner runnerAccount = new Runner(dataArr[0], dataArr[1], dataArr[2], dataArr[3], Integer.parseInt(dataArr[5]));
                         Runner_Menu runner = new Runner_Menu(runnerAccount);
                         runner.setVisible(true);
                         this.dispose();
@@ -159,6 +165,10 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
         
         
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void TextBoxUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextBoxUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextBoxUsernameActionPerformed
 
     /**
      * @param args the command line arguments

@@ -28,6 +28,13 @@ public class Runner extends User{
         this.password = password;
         this.contactNum = contactNum;
     }
+    public Runner(String id, String fullName, String password, String contactNum, int revenue){
+        this.id = id;
+        this.fullName = fullName;
+        this.password = password;
+        this.contactNum = contactNum;
+        this.revenue = revenue;
+    }
     
     public Runner(String fullName, String password, String contactNum){
         this.fullName = fullName;
@@ -165,5 +172,9 @@ public class Runner extends User{
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public int getRevenue() {
+        return this.revenue;
     }
 }
