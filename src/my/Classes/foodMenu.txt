@@ -1,3 +1,5 @@
 12,kebab,10,1
 13,kebab,10,2
-14,curry,12,1
+1,curry,12,14
+2,nasi,9,14
+3,ayam,33,14
