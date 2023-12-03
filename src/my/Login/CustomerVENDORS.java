@@ -1,22 +1,59 @@
 package my.Login;
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Mohamed Abdihakim
- */
 public class CustomerVENDORS extends javax.swing.JFrame {
 
     /**
      * Creates new form VENDORS
      */
+    
+     private List<Vendor> vendors;
+
     public CustomerVENDORS() {
         initComponents();
+        try {
+            vendors = FileHandler.readVendorsFromFile("C:\\Users\\Mohamed Abdihakim\\Downloads\\vendors.txt");
+            populateTable();
+        } catch (IOException e) {
+            e.printStackTrace();
     }
+
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = jTable1.getSelectedRow();
+                if (selectedRow != -1) {
+                    openMenuForVendor(selectedRow);
+                }
+            }
+        });
+    }
+
+    private void populateTable() {
+       DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (Vendor vendor : vendors) {
+            model.addRow(new Object[]{vendor.getUserId(), vendor.getName(), vendor.getContactNumber()});
+        }
+    }
+
+    private void openMenuForVendor(int selectedRow) {
+        
+        System.out.println("Selected Row: " + selectedRow);
+        Vendor selectedVendor = vendors.get(selectedRow);
+        System.out.println("Selected Vendor: " + selectedVendor.getName());
+        // Pass the selectedVendor information to the new JFrame for the menu
+        CustomerMENU cm = new CustomerMENU(selectedVendor);
+        cm.setVisible(true);
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

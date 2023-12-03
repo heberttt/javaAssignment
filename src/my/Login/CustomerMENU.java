@@ -1,21 +1,32 @@
 package my.Login;
+import javax.swing.*;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Mohamed Abdihakim
- */
 public class CustomerMENU extends javax.swing.JFrame {
+    private Vendor vendor;
+
+    public CustomerMENU(Vendor vendor) {
+        this.vendor = vendor;
+        initComponents();
+        setupUI();
+    }
 
     /**
      * Creates new form NewJFrame
      */
     public CustomerMENU() {
         initComponents();
+        setupUI();
     }
 
     /**
@@ -138,43 +149,161 @@ public class CustomerMENU extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setupUI() {
+        /*
+        jTable1.setModel(new DefaultTableModel(
+        new Object[][] {},
+        new String[] {"MENU ID", "NAME", "PRICE"}
+    ) {
+        Class[] columnTypes = new Class[] {
+            Integer.class, String.class, Double.class
+        };
+        public Class getColumnClass(int columnIndex) {
+            return columnTypes[columnIndex];
+        }
+    });
+
+jList1.addListSelectionListener(new ListSelectionListener() {
+    public void valueChanged(ListSelectionEvent event) {
+        if (!event.getValueIsAdjusting()) {
+            Vendor selectedVendor = Vendor.getSelectedValue();
+            if (selectedVendor != null) {
+                createMenuTableForVendor(selectedVendor);
+            }
+        }
+    }
+});
+*/
+    // Example vendors (replace with your actual vendor data)
+   
+    try {
+
+              List<Vendor> vendors = FileHandler.readVendorsFromFile("C:\\Users\\Mohamed Abdihakim\\Downloads\\vendors.txt");
+
+        // Create a model for the vendor list
+        DefaultListModel<String> vendorListModel = new DefaultListModel<>();
+        for (Vendor vendor : vendors) {
+            vendorListModel.addElement(vendor.getVendorName()); // Assuming Vendor has a getVendorName() method
+        }
+        
+
+        // Create the vendor list
+        JList<String> vendorList = new JList<>(vendorListModel);
+
+        // Add a ListSelectionListener to the vendor list
+        vendorList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+             public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            int selectedIndex = vendorList.getSelectedIndex();
+            if (selectedIndex != -1) {
+                Vendor selectedVendor = vendors.get(selectedIndex);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        createMenuTableForVendor(selectedVendor);
+                    
+                        
+
+                    }
+                         });
+                    }
+                }
+            }
+        });
+
+        // Add the vendor list to your layout (you might need to customize this based on your layout)
+        JScrollPane vendorScrollPane = new JScrollPane(vendorList);
+        // Add vendorScrollPane to your form as needed
+        // For example:
+        // layout.add(vendorScrollPane, BorderLayout.WEST);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    
+       
+
+    // Add other UI setup code as needed
+
+    
+    }
+    
+    
+    private void createMenuTableForVendor(Vendor vendor) {
+        
+    // Your logic to load menu data for the given vendor
+   List<String[]> menuItems = loadMenuForVendor(vendor);
+
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
+
+    for (String[] menuItem : menuItems) {
+        model.addRow(new Object[] {Integer.parseInt(menuItem[0]), menuItem[1], Double.parseDouble(menuItem[2])});
+    }
+   
+    }
+/*
+    
+    JTable menuTable = new JTable();
+
+    // Add the menu items to the table
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("MENU ID");
+    model.addColumn("NAME");
+    model.addColumn("PRICE");
+
+    for (String[] menuItem : menuItems) {
+        //String[] itemData = menuItem.split(",");
+        System.out.print(String.join("," ,menuItem) + "\n");
+        model.addRow(String.join(",", menuItem).split(","));
+    }
+
+    jTable1.setModel(model);
+
+    // Add the table to your layout (you might need to customize this based on your layout)
+    // For example, you can add it to a JScrollPane and then add the JScrollPane to your form
+    JScrollPane scrollPane = new JScrollPane(menuTable);
+    // Add scrollPane to your form as needed
+}
+    */
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerMENU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerMENU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerMENU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerMENU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+      
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerMENU().setVisible(true);
+                 CustomerMENU menuFrame = new CustomerMENU();
+            menuFrame.setVisible(true);
+            menuFrame.setupUI();
             }
         });
     }
+    
+    private List<String[]> loadMenuForVendor(Vendor vendor) {
+        
+        List<String[]> menuItems = new ArrayList<>();
+
+    
+        String filePath = "C:\\Users\\Mohamed Abdihakim\\Downloads\\menu_" + vendor.getUserId() + ".txt";
+
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                menuItems.add(data); 
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading menu for vendor: " + e.getMessage());
+            e.printStackTrace();// Handle the exception appropriately in a real application
+        }
+
+        return menuItems;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Checkbox checkbox1;

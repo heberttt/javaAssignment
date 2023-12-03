@@ -1,15 +1,16 @@
 package my.Login;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import static my.Login.CustomerREVIEW.fetchReviewsFromFeedbackFile;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
-/**
- *
- * @author Mohamed Abdihakim
- */
 public class CustomerFEEDBACK extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form FEEDBACK
@@ -33,8 +34,8 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        feedbackTextField = new javax.swing.JTextField();
+        submitButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -55,13 +56,18 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        feedbackTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                feedbackTextFieldActionPerformed(evt);
             }
         });
 
-        jButton1.setText("SUBMIT");
+        submitButton.setText("SUBMIT");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("REVIEW:");
 
@@ -94,7 +100,7 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -111,7 +117,7 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
                                 .addComponent(jRadioButton5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButton6))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(feedbackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -119,7 +125,7 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(feedbackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -128,31 +134,82 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
                             .addComponent(jRadioButton5)
                             .addComponent(jRadioButton6)
                             .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton4)))
+                            .addComponent(jRadioButton4)
+                            .addComponent(jRadioButton3)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void feedbackTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feedbackTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_feedbackTextFieldActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+                                              
+       String feedback = feedbackTextField.getText();
+        int rating = getSelectedRating();
+
+        if (feedback.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please provide feedback.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (rating == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a rating.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            saveFeedbackToFile(feedback, rating);
+            showCustomerREVIEW(); 
+        }
+    }                                            
+
+    private void saveFeedbackToFile(String feedback, int rating) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Mohamed Abdihakim\\Downloads\\feedback.txt", true))) {
+            writer.write("Rating: " + rating + "\n");
+            writer.write("Feedback: " + feedback + "\n\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getSelectedRating() {
+        if (jRadioButton2.isSelected()) return 1;
+        else if (jRadioButton3.isSelected()) return 2;
+        else if (jRadioButton4.isSelected()) return 3;
+        else if (jRadioButton5.isSelected()) return 4;
+        else if (jRadioButton6.isSelected()) return 5;
+        else return -1; // No rating selected
+    }
+/*
+    private void showCustomerREVIEW() {
+   String feedback = "Thank you for your feedback!\n\n"; // You can load the actual feedback from the file
+    showCustomerREVIEW(feedback);
+        JOptionPane.showMessageDialog(this, "Thank you for your feedback!", "Review Page", JOptionPane.INFORMATION_MESSAGE);
+    
+
+    // ... (unchanged code)
+
+    }//GEN-LAST:event_submitButtonActionPerformed
+    */
+     private void showCustomerREVIEW() {
+        CustomerREVIEW reviewPage = new CustomerREVIEW();
+        List<String> reviews = fetchReviewsFromFeedbackFile(); 
+        reviewPage.setReviews(reviews); 
+        reviewPage.setVisible(true);
+        this.dispose();
+    
+}
     /**
      * @param args the command line arguments
      */
@@ -187,10 +244,9 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
                 new CustomerFEEDBACK().setVisible(true);
             }
         });
-    }
-
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField feedbackTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -203,7 +259,7 @@ public class CustomerFEEDBACK extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }
