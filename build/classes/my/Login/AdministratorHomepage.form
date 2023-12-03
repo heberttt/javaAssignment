@@ -33,7 +33,12 @@
                       <Component id="btnTopUp" min="-2" pref="121" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="btnSearchUser" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,7 +52,9 @@
                   <Component id="btnTopUp" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="btnUserRegistration" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="58" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnSearchUser" min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace pref="56" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,6 +84,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistrationActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSearchUser">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Search User Information"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchUserActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
