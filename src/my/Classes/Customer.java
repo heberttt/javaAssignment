@@ -216,4 +216,55 @@ public class Customer extends User{
         this.contactNum = newContact;
     }
     
+    public String getFullName(){
+        return this.fullName;
+    }
+    
+    public void displayNotification(DefaultTableModel table, String receiverID){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getUserNotification(receiverID);
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3), eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
+    
+    private ArrayList<ArrayList<String>> getUserNotification(String id){  // gets all user for a specific role and put it inside a nested arraylist<String>
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(CustomerNotificationsFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            if(dataArr[2].equals(id)){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[3]);
+                dataList.add(dataArr[4]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[5]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
 }
