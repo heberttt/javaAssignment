@@ -10,16 +10,28 @@
             <file>file:/C:/javaAssignment/src/my/Classes/Orders.txt</file>
             <file>file:/C:/javaAssignment/src/my/Login/Runner_ViewTask.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Customer.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerDETAILS.java</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/currentDate.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Runner.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/foodMenu.txt</file>
+            <file>file:/C:/javaAssignment/src/my/Login/FileHandler.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/User.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerFEEDBACK.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/task.txt</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerHISTORYDETAILS.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteVendor.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerMENU.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerVENDORS.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/AdminTopUp.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteRunner.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerHOMEPAGE.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/classdiagram.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerTRANSACTION.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/TopUpTransaction.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/FileLocationInterface.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/LoginUI.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerREVIEW.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerCART.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Notification.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/Runner_History.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Administrator.java</file>
@@ -29,11 +41,12 @@
             <file>file:/C:/javaAssignment/src/my/Login/VendorHomepage.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/Runner_Menu.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteCustomer.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_TaskReq.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/Runner_Review.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Vendor.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/VendorNotifications.txt</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Users.txt</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerORDERHISTORY.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerSTATUS.java</file>
         </group>
     </open-files>
 </project-private>
