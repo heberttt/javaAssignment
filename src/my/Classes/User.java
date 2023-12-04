@@ -28,6 +28,7 @@ abstract class User implements FileLocationInterface {
     
     abstract void createAccount();
     abstract void editAccount();
+    abstract String getRole();
     
     protected int getUserTextLine(String UserID){
        try {
@@ -111,6 +112,32 @@ abstract class User implements FileLocationInterface {
        } catch (IOException e) {
           e.printStackTrace();
        }
+    }
+    
+    
+    public String getUserRole(String ID){
+        try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(ID)){
+                    reader.close();
+                    return dataArr[4];
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        String fail = "-1";
+        return fail;
     }
     
     

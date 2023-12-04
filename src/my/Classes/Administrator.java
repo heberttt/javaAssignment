@@ -34,6 +34,9 @@ public class Administrator extends User implements FileLocationInterface {
         this.password = password;
         this.contactNum = contactNum;
     }
+    public Administrator(String id){
+        this.id = id;
+    }
     
     public String getId(){
         return this.id;
@@ -242,6 +245,115 @@ public class Administrator extends User implements FileLocationInterface {
         } 
         
         return finalInfo;
+    }
+    
+    public String getRole(){
+        return "Administrator";
+    }
+    
+    
+    public Customer getCustomerData(String userID){
+        Customer custObj = new Customer("-1");
+        try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(userID)){
+                    reader.close();
+                    custObj = new Customer(dataArr[0],dataArr[1],dataArr[2],dataArr[3],Integer.parseInt(dataArr[5]));
+                    return custObj;
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        return custObj;
+    }
+    
+    public Vendor getVendorData(String userID){
+        Vendor vendObj = new Vendor("-1");
+        try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(userID)){
+                    reader.close();
+                    vendObj = new Vendor(dataArr[0],dataArr[1],dataArr[2],dataArr[3],(dataArr[5]), dataArr[6]);
+                    return vendObj;
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        return vendObj;
+    }
+    
+    public Runner getRunnerData(String userID){
+        Runner runnerObj = new Runner("-1");
+        try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(userID)){
+                    reader.close();
+                    runnerObj = new Runner(dataArr[0],dataArr[1],dataArr[2],dataArr[3],Integer.parseInt(dataArr[5]));
+                    return runnerObj;
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        return runnerObj;
+    }
+    
+    public Administrator getAdminData(String userID){
+        Administrator admObj = new Administrator("-1");
+        try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(userID)){
+                    reader.close();
+                    admObj = new Administrator(dataArr[0],dataArr[1],dataArr[2],dataArr[3]);
+                    return admObj;
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        return admObj;
     }
     
 }

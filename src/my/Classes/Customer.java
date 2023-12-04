@@ -216,4 +216,20 @@ public class Customer extends User{
         this.contactNum = newContact;
     }
     
+    public String getRole(){
+        return "Customer";
+    }
+    
+    public String getFullName(){
+        return this.fullName;
+    }
+    
+    public String getPassword(){
+        return this.password;
+    }
+    
+    public String getContact(){
+        return this.contactNum;
+    }
+    
 }

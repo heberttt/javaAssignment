@@ -112,7 +112,8 @@ public class AdministratorHomepage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTopUpActionPerformed
 
     private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
-        // TODO add your handling code here:
+        AdminSearchUser admin = new AdminSearchUser(adminAccount);
+        admin.setVisible(true);
     }//GEN-LAST:event_btnSearchUserActionPerformed
 
     /**

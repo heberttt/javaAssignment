@@ -191,4 +191,8 @@ public class Vendor extends User {
     public String getFullName(){
         return this.fullName;
     }
+    
+    public String getRole(){
+        return "Vendor";
+    }
 }
