@@ -11,8 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static my.Classes.FileLocationInterface.CustomerNotificationsFilePath;
 import static my.Classes.FileLocationInterface.userFilePath;
 
 /**
@@ -186,4 +189,7 @@ public class Vendor extends User {
     public void setRestaurantName(String RestaurantName){
         this.restaurantName = RestaurantName;
     }
+    
+    
+    
 }

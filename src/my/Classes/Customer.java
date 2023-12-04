@@ -266,5 +266,50 @@ public class Customer extends User{
         
         return finalInfo;
     }
+    public void displayVendor(DefaultTableModel table, String Vendor){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getVendor(Vendor);
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2)};
+            table.addRow(finalData);
+      }   	
+    }
+    
+    private ArrayList<ArrayList<String>> getVendor(String Vendor){  // gets all user for a specific role and put it inside a nested arraylist<String>
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(userFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+             
+            String[] dataArr = data.split(",");
+            if(dataArr[4].equals(Vendor)){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[3]);
+                
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
     
 }

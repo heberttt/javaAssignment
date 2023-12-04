@@ -10,6 +10,12 @@ import my.Classes.*;
 
 public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationInterface{
     Customer custAcc;
+    private DefaultTableModel Model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
     /**
      * Creates new form VENDORS
      */
@@ -18,12 +24,19 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
     public CustomerVENDORS() {
         initComponents();
     }
+    private final String[] column = {"USERID", "NAME", "CONTACT NUMBER"};
     
     public CustomerVENDORS(Customer custAcc) {
         initComponents();
         this.custAcc = custAcc;
+        displayVendor();
     }
     
+    public void displayVendor(){
+        Model.setColumnIdentifiers(column);
+        custAcc.displayVendor(Model, "Vendor");
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,17 +53,7 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "USER ID", "NAME", "CONTACT NUMBER"
-            }
-        ));
+        jTable1.setModel(Model);
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("SELECT");
