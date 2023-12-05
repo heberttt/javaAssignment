@@ -22,6 +22,10 @@ import static my.Classes.FileLocationInterface.userFilePath;
 public class Vendor extends User {
     
     String restaurantName;
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
     int revenue;
     
     public Vendor(String id, String fullName, String password, String contactNum, String restaurantName){
@@ -194,5 +198,9 @@ public class Vendor extends User {
     
     public String getRole(){
         return "Vendor";
+    }
+    
+    public String getRevenue(){
+        return String.valueOf(revenue);
     }
 }

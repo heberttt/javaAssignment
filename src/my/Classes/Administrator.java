@@ -356,4 +356,155 @@ public class Administrator extends User implements FileLocationInterface {
         return admObj;
     }
     
+    
+    public ArrayList<ArrayList<String>> getDailyTopUpReceipt(Customer custAcc){
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(transactionReceiptFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            currentDate today = new currentDate();
+            if(dataArr[4].equals(custAcc.getId()) && dataArr[1].equals(today.getDate()+"/"+today.getMonth()+"/"+today.getYear())){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[2]);
+                dataList.add(dataArr[3]);
+                dataList.add(dataArr[5]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
+    public void displayDailyTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getDailyTopUpReceipt(custAcc);
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3), eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
+    
+    public ArrayList<ArrayList<String>> getMonthlyTopUpReceipt(Customer custAcc){
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(transactionReceiptFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            currentDate today = new currentDate();
+            
+            String[] transactionDateArr = dataArr[1].split("/");
+            String transactionMonthAndYear = transactionDateArr[1] + "/" + transactionDateArr[2];
+            if(dataArr[4].equals(custAcc.getId()) && transactionMonthAndYear.equals(today.getMonth()+"/"+today.getYear())){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[2]);
+                dataList.add(dataArr[3]);
+                dataList.add(dataArr[5]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
+    public void displayMonthlyTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getMonthlyTopUpReceipt(custAcc);
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3), eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
+    
+    
+    public ArrayList<ArrayList<String>> getYearlyTopUpReceipt(Customer custAcc){
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
+        try {
+        File myObj = new File(transactionReceiptFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+            currentDate today = new currentDate();
+            
+            String[] transactionDateArr = dataArr[1].split("/");
+            String transactionMonthAndYear = transactionDateArr[2];
+            if(dataArr[4].equals(custAcc.getId()) && transactionMonthAndYear.equals(today.getYear())){
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[1]);
+                dataList.add(dataArr[2]);
+                dataList.add(dataArr[3]);
+                dataList.add(dataArr[5]);
+            
+                finalInfo.add(dataList);
+            }
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
+    public void displayYearlyTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
+        fullData = getYearlyTopUpReceipt(custAcc);
+        
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = new ArrayList<String>();
+            eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3), eachData.get(4)};
+            table.addRow(finalData);
+      }   	
+    }
 }

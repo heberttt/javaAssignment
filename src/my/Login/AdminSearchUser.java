@@ -100,9 +100,15 @@ public class AdminSearchUser extends javax.swing.JFrame {
             }
             else if (searchedIDRole.equals("Vendor")){
                 Vendor vdrObj = adminAcc.getVendorData(searchedID);
+                AdminVendorInfo vendor = new AdminVendorInfo(vdrObj);
+                vendor.setVisible(true);
+                this.dispose();
             }
             else if (searchedIDRole.equals("Runner")){
                 Runner rnrObj = adminAcc.getRunnerData(searchedID);
+                AdminRunnerInfo runner = new AdminRunnerInfo(rnrObj);
+                runner.setVisible(true);
+                this.dispose();
             }
             else if (searchedIDRole.equals("Administrator")){
                 Administrator admObj = adminAcc.getAdminData(searchedID);
