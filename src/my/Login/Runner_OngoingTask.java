@@ -4,17 +4,37 @@
  */
 package my.Login;
 
+import javax.swing.JOptionPane;
+import my.Classes.Runner;
+
 /**
  *
  * @author Shenlung
  */
 public class Runner_OngoingTask extends javax.swing.JFrame {
 
+    Runner runnerAcc;
+    Runner_ViewTask rv;
     /**
-     * Creates new form Runner_OngoingTask
+     * Creates new form Runner_ViewTask
      */
     public Runner_OngoingTask() {
         initComponents();
+    }
+    public Runner_OngoingTask(Runner runnerAcc,Runner_ViewTask rv)
+    {
+        initComponents();
+        this.runnerAcc = runnerAcc;
+        this.rv = rv;
+        showData();
+    }
+    
+    public void showData()
+    {
+        lblCustID.setText(rv.arrCust.get(rv.posClick).getId());
+        lblCustName.setText(rv.arrCust.get(rv.posClick).getFullName());
+        lblCustLocation.setText(rv.arrOrders.get(rv.posClick).getLocation());
+        lblCustContact.setText(rv.arrCust.get(rv.posClick).getContactNum());
     }
 
     /**
@@ -26,21 +46,151 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        btnFinishTask = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblCustName = new javax.swing.JLabel();
+        lblCustID = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblCustLocation = new javax.swing.JLabel();
+        lblCustContact = new javax.swing.JLabel();
+        btnBTMOngoing = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setText("CustomerName =");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "MenuID", "FoodName", "Quantity"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jLabel2.setText("Status : Ongoing...");
+
+        btnFinishTask.setText("Finish Task");
+        btnFinishTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinishTaskActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("CustomerID =");
+
+        lblCustName.setText("jLabel5");
+
+        lblCustID.setText("CustomerID");
+
+        jLabel7.setText("ContactNumber =");
+
+        jLabel8.setText("CustomerLocation =");
+
+        lblCustLocation.setText("jLabel5");
+
+        lblCustContact.setText("jLabel5");
+
+        btnBTMOngoing.setText("Back to Menu");
+        btnBTMOngoing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBTMOngoingActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3))
+                                .addGap(43, 43, 43)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCustName)
+                                    .addComponent(lblCustID)
+                                    .addComponent(lblCustLocation))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCustContact)
+                                    .addComponent(jLabel4))))
+                        .addContainerGap(129, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnFinishTask, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBTMOngoing)
+                        .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblCustID)
+                            .addComponent(jLabel7)
+                            .addComponent(lblCustContact))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(lblCustName)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(lblCustLocation))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFinishTask, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBTMOngoing))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBTMOngoingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBTMOngoingActionPerformed
+        Runner_Menu m = new Runner_Menu (runnerAcc);
+        m.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnBTMOngoingActionPerformed
+
+    private void btnFinishTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishTaskActionPerformed
+        JOptionPane.showMessageDialog(this,"Your task is successfully finished!");
+    }//GEN-LAST:event_btnFinishTaskActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,6 +219,8 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -79,5 +231,19 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBTMOngoing;
+    private javax.swing.JButton btnFinishTask;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCustContact;
+    private javax.swing.JLabel lblCustID;
+    private javax.swing.JLabel lblCustLocation;
+    private javax.swing.JLabel lblCustName;
     // End of variables declaration//GEN-END:variables
 }

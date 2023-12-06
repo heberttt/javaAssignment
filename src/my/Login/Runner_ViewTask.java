@@ -1,20 +1,143 @@
+package my.Login;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
+import my.Classes.Administrator;
+import my.Classes.Customer;
+import static my.Classes.FileLocationInterface.ordersFilePath;
+import static my.Classes.FileLocationInterface.taskFilePath;
+import static my.Classes.FileLocationInterface.userFilePath;
+import my.Classes.Runner;
+import my.Classes.Vendor;
+import my.Classes.runOrder;
+import my.Classes.task;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package my.Login;
 
 /**
  *
  * @author Shenlung
  */
-public class Runner_ViewTask extends javax.swing.JFrame {
 
+public class Runner_ViewTask extends javax.swing.JFrame {
+    
+    ArrayList<task> arrTask = new ArrayList<>();
+    ArrayList<Customer> arrCust = new ArrayList<>();
+    ArrayList<runOrder> arrOrders = new ArrayList<>();
+    DefaultTableModel dtm = new DefaultTableModel();
+    Runner runnerAcc;
+    ArrayList<Integer> idxTask = new ArrayList<>();
+    ArrayList<Integer> idxCust = new ArrayList<>();
+    ArrayList<Integer> idxOrder = new ArrayList<>();
+    
+    int posClick;
+    
     /**
-     * Creates new form Runner_ViewTask
+     * Creates new form Task
      */
     public Runner_ViewTask() {
         initComponents();
+    }
+    public void loadDataTask()
+    {
+        try{
+            File task = new File(taskFilePath);
+            Scanner myReader = new Scanner(task);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],
+                        dataArr[2],dataArr[3]));
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void loadDataOrder()
+    {
+        try{
+            File Order = new File(ordersFilePath);
+            Scanner myReader = new Scanner(Order);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
+                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[7]));
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    public void loadDataCustomer()
+    {
+        try{
+            File cust = new File(userFilePath);
+            Scanner myReader = new Scanner(cust);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+            
+                    if (dataArr[4].equals("Customer")){
+                        arrCust.add(new Customer (dataArr[0],dataArr[1],
+                        dataArr[2],dataArr[3],Integer.parseInt(dataArr[5])));
+                    }
+            }
+            myReader.close();
+    }       catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    public void showData()
+    {
+        ViewTask_table.setModel(dtm);
+        dtm.addColumn("OrderID");
+        dtm.addColumn("Time");
+        dtm.addColumn("Customer Name");
+        dtm.addColumn("TaskFinished");
+        String CustName = "";
+        idxCust.clear();
+        idxOrder.clear();
+        idxTask.clear();
+        for (int i = 0; i < arrTask.size(); i++) {
+                System.out.println(arrTask.get(i).getOrderID());
+                
+                for (int j = 0; j < arrOrders.size(); j++) {
+                    if(arrTask.get(i).getOrderID() == arrOrders.get(i).getOrderID()){
+                        String CustID = arrOrders.get(j).getCustomerID();
+                        
+                        for (int k = 0; k < arrCust.size(); k++) {
+                            if(arrCust.get(k).getId().equals(CustID)){
+                            CustName = arrCust.get(i).getFullName();
+                            idxTask.add(i);
+                            idxOrder.add(j);
+                            idxCust.add(k);
+                            }
+                        }
+                    }
+                }
+                dtm.addRow(new Object[]{arrTask.get(i).getOrderID(), arrTask.get(i).getTime(),
+                                    CustName,arrTask.get(i).getTaskFinished()});
+            }
+    }
+    public Runner_ViewTask(Runner runnerAcc) {
+        initComponents();
+        this.runnerAcc = runnerAcc;
+        loadDataTask();
+        loadDataCustomer();
+        loadDataOrder();
+        showData();
     }
 
     /**
@@ -26,120 +149,108 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("CustomerName =");
+        btnAcceptTask = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ViewTask_table = new javax.swing.JTable();
+        btnBTMView = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "MenuID", "FoodName", "Quantity"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
 
-        jLabel2.setText("Status : Ongoing...");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("Finish Task");
+        btnAcceptTask.setText("Accept");
+        btnAcceptTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcceptTaskActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("CustomerID =");
+        ViewTask_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "OrderDate", "Time", "OrderID", "CustomerName", "Location"
+            }
+        ));
+        ViewTask_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ViewTask_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(ViewTask_table);
 
-        jLabel5.setText("jLabel5");
-
-        jLabel6.setText("CustomerID");
-
-        jLabel7.setText("ContactNumber =");
-
-        jLabel8.setText("CustomerLocation =");
-
-        jLabel9.setText("jLabel5");
-
-        jLabel10.setText("jLabel5");
+        btnBTMView.setText("Back to Menu");
+        btnBTMView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBTMViewActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel9))
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel4))))
-                .addContainerGap(129, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(btnBTMView)
+                        .addGap(205, 205, 205)
+                        .addComponent(btnAcceptTask, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel10))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAcceptTask, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBTMView)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBTMViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBTMViewActionPerformed
+        Runner_Menu m = new Runner_Menu (runnerAcc);
+        m.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnBTMViewActionPerformed
+
+    private void btnAcceptTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptTaskActionPerformed
+        Runner_OngoingTask ot = new Runner_OngoingTask(runnerAcc,this);
+        ot.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnAcceptTaskActionPerformed
+
+    private void ViewTask_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ViewTask_tableMouseClicked
+        posClick = ViewTask_table.getSelectedRow();
+    }//GEN-LAST:event_ViewTask_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -168,6 +279,20 @@ public class Runner_ViewTask extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -178,18 +303,11 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTable ViewTask_table;
+    private javax.swing.JButton btnAcceptTask;
+    private javax.swing.JButton btnBTMView;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
