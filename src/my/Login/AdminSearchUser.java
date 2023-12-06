@@ -110,8 +110,11 @@ public class AdminSearchUser extends javax.swing.JFrame {
                 runner.setVisible(true);
                 this.dispose();
             }
-            else if (searchedIDRole.equals("Administrator")){
+            else if (searchedIDRole.equals("Admin")){
                 Administrator admObj = adminAcc.getAdminData(searchedID);
+                AdminAdminInfo admin = new AdminAdminInfo(admObj);
+                admin.setVisible(true);
+                this.dispose();
             }
         }
         else{

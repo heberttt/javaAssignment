@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static my.Classes.FileLocationInterface.userFilePath;
 
@@ -157,6 +158,8 @@ public class Administrator extends User implements FileLocationInterface {
             writer.write(accountData + "\n");
 
             writer.close();
+            
+            JOptionPane.showMessageDialog(null, "The new ID assigned to this user is: " + accId);
 
         } catch (IOException e) {
             e.printStackTrace();

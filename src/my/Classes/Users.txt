@@ -1,5 +1,5 @@
 1,idkk,1,idk,Admin
-9,jovin gazali,rounding,11122233455,Customer,2767
+9,jovin gazali,rounding,11122233455,Customer,2768
 
 14,akill,passworcc,12,Vendor,kebab,20
 15,nanas,a23,12223,Vendor,nasi bakaraa,0
@@ -10,3 +10,7 @@
 
 
 18,justin,seratus,010266,Customer,92
+19,test,6,1235,Admin
+20,mickey,mouse,123,Customer,0
+21,karen,123,1,Admin
+22,as,as,as,Vendor,as,0

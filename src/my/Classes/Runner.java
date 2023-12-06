@@ -63,6 +63,8 @@ public class Runner extends User{
             writer.write(accountData + "\n");
 
             writer.close();
+            
+            JOptionPane.showMessageDialog(null, "The new ID assigned to this user is: " + accId);
 
         } catch (IOException e) {
             e.printStackTrace();
