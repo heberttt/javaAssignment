@@ -14,22 +14,61 @@ import my.Classes.*;
 
 
 public class CustomerMENU extends javax.swing.JFrame implements FileLocationInterface {
-    private Vendor vendor;
-
+    Customer custAcc;
+    String vendorId;
+    
+    public CustomerMENU(Customer custAcc, String vendorId) {
+        this.custAcc = custAcc;
+        this.vendorId = vendorId;
+        initComponents();
+        displaytableMenu();
+    }
+    
+    private DefaultTableModel Model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
+    
+    private final String[] column = {"MenuID", "FoodName", "price", "vendorID" };
+    
+    
+       public CustomerMENU() {
+        initComponents();
+  }
+       
     public CustomerMENU(Vendor vendor) {
-        this.vendor = vendor;
-        initComponents();
-        setupUI();
+      initComponents();
+      
+      displaytableMenu();
+ }
+ 
+    public void displaytableMenu(){
+        Model.setColumnIdentifiers(column);
+        custAcc.displaytableMenu(Model, "1");
+        tableMenu.setModel(Model);
     }
 
-    /**
-     * Creates new form NewJFrame
-     */
-    public CustomerMENU() {
+
+    
+    
+    public void CustomerMENU() {
         initComponents();
-        setupUI();
+        tableMenu.setModel(Model);
+        // Display the menu when the frame is created
+        displaytableMenu();
     }
 
+    public CustomerMENU(Customer custAcc) {
+        initComponents();
+        this.custAcc = custAcc;
+        // Set the model for the tableMenu
+        tableMenu.setModel(Model);
+        // Display the menu when the frame is created
+        displaytableMenu();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,7 +83,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         checkbox1 = new java.awt.Checkbox();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableMenu = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -64,29 +103,13 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
 
         jLabel1.setText("MENU");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "MENU ID", "NAME", "PRICE"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        tableMenu.setModel(Model);
+        tableMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMenuMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tableMenu);
 
         jButton1.setText("ADD TO CART");
 
@@ -150,124 +173,16 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setupUI() {
-        /*
-        jTable1.setModel(new DefaultTableModel(
-        new Object[][] {},
-        new String[] {"MENU ID", "NAME", "PRICE"}
-    ) {
-        Class[] columnTypes = new Class[] {
-            Integer.class, String.class, Double.class
-        };
-        public Class getColumnClass(int columnIndex) {
-            return columnTypes[columnIndex];
-        }
-    });
-
-jList1.addListSelectionListener(new ListSelectionListener() {
-    public void valueChanged(ListSelectionEvent event) {
-        if (!event.getValueIsAdjusting()) {
-            Vendor selectedVendor = Vendor.getSelectedValue();
-            if (selectedVendor != null) {
-                createMenuTableForVendor(selectedVendor);
-            }
-        }
-    }
-});
-*/
-    // Example vendors (replace with your actual vendor data)
    
-    try {
-
-              List<Vendor> vendors = FileHandler.readVendorsFromFile("C:\\Users\\Mohamed Abdihakim\\Downloads\\vendors.txt");
-
-        // Create a model for the vendor list
-        DefaultListModel<String> vendorListModel = new DefaultListModel<>();
-        for (Vendor vendor : vendors) {
-            vendorListModel.addElement(vendor.getVendorName()); // Assuming Vendor has a getVendorName() method
-        }
-        
-
-        // Create the vendor list
-        JList<String> vendorList = new JList<>(vendorListModel);
-
-        // Add a ListSelectionListener to the vendor list
-        vendorList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-             public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            int selectedIndex = vendorList.getSelectedIndex();
-            if (selectedIndex != -1) {
-                Vendor selectedVendor = vendors.get(selectedIndex);
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        createMenuTableForVendor(selectedVendor);
-                    
-                        
-
-                    }
-                         });
-                    }
-                }
-            }
-        });
-
-        // Add the vendor list to your layout (you might need to customize this based on your layout)
-        JScrollPane vendorScrollPane = new JScrollPane(vendorList);
-        // Add vendorScrollPane to your form as needed
-        // For example:
-        // layout.add(vendorScrollPane, BorderLayout.WEST);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
     
-       
-
-    // Add other UI setup code as needed
-
-    
-    }
-    
-    
-    private void createMenuTableForVendor(Vendor vendor) {
-        
-    // Your logic to load menu data for the given vendor
-   List<String[]> menuItems = loadMenuForVendor(vendor);
-
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0);
-
-    for (String[] menuItem : menuItems) {
-        model.addRow(new Object[] {Integer.parseInt(menuItem[0]), menuItem[1], Double.parseDouble(menuItem[2])});
-    }
    
-    }
-/*
+    private void tableMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMenuMouseClicked
+     
+    }//GEN-LAST:event_tableMenuMouseClicked
+
     
-    JTable menuTable = new JTable();
-
-    // Add the menu items to the table
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("MENU ID");
-    model.addColumn("NAME");
-    model.addColumn("PRICE");
-
-    for (String[] menuItem : menuItems) {
-        //String[] itemData = menuItem.split(",");
-        System.out.print(String.join("," ,menuItem) + "\n");
-        model.addRow(String.join(",", menuItem).split(","));
-    }
-
-    jTable1.setModel(model);
-
-    // Add the table to your layout (you might need to customize this based on your layout)
-    // For example, you can add it to a JScrollPane and then add the JScrollPane to your form
-    JScrollPane scrollPane = new JScrollPane(menuTable);
-    // Add scrollPane to your form as needed
-}
-    */
+   
+    
     /**
      * @param args the command line arguments
      */
@@ -277,33 +192,12 @@ jList1.addListSelectionListener(new ListSelectionListener() {
             public void run() {
                  CustomerMENU menuFrame = new CustomerMENU();
             menuFrame.setVisible(true);
-            menuFrame.setupUI();
+            
             }
         });
     }
     
-    private List<String[]> loadMenuForVendor(Vendor vendor) {
-        
-        List<String[]> menuItems = new ArrayList<>();
-
     
-        String filePath = "C:\\Users\\Mohamed Abdihakim\\Downloads\\menu_" + vendor.getUserId() + ".txt";
-
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-
-                menuItems.add(data); 
-            }
-        } catch (IOException e) {
-            System.err.println("Error loading menu for vendor: " + e.getMessage());
-            e.printStackTrace();// Handle the exception appropriately in a real application
-        }
-
-        return menuItems;
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -316,7 +210,7 @@ jList1.addListSelectionListener(new ListSelectionListener() {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable tableMenu;
     // End of variables declaration//GEN-END:variables
 }
