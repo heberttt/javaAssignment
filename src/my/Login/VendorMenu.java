@@ -1,5 +1,8 @@
 package my.Login;
-
+import java.awt.event.KeyEvent;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -9,18 +12,21 @@ import my.Classes.*;
  *
  * @author dvdmi
  */
-public class VendorMenu extends javax.swing.JFrame {
+public class VendorMenu extends javax.swing.JFrame implements FileLocationInterface{
     Vendor vendorAcc;
+    int menuIdCounter = 0;
     /**
      * Creates new form Menu
      */
     public VendorMenu() {
         initComponents();
+        
     }
     
     public VendorMenu(Vendor vendorAccount) {
         initComponents();
         this.vendorAcc = vendorAccount;
+        loadMenuData();
     }
 
     /**
@@ -56,6 +62,11 @@ public class VendorMenu extends javax.swing.JFrame {
         });
 
         DeleteButton.setText("Delete");
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteButtonActionPerformed(evt);
+            }
+        });
 
         ButtonEdit.setText("Edit");
         ButtonEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +99,17 @@ public class VendorMenu extends javax.swing.JFrame {
         MenuID.setText("MenuID");
 
         Price.setText("Price");
+
+        PriceBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PriceBoxActionPerformed(evt);
+            }
+        });
+        PriceBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PriceBoxKeyTyped(evt);
+            }
+        });
 
         MenuIDTextPane.setEditable(false);
         jScrollPane3.setViewportView(MenuIDTextPane);
@@ -168,12 +190,91 @@ public class VendorMenu extends javax.swing.JFrame {
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         // TODO add your handling code here:
+        editMenuItem();
     }//GEN-LAST:event_ButtonEditActionPerformed
 
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CreateButtonActionPerformed
+        // Generate MenuID automatically
+        // Get FoodName and Price from the text fields
+    String foodName = FoodName.getText();
+    int price = Integer.parseInt(PriceBox.getText());
 
+    // Generate MenuID automatically
+    String menuId;
+    do {
+        menuIdCounter++;
+        menuId = String.valueOf(menuIdCounter);
+    } while (menuIdExists(menuId)); // Check if the generated menuId already exists
+
+    MenuIDTextPane.setText(menuId);
+
+    // Append the new entry to the foodMenu.txt file
+    appendToMenuFile(menuId, foodName, price, String.valueOf(vendorAcc.getVendorID()));
+
+    // Refresh the menu table
+    loadMenuData();
+} 
+
+// Method to check if a given menuId already exists in the file
+private boolean menuIdExists(String menuId) {
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length > 0 && parts[0].equals(menuId)) {
+                return true; // MenuID already exists
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return false; // MenuID doesn't exist
+    }//GEN-LAST:event_CreateButtonActionPerformed
+// Method to append a new entry to the foodMenu.txt file
+    private void appendToMenuFile(String menuId, String foodName, int price, String vendorId) {
+        try {
+        FileWriter fileWriter = new FileWriter(foodMenuFilePath, true);
+        BufferedWriter writer = new BufferedWriter(fileWriter);
+        writer.write(menuId + "," + foodName + "," + price + "," + vendorId);
+        writer.newLine();
+        writer.close();
+        System.out.println("Entry added to foodMenu.txt");
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.err.println("Error appending to foodMenu.txt");
+    }
+}
+
+    // Method to load existing menu data into the table
+    private void loadMenuData() {
+        try {
+        if (vendorAcc != null) {  // Check if vendorAcc is not null
+            List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+            List<String[]> filteredData = new ArrayList<>();
+
+            for (String line : lines) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4 && parts[3].equals(String.valueOf(vendorAcc.getVendorID()))) {
+                    // Check if the vendor ID matches the current vendor's ID
+                    filteredData.add(new String[]{parts[0], parts[1], parts[2]});
+                }
+            }
+
+            Object[][] data = new Object[filteredData.size()][3];
+            for (int i = 0; i < filteredData.size(); i++) {
+                data[i] = filteredData.get(i);
+            }
+
+            MenuTable.setModel(new javax.swing.table.DefaultTableModel(
+                    data,
+                    new String[]{"MenuID", "Food Name", "Price"}
+            ));
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
     private void FoodNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FoodNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FoodNameActionPerformed
@@ -185,6 +286,100 @@ public class VendorMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
+        // TODO add your handling code here:
+        deleteMenuItem();
+    }//GEN-LAST:event_DeleteButtonActionPerformed
+
+    private void PriceBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PriceBoxActionPerformed
+        // TODO add your handling code here:
+        try {
+        int price = Integer.parseInt(PriceBox.getText());
+        System.out.println("Valid integer input: " + price);
+
+    } catch (NumberFormatException e) {
+        System.err.println("Invalid input. Please enter a valid integer.");
+
+        PriceBox.setText("");
+    }
+    }//GEN-LAST:event_PriceBoxActionPerformed
+
+    private void PriceBoxKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceBoxKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+    
+    // Check if the entered character is a digit or the backspace key
+    if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+        // If the entered character is not a digit and not the backspace key,
+        // consume the event to prevent it from being processed
+        evt.consume();
+    }
+    }//GEN-LAST:event_PriceBoxKeyTyped
+
+    private void editMenuItem() {
+    int selectedRow = MenuTable.getSelectedRow();
+    if (selectedRow == -1) {
+        // No row selected
+        return;
+    }
+
+    String menuId = MenuTable.getValueAt(selectedRow, 0).toString();
+    String foodName = FoodName.getText();
+    String price = PriceBox.getText();
+
+    // Update the menu item in the file
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        List<String> updatedLines = new ArrayList<>();
+
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(String.valueOf(vendorAcc.getVendorID()))) {
+                // Found the menu item to edit
+                updatedLines.add(menuId + "," + foodName + "," + price + "," + vendorAcc.getVendorID());
+            } else {
+                updatedLines.add(line);
+            }
+        }
+
+        // Write the updated lines back to the file
+        Files.write(Paths.get(foodMenuFilePath), updatedLines);
+
+        // Refresh the menu table
+        loadMenuData();
+    } catch (IOException e) {}}
+    
+    
+    private void deleteMenuItem() {
+    int selectedRow = MenuTable.getSelectedRow();
+    if (selectedRow == -1) {
+        // No row selected
+        return;
+    }
+
+    String menuId = MenuTable.getValueAt(selectedRow, 0).toString();
+
+    // Remove the menu item from the file
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        List<String> updatedLines = new ArrayList<>();
+
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (!(parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(String.valueOf(vendorAcc.getVendorID())))) {
+                // Keep lines that don't match the menu ID and vendor ID
+                updatedLines.add(line);
+            }
+        }
+
+        // Write the updated lines back to the file
+        Files.write(Paths.get(foodMenuFilePath), updatedLines);
+
+        // Refresh the menu table
+        loadMenuData();
+    } catch (IOException e) {
+    }
+}
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

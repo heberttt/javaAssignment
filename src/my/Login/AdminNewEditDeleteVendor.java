@@ -115,6 +115,12 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
             }
         });
 
+        tfRestaurantName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfRestaurantNameActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("RestaurantName");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,6 +290,10 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
         tfPassword.setText(selectedPassword);
         tfContact.setText(selectedContact);
     }//GEN-LAST:event_tableVendorMouseReleased
+
+    private void tfRestaurantNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRestaurantNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfRestaurantNameActionPerformed
 
     /**
      * @param args the command line arguments

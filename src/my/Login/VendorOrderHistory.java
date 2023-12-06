@@ -1,5 +1,5 @@
 package my.Login;
-
+import my.Classes.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,7 +10,7 @@ package my.Login;
  * @author dvdmi
  */
 public class VendorOrderHistory extends javax.swing.JFrame {
-
+    Vendor vendorAcc;
     /**
      * Creates new form VendorOrders
      */
@@ -18,6 +18,10 @@ public class VendorOrderHistory extends javax.swing.JFrame {
         initComponents();
     }
 
+    public VendorOrderHistory(Vendor vendorAccount) {
+        initComponents();
+        this.vendorAcc = vendorAccount;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,8 +93,9 @@ public class VendorOrderHistory extends javax.swing.JFrame {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
-        VendorHomepage hp = new VendorHomepage(); // to go to the VendorMenu
+        VendorHomepage hp = new VendorHomepage(vendorAcc); // to go to the VendorMenu
         hp.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
     /**
