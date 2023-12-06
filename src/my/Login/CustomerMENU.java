@@ -16,12 +16,30 @@ import my.Classes.*;
 public class CustomerMENU extends javax.swing.JFrame implements FileLocationInterface {
     Customer custAcc;
     String vendorId;
+    Vendor vendorAcc;
+    
+    String selectedID = "";
+    String selectedFoodName = "";
+    String selectedPrice = "";
+    ArrayList<String> selectedMenus = new ArrayList<String>();
+    ArrayList<FoodMenu> MenuInCart = new ArrayList<FoodMenu>();
     
     public CustomerMENU(Customer custAcc, String vendorId) {
         this.custAcc = custAcc;
         this.vendorId = vendorId;
         initComponents();
         displaytableMenu();
+        
+    }
+    
+    
+    public CustomerMENU(Customer custAcc, Vendor vendorAcc) {
+        this.custAcc = custAcc;
+        this.vendorAcc = vendorAcc;
+        initComponents();
+        displaytableMenu();
+        lblMenu.setText(vendorAcc.getRestaurantName() + "'s Menu");
+        
     }
     
     private DefaultTableModel Model = new DefaultTableModel(){
@@ -31,7 +49,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         }
     };
     
-    private final String[] column = {"MenuID", "FoodName", "price", "vendorID" };
+    private final String[] column = {"MenuID", "FoodName", "price"};
     
     
        public CustomerMENU() {
@@ -46,7 +64,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
  
     public void displaytableMenu(){
         Model.setColumnIdentifiers(column);
-        custAcc.displaytableMenu(Model, "1");
+        custAcc.displaytableMenu(Model, vendorAcc.getId());
         tableMenu.setModel(Model);
     }
 
@@ -81,11 +99,11 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         checkbox1 = new java.awt.Checkbox();
-        jLabel1 = new javax.swing.JLabel();
+        lblMenu = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableMenu = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnOpenCart = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -101,19 +119,32 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("MENU");
+        lblMenu.setText("MENU");
 
         tableMenu.setModel(Model);
         tableMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMenuMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableMenuMouseReleased(evt);
+            }
         });
         jScrollPane2.setViewportView(tableMenu);
 
-        jButton1.setText("ADD TO CART");
+        btnAdd.setText("ADD TO CART");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("OPEN CART");
+        btnOpenCart.setText("OPEN CART");
+        btnOpenCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenCartActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -139,15 +170,15 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnOpenCart, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(80, 80, 80)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(107, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(281, 281, 281)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(338, 338, 338))
@@ -157,7 +188,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblMenu)
                     .addComponent(jLabel2))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -165,8 +196,8 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(btnOpenCart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -179,6 +210,51 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     private void tableMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMenuMouseClicked
      
     }//GEN-LAST:event_tableMenuMouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (!(row == -1)){
+            if(!selectedMenus.contains(this.selectedID)){
+                selectedMenus.add(this.selectedID);
+                int quantity = showIntegerInputDialog("Enter amount: ");
+                FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
+                MenuInCart.add(aMenu);
+                JOptionPane.showMessageDialog(null, "Menu added to cart");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "You have selected that menu");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a menu");
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+    private int showIntegerInputDialog(String message){
+        int userInput = -1;
+        try {
+                String inputString = JOptionPane.showInputDialog(null, message);
+
+                userInput = Integer.parseInt(inputString);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please Enter an amount:");
+            }
+        
+        
+        return userInput;
+    }
+    int row = -1;
+    private void tableMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMenuMouseReleased
+        this.row = tableMenu.getSelectedRow();
+        this.selectedID = tableMenu.getValueAt(this.row, 0).toString();
+        this.selectedFoodName = tableMenu.getValueAt(this.row, 1).toString();
+        this.selectedPrice = tableMenu.getValueAt(this.row, 2).toString();
+    }//GEN-LAST:event_tableMenuMouseReleased
+
+    private void btnOpenCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenCartActionPerformed
+        CustomerCART cart = new CustomerCART(custAcc, MenuInCart);
+        cart.setVisible(true);
+        
+    }//GEN-LAST:event_btnOpenCartActionPerformed
 
     
    
@@ -201,16 +277,16 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnOpenCart;
     private java.awt.Checkbox checkbox1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel lblMenu;
     private javax.swing.JTable tableMenu;
     // End of variables declaration//GEN-END:variables
 }

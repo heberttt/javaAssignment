@@ -1,5 +1,7 @@
 package my.Login;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
 /*
@@ -12,12 +14,43 @@ import my.Classes.*;
  * @author Mohamed Abdihakim
  */
 public class CustomerCART extends javax.swing.JFrame implements FileLocationInterface {
-
+    ArrayList<FoodMenu> MenusInCart;
+    private final String[] column = {"MenuID", "Name", "Price","Quantity"};
+    Customer custAcc;
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
     /**
      * Creates new form CART
      */
     public CustomerCART() {
         initComponents();
+    }
+    
+    public CustomerCART(Customer customerAcc, ArrayList<FoodMenu> MenusInCart) {
+        initComponents();
+        this.custAcc = customerAcc;
+        this.MenusInCart = MenusInCart;
+        displayCart();
+    }
+    
+    
+    public void displayCart(){
+        model.setColumnIdentifiers(column);
+        displayMenu(model, MenusInCart); 
+    }
+    
+    public void displayMenu(DefaultTableModel table, ArrayList<FoodMenu> f){   
+        
+        for (int counter = 0; counter < f.size(); counter++) { 		      
+            FoodMenu Data;
+            Data = f.get(counter);
+            String[] finalData = {Data.getId(),Data.getName(),Data.getPrice(),String.valueOf(Data.getQuantity())};
+            table.addRow(finalData);
+      }   	
     }
 
     /**
@@ -36,35 +69,7 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "MENUID", "NAME", "PRICE", "QUANTITY"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTable1.setModel(model);
         jScrollPane3.setViewportView(jTable1);
 
         jButton1.setText("PLACE ORDER");

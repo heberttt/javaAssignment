@@ -107,8 +107,10 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
         System.out.println(this.row);
         String vendorId = jTable1.getValueAt(this.row, 0).toString();
         
+        Vendor vendor = new Vendor(vendorId);
+        vendor.getVdrDatafromID();
         
-          CustomerMENU cm = new CustomerMENU(custAcc, vendorId);
+        CustomerMENU cm = new CustomerMENU(custAcc, vendor);
         cm.setVisible(true);
         
     // Check the vendor ID and open the corresponding menu
