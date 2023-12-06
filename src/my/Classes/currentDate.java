@@ -24,7 +24,7 @@ public class currentDate {
         currentTime = dateArr[3];
         timeZone = dateArr[4];
         currentYear = dateArr[5];
-    }
+    } 
     
     public String getYear(){
         return currentYear;

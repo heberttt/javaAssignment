@@ -30,7 +30,7 @@ public class TopUpTransaction implements FileLocationInterface{
         date = c.getDate()+"/"+c.getMonth()+"/"+c.getYear();
         time = c.getCurrentTime();
     }
-    
+     
     public void generateTransactionReceipt(Administrator adminAcc){
         this.topUpTransactionID = availableId();
         

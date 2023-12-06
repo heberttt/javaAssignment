@@ -1,10 +1,7 @@
 1,idkk,1,idk,Admin
-<<<<<<< HEAD
+
 9,jovin gazani,r,11122233455,Customer,1391
 
-=======
-9,jovin gazani,rounding,11122233455,Customer,1514
->>>>>>> 1677dcb7d4ed8ed20cf9a768f05ec26c8e1de283
 14,akil,passworcc,12,Vendor,kebeb,20
 15,nanas,a23,12223,Vendor,nasi bakaraa,0
 16,grabbb,googo,12212,Runner,20

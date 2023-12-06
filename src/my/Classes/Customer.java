@@ -224,9 +224,6 @@ public class Customer extends User{
         this.contactNum = newContact;
     }
     
-    public String getFullName(){
-        return this.fullName;
-    }
     
     public void displayNotification(DefaultTableModel table, String receiverID){    // takes the table model and role and add the role info in the table
         ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();

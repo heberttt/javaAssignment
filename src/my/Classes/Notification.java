@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import static my.Classes.FileLocationInterface.transactionReceiptFilePath;
 
-/**
+/** 
  *
  * @author himagi
  */

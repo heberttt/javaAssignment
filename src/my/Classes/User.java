@@ -71,7 +71,7 @@ abstract class User implements FileLocationInterface {
             if(biggestNum <= Integer.parseInt(data)){
                 biggestNum = Integer.parseInt(data);
             }
-        }
+        } 
         myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");

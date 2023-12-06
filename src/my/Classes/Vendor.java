@@ -78,7 +78,7 @@ public class Vendor extends User {
     public Vendor(String id){
         this.id = id;
     }
-    
+     
     @Override
     public void createAccount(){
         String accName = this.fullName;
