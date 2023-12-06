@@ -204,6 +204,14 @@ public class Customer extends User{
           e.printStackTrace();
        }
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getContactNum() {
+        return contactNum;
+    }
     
     public void setFullName(String newName){
         this.fullName = newName;
