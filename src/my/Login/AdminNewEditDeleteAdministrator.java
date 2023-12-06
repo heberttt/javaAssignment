@@ -190,26 +190,61 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
         String admPass = tfPassword.getText();
         String admContact = tfContact.getText();
         
-        Administrator adminNewAcc = new Administrator(admName,admPass,admContact);
-        adminNewAcc.createAccount();
-        model.setRowCount(0);
-        displayAdministrator();
-        clearText();
+        try{
+            String checkSpecialCharacters = admName + admPass + admContact;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (admName.equals("") || admPass.equals("") || admContact.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (admName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
+            
+            
+            Administrator adminNewAcc = new Administrator(admName,admPass,admContact);
+            adminNewAcc.createAccount();
+            model.setRowCount(0);
+            displayAdministrator();
+            clearText();
+        }catch (IllegalArgumentException e){
+            String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+            JOptionPane.showMessageDialog(null, errMsgArr[1]);
+        }
+        
+        
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    
+    
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         String admId = tpUserID.getText();
         if(!admId.equals("")){
             String newName = tfFullName.getText();
             String newPass = tfPassword.getText();
             String newContact = tfContact.getText();
-        
+            
+            try{
+            String checkSpecialCharacters = newName + newPass + newContact;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (newName.equals("") || newPass.equals("") || newContact.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (newName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
             Administrator editedAdm = new Administrator(admId, newName, newPass, newContact);
-        
             editedAdm.editAccount();
-        
             model.setRowCount(0);
             displayAdministrator();
+            }catch (IllegalArgumentException e){
+                String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+                JOptionPane.showMessageDialog(null, errMsgArr[1]);
+            }
+            
         }
         else{
             JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);

@@ -188,11 +188,30 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         String custPass = tfPassword.getText();
         String custContact = tfContact.getText();
         
-        Customer customerNewAcc = new Customer(custName,custPass,custContact);
-        customerNewAcc.createAccount();
-        model.setRowCount(0);
-        displayCustomer();
-        clearText();
+        try{
+            String checkSpecialCharacters = custName + custPass + custContact;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (custName.equals("") || custPass.equals("") || custContact.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (custName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
+            
+            
+            Customer customerNewAcc = new Customer(custName,custPass,custContact);
+            customerNewAcc.createAccount();
+            model.setRowCount(0);
+            displayCustomer();
+            clearText();
+        }catch (IllegalArgumentException e){
+            String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+            JOptionPane.showMessageDialog(null, errMsgArr[1]);
+        }
+        
+        
     }//GEN-LAST:event_btnCreateCustActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -202,7 +221,18 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
             String newPass = tfPassword.getText();
             String newContact = tfContact.getText();
         
-        
+            try{
+            String checkSpecialCharacters = newName + newPass + newContact;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (newName.equals("") || newPass.equals("") || newContact.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (newName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
+            
         
             Customer editedCust = new Customer(custId);
             editedCust.getCustDataFromId();
@@ -214,6 +244,11 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
         
             model.setRowCount(0);
             displayCustomer();
+            }catch (IllegalArgumentException e){
+                String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+                JOptionPane.showMessageDialog(null, errMsgArr[1]);
+            }
+        
         }
         else{
             JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);

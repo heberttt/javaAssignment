@@ -207,12 +207,28 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
         String vdrPass = tfPassword.getText();
         String vdrContact = tfContact.getText();
         String vdrRestaurantName = tfRestaurantName.getText();
+        try{
+            String checkSpecialCharacters = vdrName + vdrPass + vdrContact + vdrRestaurantName;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (vdrName.equals("") || vdrPass.equals("") || vdrContact.equals("") || vdrRestaurantName.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (vdrName.trim().equals("") || vdrRestaurantName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
+            
+            Vendor vendorAcc = new Vendor(vdrName,vdrPass,vdrContact, vdrRestaurantName);
+            vendorAcc.createAccount();
+            model.setRowCount(0);
+            tableDisplayVendor();
+            clearText();
+        }catch (IllegalArgumentException e){
+            String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+            JOptionPane.showMessageDialog(null, errMsgArr[1]);
+        }
         
-        Vendor vendorAcc = new Vendor(vdrName,vdrPass,vdrContact, vdrRestaurantName);
-        vendorAcc.createAccount();
-        model.setRowCount(0);
-        tableDisplayVendor();
-        clearText();
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -222,7 +238,19 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
             String newName = tfFullName.getText();
             String newPass = tfPassword.getText();
             String newContact = tfContact.getText();
-        
+            
+            
+            try{
+            String checkSpecialCharacters = newName + newPass + newContact + vdrRestaurantName;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (newName.equals("") || newPass.equals("") || newContact.equals("") || vdrRestaurantName.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (newName.trim().equals("") || vdrRestaurantName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
             Vendor editedVdr = new Vendor(vdrId);
             
             int i = editedVdr.getVdrDatafromID();
@@ -236,6 +264,12 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
                 model.setRowCount(0);
                 tableDisplayVendor(); 
             }
+            }catch (IllegalArgumentException e){
+                String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+                JOptionPane.showMessageDialog(null, errMsgArr[1]);
+            }
+            
+            
             
             
             
