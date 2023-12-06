@@ -7,10 +7,7 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
-<<<<<<< HEAD
 
-nbproject/private/
-=======
 # Class Files #
 *.class
 
@@ -18,4 +15,3 @@ nbproject/private/
 *.jar
 *.war
 *.ear
->>>>>>> a174fa4f7a2338a0f3e45319e3eb8963d5562536
