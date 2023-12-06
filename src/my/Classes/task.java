@@ -11,55 +11,47 @@ package my.Classes;
 public class task {
     private int OrderID;
     private String time;
-    private String OrderDate;
-    private String CustomerName;
-    private String Location;
+    private String status;
+    private String taskFinished;
 
-    public task(int OrderID, String time, String OrderDate, String CustomerName, String Location) {
+    public task(int OrderID, String time, String status, String taskFinished) {
         this.OrderID = OrderID;
         this.time = time;
-        this.OrderDate = OrderDate;
-        this.CustomerName = CustomerName;
-        this.Location = Location;
+        this.status = status;
+        this.taskFinished = taskFinished;
     }
 
     public int getOrderID() {
         return OrderID;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public String getOrderDate() {
-        return OrderDate;
-    }
-
-    public String getCustomerName() {
-        return CustomerName;
-    }
-
-    public String getLocation() {
-        return Location;
-    }
-
     public void setOrderID(int OrderID) {
         this.OrderID = OrderID;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
 
-    public void setOrderDate(String OrderDate) {
-        this.OrderDate = OrderDate;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCustomerName(String CustomerName) {
-        this.CustomerName = CustomerName;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public void setLocation(String Location) {
-        this.Location = Location;
+    public String getTaskFinished() {
+        return taskFinished;
     }
+
+    public void setTaskFinished(String taskFinished) {
+        this.taskFinished = taskFinished;
+    }
+
+    
 }
