@@ -1,6 +1,17 @@
 package my.Login;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
+import my.Classes.Administrator;
+import my.Classes.Customer;
+import static my.Classes.FileLocationInterface.taskFilePath;
+import static my.Classes.FileLocationInterface.userFilePath;
 import my.Classes.Runner;
+import my.Classes.Vendor;
+import my.Classes.task;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,19 +22,74 @@ import my.Classes.Runner;
  *
  * @author Shenlung
  */
-public class Runner_ViewTask extends javax.swing.JFrame {
 
+public class Runner_ViewTask extends javax.swing.JFrame {
+    
+    ArrayList<task> arrTask = new ArrayList<>();
+    ArrayList<Customer> arrCust = new ArrayList<>();
+    DefaultTableModel dtm = new DefaultTableModel();
     Runner runnerAcc;
+    
     /**
      * Creates new form Task
      */
     public Runner_ViewTask() {
         initComponents();
+        loadData();
+    }
+    public void loadData()
+    {
+        try{
+            File task = new File(taskFilePath);
+            Scanner myReader = new Scanner(task);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],dataArr[2],dataArr[3],dataArr[4]));
+                
+            }
+            myReader.close();
+            
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        
     }
     
+    public void loadDataOrder()
+    {
+        
+    }
+    public void loadDataCustomer()
+    {
+        
+    }
+    public void showData()
+    {
+        ViewTask_table.setModel(dtm);
+        dtm.addColumn("OrderID");
+        dtm.addColumn("Time");
+        dtm.addColumn("CustomerName");
+        dtm.addColumn("TaskFinished");
+        
+        for (int i = 0; i < arrTask.size(); i++) 
+                {
+                System.out.println(arrTask.get(i).getOrderID());
+
+                dtm.addRow(new Object[]{arrTask.get(i).getOrderID(),
+                                           arrTask.get(i).getTime(),
+                                           arrTask.get(i).getStatus(),
+                                           arrTask.get(i).getTaskFinished()});
+                }
+    }
     public Runner_ViewTask(Runner runnerAcc) {
         initComponents();
         this.runnerAcc = runnerAcc;
+        loadData();
+        loadDataCustomer();
+        loadDataOrder();
+        showData();
     }
 
     /**
@@ -72,7 +138,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "OrderDate", "OrderID", "CustomerID", "CustomerName", "Location"
+                "OrderDate", "Time", "OrderID", "CustomerName", "Location"
             }
         ));
         jScrollPane3.setViewportView(ViewTask_table);
@@ -91,13 +157,13 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnBTMView)
                         .addGap(205, 205, 205)
-                        .addComponent(btnAcceptTask, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAcceptTask, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(167, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
