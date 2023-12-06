@@ -180,7 +180,7 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
     }//GEN-LAST:event_jBtnVendorsActionPerformed
 
     private void jBtnOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOrdersActionPerformed
-        CustomerSTATUS cs = new CustomerSTATUS();
+        CustomerSTATUS cs = new CustomerSTATUS(custAcc);
         cs.setVisible(true);
     }//GEN-LAST:event_jBtnOrdersActionPerformed
 

@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
@@ -10,7 +11,14 @@ import my.Classes.*;
 
 public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationInterface{
     Customer custAcc;
+    private JTable tableMenu;
     private DefaultTableModel Model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
+    private DefaultTableModel vendorMenuModel = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
             return false;
@@ -29,6 +37,10 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
     public CustomerVENDORS(Customer custAcc) {
         initComponents();
         this.custAcc = custAcc;
+         tableMenu = new JTable(Model);
+
+    // Set the model for tableMenu
+    tableMenu.setModel(Model);
         displayVendor();
     }
     
@@ -36,7 +48,7 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
         Model.setColumnIdentifiers(column);
         custAcc.displayVendor(Model, "Vendor");
     }
-        
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +66,11 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(Model);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("SELECT");
@@ -81,6 +98,34 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    int row = -1;
+    
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+       
+        this.row = jTable1.getSelectedRow();
+        System.out.println(this.row);
+        String vendorId = jTable1.getValueAt(this.row, 0).toString();
+        
+        
+          CustomerMENU cm = new CustomerMENU(custAcc, vendorId);
+        cm.setVisible(true);
+        
+    // Check the vendor ID and open the corresponding menu
+    if (vendorId.equals("15")) {
+        // Vendor with ID 1 is clicked
+        // No need to declare cm again, use the existing cm
+        // Perform any actions specific to vendor 1 if needed
+    } else if (vendorId.equals("14")) {
+        // Vendor with ID 2 is clicked
+        Customer cMenu = new Customer("14");
+        JTable tableMenu = new JTable();
+        DefaultTableModel vendorMenuModel = new DefaultTableModel();
+        tableMenu.setModel(vendorMenuModel);
+        cMenu.displaytableMenu(vendorMenuModel, "14");
+        tableMenu.setVisible(true);
+    }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
