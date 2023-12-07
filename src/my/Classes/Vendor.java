@@ -198,6 +198,8 @@ public class Vendor extends User {
         return -1;
     }
     
+   
+    
     public void setFullName(String FullName){
         this.fullName = FullName;
     }

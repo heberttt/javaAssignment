@@ -345,7 +345,7 @@ public class Customer extends User{
             }
              
             String[] dataArr = data.split(",");
-            if(dataArr[3].equals(vendorId)){
+            if(dataArr[0].equals(vendorId)){
                 ArrayList<String> dataList = new ArrayList<String>();
                 dataList.add(dataArr[0]);
                 dataList.add(dataArr[1]);
@@ -411,6 +411,15 @@ public class Customer extends User{
         } 
         
         return finalInfo;
+    } 
+        public void displaydetails(DefaultTableModel table){    // takes the table model and role and add the role info in the table
+        ArrayList<ArrayList<String>> fullData =getdetails();
+        for (int counter = 0; counter < fullData.size(); counter++) { 		      
+            ArrayList<String> eachData = fullData.get(counter);
+            String[] finalData = {eachData.get(0),eachData.get(1)};
+            table.addRow(finalData);
+            System.out.println(eachData.get(1));
+      }   	
     }
      
     public void reduceCredit(int amount){
@@ -446,4 +455,62 @@ public class Customer extends User{
           e.printStackTrace();
        }
     }
+    
+    private ArrayList<ArrayList<String>> getdetails(){ 
+        ArrayList<ArrayList<String>> finalInfo = new ArrayList<>();
+        try {
+        File myObj = new File(ordersFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            
+            String data = myReader.nextLine();
+            
+            if (data.equals("")){
+                continue;
+            }
+            
+            String[] dataArr = data.split(",");
+     
+                ArrayList<String> dataList = new ArrayList<String>();
+                dataList.add(dataArr[0]);
+                dataList.add(dataArr[6]);
+            
+                finalInfo.add(dataList);
+            
+            
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        
+        return finalInfo;
+    }
+    
+    public ArrayList<String> getAdditionalDetails(String orderId) {
+    ArrayList<String> additionalDetails = new ArrayList<>();
+
+    try {
+        File myObj = new File(ordersFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+
+            if (data.contains(orderId)) {
+                String[] dataArr = data.split(",");
+                additionalDetails.add(dataArr[0]);
+                additionalDetails.add(dataArr[1]); 
+                additionalDetails.add(dataArr[5]); 
+                break;
+            }
+        }
+        myReader.close();
+    } catch (FileNotFoundException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+    }
+
+    return additionalDetails;
+}
 }

@@ -18,12 +18,12 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
             return false;
         }
     };
-    private DefaultTableModel vendorMenuModel = new DefaultTableModel(){
-        @Override
-        public boolean isCellEditable(int row, int column){  // turn table into non-editable
-            return false;
-        }
-    };
+//    private DefaultTableModel vendorMenuModel = new DefaultTableModel(){
+//        @Override
+//        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+//            return false;
+//        }
+//    };
     /**
      * Creates new form VENDORS
      */
@@ -106,6 +106,7 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
         this.row = jTable1.getSelectedRow();
         System.out.println(this.row);
         String vendorId = jTable1.getValueAt(this.row, 0).toString();
+        System.out.println(vendorId);
         
         Vendor vendor = new Vendor(vendorId);
         vendor.getVdrDatafromID();
@@ -113,20 +114,18 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
         CustomerMENU cm = new CustomerMENU(custAcc, vendor);
         cm.setVisible(true);
         
-    // Check the vendor ID and open the corresponding menu
-    if (vendorId.equals("15")) {
-        // Vendor with ID 1 is clicked
-        // No need to declare cm again, use the existing cm
-        // Perform any actions specific to vendor 1 if needed
-    } else if (vendorId.equals("14")) {
-        // Vendor with ID 2 is clicked
-        Customer cMenu = new Customer("14");
-        JTable tableMenu = new JTable();
-        DefaultTableModel vendorMenuModel = new DefaultTableModel();
-        tableMenu.setModel(vendorMenuModel);
-        cMenu.displaytableMenu(vendorMenuModel, "14");
-        tableMenu.setVisible(true);
-    }
+
+//    if (vendorId.equals("15")) {
+//   
+//    } else if (vendorId.equals("14")) {
+//       
+//        Customer cMenu = new Customer("14");
+//        JTable tableMenu = new JTable();
+//        DefaultTableModel vendorMenuModel = new DefaultTableModel();
+//        tableMenu.setModel(vendorMenuModel);
+//        cMenu.displaytableMenu(vendorMenuModel, "14");
+//        tableMenu.setVisible(true);
+//    }
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
