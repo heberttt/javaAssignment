@@ -54,7 +54,7 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
             String[] finalData = {Data.getId(),Data.getName(),Data.getPrice(),String.valueOf(Data.getQuantity())};
             table.addRow(finalData);
       }   	
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.

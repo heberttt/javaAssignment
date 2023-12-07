@@ -6,7 +6,7 @@ import my.Classes.*;
  */
 
 /**
- *
+ * 
  * @author Mohamed Abdihakim
  */
 public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocationInterface{

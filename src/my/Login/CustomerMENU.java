@@ -28,7 +28,6 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.custAcc = custAcc;
         this.vendorId = vendorId;
         initComponents();
-        displaytableMenu();
         
     }
     
@@ -37,7 +36,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.custAcc = custAcc;
         this.vendorAcc = vendorAcc;
         initComponents();
-        displaytableMenu();
+        displaytableMenu(vendorAcc.getId());
         lblMenu.setText(vendorAcc.getRestaurantName() + "'s Menu");
         
     }

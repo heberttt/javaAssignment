@@ -222,7 +222,7 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
     int row = -1;
     private void tableCustomerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseReleased
         this.row = tableCustomer.getSelectedRow();
-        
+         
         String selectedId = String.valueOf(model.getValueAt(row,0));
         String selectedName = String.valueOf(model.getValueAt(row, 1));
         String selectedPassword = String.valueOf(model.getValueAt(row, 2));

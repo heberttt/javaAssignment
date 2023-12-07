@@ -345,7 +345,7 @@ public class Customer extends User{
             }
              
             String[] dataArr = data.split(",");
-            if(dataArr[0].equals(vendorId)){
+            if(dataArr[3].equals(vendorId)){
                 ArrayList<String> dataList = new ArrayList<String>();
                 dataList.add(dataArr[0]);
                 dataList.add(dataArr[1]);
@@ -421,7 +421,7 @@ public class Customer extends User{
             System.out.println(eachData.get(1));
       }   	
     }
-     
+      
     public void reduceCredit(int amount){
        int updatedCredit = credit - amount;
        int lineNum = getUserTextLine(this.id);

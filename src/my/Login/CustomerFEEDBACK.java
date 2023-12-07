@@ -11,7 +11,7 @@ import my.Classes.*;
 
 public class CustomerFEEDBACK extends javax.swing.JFrame implements FileLocationInterface{
     
-
+ 
     /**
      * Creates new form FEEDBACK
      */

@@ -73,7 +73,7 @@ public class Notification implements FileLocationInterface {
        int availableId = biggestNum + 1;
        return availableId;
     }
-    
+     
     protected int availableVendorNotificationsId(){
        int biggestNum = 0;
        try {
