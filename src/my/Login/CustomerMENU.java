@@ -21,7 +21,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.custAcc = custAcc;
         this.vendorId = vendorId;
         initComponents();
-        displaytableMenu();
+        displaytableMenu(vendorId);
     }
     
     private DefaultTableModel Model = new DefaultTableModel(){
@@ -41,34 +41,34 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     public CustomerMENU(Vendor vendor) {
       initComponents();
       
-      displaytableMenu();
+     
  }
  
-    public void displaytableMenu(){
+    public void displaytableMenu(String id){
         Model.setColumnIdentifiers(column);
-        custAcc.displaytableMenu(Model, "1");
+        custAcc.displaytableMenu(Model, id);
         tableMenu.setModel(Model);
     }
 
 
     
     
-    public void CustomerMENU() {
-        initComponents();
-        tableMenu.setModel(Model);
-        // Display the menu when the frame is created
-        displaytableMenu();
-    }
-
-    public CustomerMENU(Customer custAcc) {
-        initComponents();
-        this.custAcc = custAcc;
-        // Set the model for the tableMenu
-        tableMenu.setModel(Model);
-        // Display the menu when the frame is created
-        displaytableMenu();
-    }
-    
+//    public void CustomerMENU() {
+//        initComponents();
+//        tableMenu.setModel(Model);
+//        // Display the menu when the frame is created
+//        displaytableMenu("1");
+//    }
+//
+//    public CustomerMENU(Customer custAcc) {
+//        initComponents();
+//        this.custAcc = custAcc;
+//        // Set the model for the tableMenu
+//        tableMenu.setModel(Model);
+//        // Display the menu when the frame is created
+//        displaytableMenu("2");
+//    }
+//    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

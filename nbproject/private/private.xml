@@ -3,21 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerHOMEPAGE.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteAdministrator.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/FileLocationInterface.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Orders.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Customer.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerCART.java</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/review.txt</file>
             <file>file:/C:/javaAssignment/src/my/Classes/foodMenu.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/VendorMenu.java</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/Orders.txt</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Vendor.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Users.txt</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/Customer.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerDETAILS.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerCART.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/task.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerSTATUS.java</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/Users.txt</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerORDERHISTORY.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/CustomerHISTORYDETAILS.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteVendor.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerVENDORS.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerMENU.java</file>
         </group>
     </open-files>
 </project-private>
