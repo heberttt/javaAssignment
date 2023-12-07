@@ -110,7 +110,7 @@ public class runOrder implements FileLocationInterface{
     }
     
     
-    public void placeOrder(){
+    public int placeOrder(){
         String Menus = "";
         int totalPrice = 0;
         for (int i = 0 ; i < MenusInCart.size() ; i++){
@@ -138,6 +138,7 @@ public class runOrder implements FileLocationInterface{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return totalPrice;
     }
     
     protected int availableId(){

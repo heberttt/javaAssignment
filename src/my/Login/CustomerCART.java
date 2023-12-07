@@ -72,7 +72,7 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
         jLabel2 = new javax.swing.JLabel();
         tfLocation = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable1.setModel(model);
         jScrollPane3.setViewportView(jTable1);
@@ -135,7 +135,8 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         String location = tfLocation.getText();
         runOrder newOrder = new runOrder(custAcc, vdrAcc, MenusInCart, location);
-        newOrder.placeOrder();
+        int totalPrice = newOrder.placeOrder();
+        custAcc.reduceCredit(totalPrice);
         String message = custAcc.getFullName() + " has made a request order.";
         Notification notification = new Notification(custAcc.getId(), vdrAcc.getId(), message);
         notification.sendVendor();
