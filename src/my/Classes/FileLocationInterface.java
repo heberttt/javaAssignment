@@ -4,11 +4,6 @@
  */
 package my.Classes;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author himagi
@@ -22,5 +17,6 @@ public interface FileLocationInterface {
     public final String taskFilePath = path + "task.txt";
     public final String ordersFilePath = path + "Orders.txt";
     public final String foodMenuFilePath = path + "foodMenu.txt";
+    public final String VendorNotificationsFilePath = path + "VendorNotifications.txt";
 }   
  

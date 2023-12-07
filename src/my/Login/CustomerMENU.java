@@ -251,7 +251,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     }//GEN-LAST:event_tableMenuMouseReleased
 
     private void btnOpenCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenCartActionPerformed
-        CustomerCART cart = new CustomerCART(custAcc, MenuInCart);
+        CustomerCART cart = new CustomerCART(custAcc, vendorAcc, MenuInCart);
         cart.setVisible(true);
         
     }//GEN-LAST:event_btnOpenCartActionPerformed
