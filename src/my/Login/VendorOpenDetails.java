@@ -134,9 +134,9 @@ private String calculateTotalPrice(String menuID, String quantity, String vendor
     // Parse the quantity and food price to calculate total price
     try {
         int quantityValue = Integer.parseInt(quantity);
-        double priceValue = Double.parseDouble(foodPrice);
+        int priceValue = Integer.parseInt(foodPrice);
 
-        double totalPrice = quantityValue * priceValue;
+        int totalPrice = quantityValue * priceValue;
         return String.valueOf(totalPrice);
     } catch (NumberFormatException e) {
         e.printStackTrace();
