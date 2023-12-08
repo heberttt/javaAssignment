@@ -6,7 +6,7 @@ package my.Login;
 import java.util.*;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
-import my.Classes.*;
+import my.Classes.*; 
 
 /**
  *
@@ -130,8 +130,9 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
                     myReader.close();
                     lblResult.setText("Success!");
                     if (dataArr[4].equals("Customer")){
-                        //FormDemo frame = new FormDemo();
-                        //frame.setVisible(true);
+                        Customer custAccount = new Customer(dataArr[0], dataArr[1], dataArr[2], dataArr[3], Integer.parseInt(dataArr[5]));
+                        CustomerHOMEPAGE customer = new CustomerHOMEPAGE(custAccount);
+                        customer.setVisible(true);
                         this.dispose();
                         break;
                     }

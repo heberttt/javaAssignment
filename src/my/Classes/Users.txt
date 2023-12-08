@@ -1,8 +1,16 @@
 1,idkk,1,idk,Admin
-9,jovin gazani,rounding,11122233455,Customer,1514
+
+9,jovin gazani,r,11122233455,Customer,1371
+10,lala lolo,r,15522233477,Customer,1392
+
+
 14,akil,passworcc,12,Vendor,kebeb,20
 15,nanas,a23,12223,Vendor,nasi bakaraa,0
 16,grabbb,googo,12212,Runner,20
+<<<<<<< HEAD
 17,test,2,12123123,Runner,018,dA,1,01010,Customer,0
 18,hebe,1,1,Customer,0
 19,hebertg,1,1,Customer,0
+=======
+17,test,2,12123123,Runner,0
+>>>>>>> runner

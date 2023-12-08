@@ -6,8 +6,8 @@ package my.Classes;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
+/** 
+ * 
  * @author himagi
  */
 public class main {

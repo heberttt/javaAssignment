@@ -1,13 +1,16 @@
 package my.Classes;
-
+ 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import static my.Classes.FileLocationInterface.foodMenuFilePath;
+import my.Classes.*;
+import static my.Classes.FileLocationInterface.userFilePath;
 
-public class runOrder {
+public class runOrder implements FileLocationInterface{
     private int OrderID;
     private String date;
     private String time;
@@ -17,6 +20,9 @@ public class runOrder {
     private String Menu;
     private String Location;
     private int totalPrice;
+    private Customer customer;
+    private Vendor vendor;
+    private ArrayList<FoodMenu> MenusInCart;
     
     public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, int totalPrice, String Location)
     {
@@ -32,6 +38,15 @@ public class runOrder {
 
         
     
+    }
+    
+    public runOrder(Customer customer, Vendor vendor, ArrayList<FoodMenu> MenusInCart, String Location)
+    {
+        this.vendor = vendor;
+        this.customer = customer;
+        this.Location = Location;
+        this.MenusInCart = MenusInCart;
+        
     }
 
     public int getOrderID() {
@@ -160,4 +175,64 @@ public class runOrder {
     }
     return "Unknown";
 }
+     
+    public int placeOrder(){
+        String Menus = "";
+        int totalPrice = 0;
+        for (int i = 0 ; i < MenusInCart.size() ; i++){
+            FoodMenu menu = MenusInCart.get(i);
+            if (i == MenusInCart.size() - 1){
+                Menus += menu.getId() + "!" + menu.getQuantity();
+            }
+            else{
+                Menus += menu.getId() + "!" + menu.getQuantity() + ";";
+            }
+            totalPrice += Integer.parseInt(menu.getPrice()) * menu.getQuantity();
+        }
+        currentDate d = new currentDate();
+        String date = d.getDate() + "/" + d.getMonth() + "/" + d.getYear();
+        String finalOrder = String.valueOf(availableId()) + "," + date +  "," + d.getCurrentTime() + "," + customer.getId() + "," + vendor.getId() + ","+ "ongoing" + "," + Menus + "," + totalPrice + "," + Location;//continue
+        
+        try {
+            // Create a BufferedWriter in append mode to write to the file
+            BufferedWriter writer = new BufferedWriter(new FileWriter(ordersFilePath, true));
+
+            writer.write(finalOrder + "\n");
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return totalPrice;
+    }
+    
+    protected int availableId(){
+       int biggestNum = 0;
+       try {
+        File myObj = new File(ordersFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            if(data.equals("")){
+                continue;
+            }
+            String[] dataArr = data.split(",");
+            data = dataArr[0];
+            
+            if(biggestNum <= Integer.parseInt(data)){
+                biggestNum = Integer.parseInt(data);
+            }
+        } 
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+       int availableId = biggestNum + 1;
+       return availableId;
+    }
+    
+    
+    
 }

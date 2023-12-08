@@ -11,22 +11,25 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import static my.Classes.FileLocationInterface.userFilePath;
 
-/**
+/** 
  *
  * @author himagi
  */
 public class Runner extends User{
     int revenue;
+    ArrayList<runOrder> arrHistoryOrder = new ArrayList<runOrder>();
     
     public Runner(String id, String fullName, String password, String contactNum){
         this.id = id;
         this.fullName = fullName;
         this.password = password;
         this.contactNum = contactNum;
+        this.revenue = 0;
     }
     public Runner(String id, String fullName, String password, String contactNum, int revenue){
         this.id = id;
@@ -69,7 +72,7 @@ public class Runner extends User{
         }
         
         
-    }
+    } 
     
     
     @Override
@@ -177,4 +180,17 @@ public class Runner extends User{
     public int getRevenue() {
         return this.revenue;
     }
-} 
+    public void addRevenue()
+    {
+        revenue += 5;
+    }
+
+    public ArrayList<runOrder> getArrHistoryOrder() {
+        return arrHistoryOrder;
+    }
+
+    public void setArrHistoryOrder(ArrayList<runOrder> arrHistoryOrder) {
+        this.arrHistoryOrder = arrHistoryOrder;
+    }
+    
+}

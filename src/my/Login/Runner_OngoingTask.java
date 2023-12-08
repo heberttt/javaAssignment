@@ -4,7 +4,15 @@
  */
 package my.Login;
 
+import java.awt.Menu;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static my.Classes.FileLocationInterface.foodMenuFilePath;
+import my.Classes.FoodMenu;
 import my.Classes.Runner;
 
 /**
@@ -15,6 +23,9 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
 
     Runner runnerAcc;
     Runner_ViewTask rv;
+    DefaultTableModel dtm = new DefaultTableModel();
+    Runner_History rh;
+    
     /**
      * Creates new form Runner_ViewTask
      */
@@ -26,15 +37,37 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
         initComponents();
         this.runnerAcc = runnerAcc;
         this.rv = rv;
+        OngoingTask_Table.setModel(dtm);
         showData();
     }
     
     public void showData()
     {
-        lblCustID.setText(rv.arrCust.get(rv.posClick).getId());
-        lblCustName.setText(rv.arrCust.get(rv.posClick).getFullName());
-        lblCustLocation.setText(rv.arrOrders.get(rv.posClick).getLocation());
-        lblCustContact.setText(rv.arrCust.get(rv.posClick).getContactNum());
+        OngoingTask_Table.setModel(dtm);
+        dtm.addColumn("MenuID");
+        dtm.addColumn("Menu Name");
+        dtm.addColumn("Quantity");
+        
+        int idxCust = rv.idxCust.get(rv.posClick);
+        lblCustID.setText(rv.arrCust.get(idxCust).getId());
+        lblCustName.setText(rv.arrCust.get(idxCust).getFullName());
+        lblCustLocation.setText(rv.arrOrders.get(idxCust).getLocation());
+        lblCustContact.setText(rv.arrCust.get(idxCust).getContactNum());
+        int idxOrder = rv.idxOrder.get(rv.posClick);
+        String temp = rv.arrOrders.get(idxOrder).getMenu();
+        String t[]= temp.split(";");
+        for (int i = 0; i < t.length; i++) {
+            String[]tt = t[i].split("!");
+            String menuName = "";
+            for (int j = 0; j < rv.arrMenu.size(); j++) {
+                if(rv.arrMenu.get(j).getId().equalsIgnoreCase(tt[0]))
+                {
+                    menuName = rv.arrMenu.get(j).getName();
+                }
+                
+            }
+            dtm.addRow(new Object[]{tt[0], menuName ,tt[1]});
+        }
     }
 
     /**
@@ -48,7 +81,7 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        OngoingTask_Table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         btnFinishTask = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -60,12 +93,13 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
         lblCustLocation = new javax.swing.JLabel();
         lblCustContact = new javax.swing.JLabel();
         btnBTMOngoing = new javax.swing.JButton();
+        lblStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("CustomerName =");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        OngoingTask_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -76,9 +110,9 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
                 "MenuID", "FoodName", "Quantity"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(OngoingTask_Table);
 
-        jLabel2.setText("Status : Ongoing...");
+        jLabel2.setText("Status =");
 
         btnFinishTask.setText("Finish Task");
         btnFinishTask.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +142,8 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
             }
         });
 
+        lblStatus.setText("Ongoing...");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,14 +165,17 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
                                     .addComponent(lblCustID)
                                     .addComponent(lblCustLocation))
                                 .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel7)
-                                    .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblStatus)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCustContact)
                                     .addComponent(jLabel4))))
-                        .addContainerGap(129, Short.MAX_VALUE))
+                        .addContainerGap(121, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnFinishTask, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -165,7 +204,9 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
                                     .addComponent(lblCustName)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabel2)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(lblStatus))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -189,7 +230,12 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBTMOngoingActionPerformed
 
     private void btnFinishTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishTaskActionPerformed
+        rv.arrTask.get(rv.posClick).setTaskFinished("true");
+        lblStatus.setText("Delivered");
+        rv.saveDataTask();
         JOptionPane.showMessageDialog(this,"Your task is successfully finished!");
+        runnerAcc.addRevenue();
+        
     }//GEN-LAST:event_btnFinishTaskActionPerformed
 
     /**
@@ -231,6 +277,7 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable OngoingTask_Table;
     private javax.swing.JButton btnBTMOngoing;
     private javax.swing.JButton btnFinishTask;
     private javax.swing.JLabel jLabel1;
@@ -240,10 +287,11 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCustContact;
     private javax.swing.JLabel lblCustID;
     private javax.swing.JLabel lblCustLocation;
     private javax.swing.JLabel lblCustName;
+    private javax.swing.JLabel lblStatus;
     // End of variables declaration//GEN-END:variables
+
 }

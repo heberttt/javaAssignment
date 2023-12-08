@@ -11,7 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import static my.Classes.FileLocationInterface.userFilePath;
-
+ 
 /**
  *
  * @author himagi
@@ -30,7 +30,7 @@ public class TopUpTransaction implements FileLocationInterface{
         date = c.getDate()+"/"+c.getMonth()+"/"+c.getYear();
         time = c.getCurrentTime();
     }
-    
+     
     public void generateTransactionReceipt(Administrator adminAcc){
         this.topUpTransactionID = availableId();
         

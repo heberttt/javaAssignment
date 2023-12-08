@@ -1,15 +1,20 @@
 package my.Login;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.Administrator;
 import my.Classes.Customer;
+import static my.Classes.FileLocationInterface.foodMenuFilePath;
 import static my.Classes.FileLocationInterface.ordersFilePath;
 import static my.Classes.FileLocationInterface.taskFilePath;
 import static my.Classes.FileLocationInterface.userFilePath;
+import my.Classes.FoodMenu;
 import my.Classes.Runner;
 import my.Classes.Vendor;
 import my.Classes.runOrder;
@@ -30,13 +35,14 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     ArrayList<task> arrTask = new ArrayList<>();
     ArrayList<Customer> arrCust = new ArrayList<>();
     ArrayList<runOrder> arrOrders = new ArrayList<>();
+    ArrayList<FoodMenu> arrMenu = new ArrayList<>();
     DefaultTableModel dtm = new DefaultTableModel();
     Runner runnerAcc;
     ArrayList<Integer> idxTask = new ArrayList<>();
     ArrayList<Integer> idxCust = new ArrayList<>();
     ArrayList<Integer> idxOrder = new ArrayList<>();
     
-    int posClick;
+    int posClick = -1;
     
     /**
      * Creates new form Task
@@ -52,8 +58,12 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
                 String[] dataArr = data.split(",");
+                
+                if(dataArr[2].equalsIgnoreCase("none"))
+                {
                 arrTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],
                         dataArr[2],dataArr[3]));
+                }
             }
             myReader.close();
             
@@ -87,25 +97,67 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             Scanner myReader = new Scanner(cust);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
-                String[] dataArr = data.split(",");
-            
+                if(!data.equals(""))
+                {
+                    String[] dataArr = data.split(",");
                     if (dataArr[4].equals("Customer")){
                         arrCust.add(new Customer (dataArr[0],dataArr[1],
                         dataArr[2],dataArr[3],Integer.parseInt(dataArr[5])));
                     }
+                
+                }
             }
             myReader.close();
     }       catch(FileNotFoundException e){
             e.printStackTrace();
         }
     }
+    public void loadDataMenu()
+    {
+        try{
+            File Menu = new File(foodMenuFilePath);
+            Scanner myReader = new Scanner(Menu);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrMenu.add(new FoodMenu(dataArr[0],dataArr[1],dataArr[2],null));
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void saveDataTask()
+    {
+        try{
+            File f = new File(taskFilePath);
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+            String line = "";
+            for (int i = 0; i < arrTask.size(); i++) {
+                line = arrTask.get(i).getOrderID() + "," + 
+                       arrTask.get(i).getTime() + "," +
+                       arrTask.get(i).getStatus()+ "," +
+                       arrTask.get(i).getTaskFinished() + ",";
+                bw.write(line + "\n");
+            }
+            bw.close();
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
     public void showData()
     {
         ViewTask_table.setModel(dtm);
         dtm.addColumn("OrderID");
         dtm.addColumn("Time");
         dtm.addColumn("Customer Name");
-        dtm.addColumn("TaskFinished");
+        
         String CustName = "";
         idxCust.clear();
         idxOrder.clear();
@@ -128,7 +180,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                     }
                 }
                 dtm.addRow(new Object[]{arrTask.get(i).getOrderID(), arrTask.get(i).getTime(),
-                                    CustName,arrTask.get(i).getTaskFinished()});
+                                    CustName});
             }
     }
     public Runner_ViewTask(Runner runnerAcc) {
@@ -137,6 +189,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
         loadDataTask();
         loadDataCustomer();
         loadDataOrder();
+        loadDataMenu();
         showData();
     }
 
@@ -243,9 +296,12 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBTMViewActionPerformed
 
     private void btnAcceptTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptTaskActionPerformed
+        if(posClick > -1){
         Runner_OngoingTask ot = new Runner_OngoingTask(runnerAcc,this);
         ot.setVisible(true);
         dispose();
+        }
+        
     }//GEN-LAST:event_btnAcceptTaskActionPerformed
 
     private void ViewTask_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ViewTask_tableMouseClicked
