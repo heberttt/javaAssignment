@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.*;
 import my.Classes.*;
 public class CustomerREVIEW extends javax.swing.JFrame implements FileLocationInterface{
-
+ 
     /**
      * Creates new form REVIEW
      */

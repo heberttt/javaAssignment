@@ -10,7 +10,7 @@ import static my.Classes.FileLocationInterface.*;
  */
 
 /**
- *
+ * 
  * @author dvdmi
  */
 public class VendorOpenDetails extends javax.swing.JFrame {

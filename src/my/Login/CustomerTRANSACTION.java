@@ -11,7 +11,7 @@ import my.Classes.*;
  */
 public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocationInterface{
 
-    /**
+    /** 
      * Creates new form TRANSACTION
      */
     public CustomerTRANSACTION() {

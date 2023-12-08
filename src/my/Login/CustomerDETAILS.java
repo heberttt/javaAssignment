@@ -11,7 +11,7 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
 
      Customer custAcc;
 
-   
+    
 
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override

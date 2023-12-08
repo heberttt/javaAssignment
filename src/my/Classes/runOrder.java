@@ -21,7 +21,7 @@ public class runOrder implements FileLocationInterface{
     private String Location;
     private int totalPrice;
     private Customer customer;
-    private Vendor vendor;
+    private Vendor vendor; 
     private ArrayList<FoodMenu> MenusInCart;
     
     public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, int totalPrice, String Location)
@@ -34,6 +34,21 @@ public class runOrder implements FileLocationInterface{
         this.OrderStatus = OrderStatus;
         this.Menu = Menu;        
         this.totalPrice = totalPrice;
+        this.Location = Location;
+
+        
+    
+    }
+    
+    public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, String Location)
+    {
+        this.OrderID = OrderID;
+        this.date = date;
+        this.time = time;
+        this.CustomerID = CustomerID;
+        this.VendorID = VendorID;
+        this.OrderStatus = OrderStatus;
+        this.Menu = Menu;        
         this.Location = Location;
 
         

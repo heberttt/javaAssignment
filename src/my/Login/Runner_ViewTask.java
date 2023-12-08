@@ -82,7 +82,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 String data = myReader.nextLine();
                 String[] dataArr = data.split(",");
                 arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
-                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],Integer.parseInt(dataArr[7]),dataArr[8]));
+                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
             }
             myReader.close();
             

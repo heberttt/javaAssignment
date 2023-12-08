@@ -214,10 +214,7 @@ public class Vendor extends User {
     public void setRestaurantName(String RestaurantName){
         this.restaurantName = RestaurantName;
     }
-    
-    public String getFullName(){
-        return this.fullName;
-    }
+     
     
     public String getVendorID(){
         return this.id;

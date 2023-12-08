@@ -6,7 +6,7 @@ import my.Classes.*;
  */
 
 /**
- *
+ * 
  * @author dvdmi
  */
 public class VendorCustReview extends javax.swing.JFrame {

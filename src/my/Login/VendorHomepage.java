@@ -11,7 +11,7 @@ public class VendorHomepage extends javax.swing.JFrame {
     public VendorHomepage() {
         initComponents();
     }
-    
+     
     public VendorHomepage(Vendor vendorAcc) {
         initComponents();
         this.vendorAcc = vendorAcc;

@@ -14,7 +14,7 @@ import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
  
 /** 
- *
+ * 
  * @author heber
  */
 public class FoodMenu implements FileLocationInterface {

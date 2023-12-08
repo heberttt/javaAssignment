@@ -12,7 +12,7 @@ import static my.Classes.FileLocationInterface.ordersFilePath;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-/**
+/** 
  *
  * @author dvdmi
  */
@@ -163,6 +163,9 @@ public class VendorOrders extends javax.swing.JFrame {
                 // Convert vendorAcc.getVendorID() to String for proper comparison
                 if (dataArr[4].equals(String.valueOf(vendorAcc.getVendorID()))) {
                     // Add only the required columns to the list
+                    if (dataArr[5].equals("done")){
+                        continue;
+                    }
                     ArrayList<String> order = new ArrayList<>();
                     order.add(dataArr[0]);
                     order.add(dataArr[1]);

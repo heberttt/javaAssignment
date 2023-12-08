@@ -6,7 +6,7 @@ package my.Classes;
 
 /**
  *
- * @author Shenlung
+ * @author Shenlung 
  */
 public class RunnerReview {
     private String ReviewID;
