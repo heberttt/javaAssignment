@@ -16,9 +16,9 @@ public class runOrder {
     private String OrderStatus;
     private String Menu;
     private String Location;
-    private double totalPrice;
+    private int totalPrice;
     
-    public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, double totalPrice, String Location)
+    public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, int totalPrice, String Location)
     {
         this.OrderID = OrderID;
         this.date = date;
@@ -98,7 +98,7 @@ public class runOrder {
         this.Menu = Menu;
     }
     
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(int totalPrice) {
            this.totalPrice = totalPrice;
     }
     
@@ -109,7 +109,7 @@ public class runOrder {
         public void calculateTotalPrice() {
         // Split the Menu string into individual items
         String[] menuItems = this.Menu.split(";");
-        double sum = 0;
+        int sum = 0;
 
         for (String menuItem : menuItems) {
             // Split each menu item using "!" to get menuID and quantity
@@ -125,9 +125,9 @@ public class runOrder {
                 // Parse the quantity and food price to calculate total price for the menu item
                 try {
                     int quantityValue = Integer.parseInt(quantity);
-                    double priceValue = Double.parseDouble(foodPrice);
+                    int priceValue = Integer.parseInt(foodPrice);
 
-                    double totalPrice = quantityValue * priceValue;
+                    int totalPrice = quantityValue * priceValue;
                     sum += totalPrice;
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
