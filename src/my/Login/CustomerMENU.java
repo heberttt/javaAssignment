@@ -28,7 +28,6 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.custAcc = custAcc;
         this.vendorId = vendorId;
         initComponents();
-        displaytableMenu();
         
     }
     
@@ -37,7 +36,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.custAcc = custAcc;
         this.vendorAcc = vendorAcc;
         initComponents();
-        displaytableMenu();
+        displaytableMenu(vendorAcc.getId());
         lblMenu.setText(vendorAcc.getRestaurantName() + "'s Menu");
         
     }
@@ -59,10 +58,10 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     public CustomerMENU(Vendor vendor) {
       initComponents();
       
-      displaytableMenu();
+     
  }
  
-    public void displaytableMenu(){
+    public void displaytableMenu(String id){
         Model.setColumnIdentifiers(column);
         custAcc.displaytableMenu(Model, vendorAcc.getId());
         tableMenu.setModel(Model);
@@ -71,22 +70,22 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
 
     
     
-    public void CustomerMENU() {
-        initComponents();
-        tableMenu.setModel(Model);
-        // Display the menu when the frame is created
-        displaytableMenu();
-    }
-
-    public CustomerMENU(Customer custAcc) {
-        initComponents();
-        this.custAcc = custAcc;
-        // Set the model for the tableMenu
-        tableMenu.setModel(Model);
-        // Display the menu when the frame is created
-        displaytableMenu();
-    }
-    
+//    public void CustomerMENU() {
+//        initComponents();
+//        tableMenu.setModel(Model);
+//        // Display the menu when the frame is created
+//        displaytableMenu("1");
+//    }
+//
+//    public CustomerMENU(Customer custAcc) {
+//        initComponents();
+//        this.custAcc = custAcc;
+//        // Set the model for the tableMenu
+//        tableMenu.setModel(Model);
+//        // Display the menu when the frame is created
+//        displaytableMenu("2");
+//    }
+//    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,7 +250,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     }//GEN-LAST:event_tableMenuMouseReleased
 
     private void btnOpenCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenCartActionPerformed
-        CustomerCART cart = new CustomerCART(custAcc, MenuInCart);
+        CustomerCART cart = new CustomerCART(custAcc, vendorAcc, MenuInCart);
         cart.setVisible(true);
         
     }//GEN-LAST:event_btnOpenCartActionPerformed

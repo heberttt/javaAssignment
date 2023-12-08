@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import static my.Classes.FileLocationInterface.CustomerNotificationsFilePath;
 import static my.Classes.FileLocationInterface.userFilePath;
 
-/**
+/** 
  *
  * @author himagi
  */
@@ -197,6 +197,8 @@ public class Vendor extends User {
         }
         return -1;
     }
+    
+   
     
     public void setFullName(String FullName){
         this.fullName = FullName;

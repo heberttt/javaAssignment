@@ -2,14 +2,14 @@ package my.Login;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
-
+ 
 public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocationInterface {
     Customer custAcc;
     private DefaultTableModel model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
             return false;
-        }
+        } 
     };
     private final String[] column = {"NotificationID","Date", "Time", "SenderID",  "Content"};
     /**
