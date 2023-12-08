@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import javax.swing.table.DefaultTableModel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,6 +15,7 @@ import my.Classes.*;
  */
 public class VendorMenu extends javax.swing.JFrame implements FileLocationInterface{
     Vendor vendorAcc;
+    
     int menuIdCounter = 0;
     /**
      * Creates new form Menu
@@ -28,6 +30,9 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
         this.vendorAcc = vendorAccount;
         loadMenuData();
     }
+    
+    List<String> deletedMenuIds = new ArrayList<>();
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,6 +91,11 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
                 "MenuID", "Food Name", "Price"
             }
         ));
+        MenuTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                MenuTableMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(MenuTable);
 
         FoodNameLabel.setText("Food Name");
@@ -125,7 +135,7 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -137,10 +147,9 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(FoodName)
                             .addComponent(PriceBox, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 33, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 45, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -148,10 +157,10 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
                                 .addGap(18, 18, 18)
                                 .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)))
+                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(215, 215, 215))
+                .addGap(250, 250, 250))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,6 +202,21 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
         editMenuItem();
     }//GEN-LAST:event_ButtonEditActionPerformed
 
+    private boolean menuIdExists(String menuId, String vendorId) {
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(vendorId)) {
+                return true; // MenuID already exists for the current vendor
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return false; // MenuID doesn't exist for the current vendor
+}
+    
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
         // TODO add your handling code here:
         // Generate MenuID automatically
@@ -200,12 +224,14 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
     String foodName = FoodName.getText();
     int price = Integer.parseInt(PriceBox.getText());
 
-    // Generate MenuID automatically
-    String menuId;
-    do {
-        menuIdCounter++;
-        menuId = String.valueOf(menuIdCounter);
-    } while (menuIdExists(menuId)); // Check if the generated menuId already exists
+    // Generate or reuse MenuID
+    String menuId = generateOrReuseMenuId();
+    
+    // Check if the generated or reused menuId already exists for the current vendor
+    while (menuIdExists(menuId, String.valueOf(vendorAcc.getVendorID()))) {
+        // Keep generating or reusing until a non-existing menuId is found
+        menuId = generateOrReuseMenuId();
+    }
 
     MenuIDTextPane.setText(menuId);
 
@@ -216,13 +242,31 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
     loadMenuData();
 } 
 
+    private String generateOrReuseMenuId() {
+    int i = 1;
+
+    do {
+        // Check if the current menuId is deleted and can be reused
+        if (deletedMenuIds.contains(String.valueOf(i))) {
+            deletedMenuIds.remove(String.valueOf(i));
+            return String.valueOf(i); // Return the reused menuId
+        }
+
+        i++;
+    } while (i <= menuIdCounter);
+
+    // Generate a new menuId
+    menuIdCounter++;
+    return String.valueOf(menuIdCounter);
+}
+    
 // Method to check if a given menuId already exists in the file
 private boolean menuIdExists(String menuId) {
     try {
         List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
         for (String line : lines) {
-            String[] parts = line.split(",");
-            if (parts.length > 0 && parts[0].equals(menuId)) {
+            String[] dataArr = line.split(",");
+            if (dataArr.length > 0 && dataArr[0].equals(menuId)) {
                 return true; // MenuID already exists
             }
         }
@@ -315,6 +359,24 @@ private boolean menuIdExists(String menuId) {
         evt.consume();
     }
     }//GEN-LAST:event_PriceBoxKeyTyped
+    int row = -1;
+    private void MenuTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuTableMouseReleased
+        // TODO add your handling code here:
+        this.row = MenuTable.getSelectedRow();
+
+    // Check if row is valid
+    if (row != -1) {
+        DefaultTableModel model = (DefaultTableModel) MenuTable.getModel();
+        
+        String selectedId = String.valueOf(model.getValueAt(row, 0));
+        String selectedFoodName = String.valueOf(model.getValueAt(row, 1));
+        String selectedPrice = String.valueOf(model.getValueAt(row, 2));
+        
+        MenuIDTextPane.setText(selectedId);
+        FoodName.setText(selectedFoodName);
+        PriceBox.setText(selectedPrice);
+    }                      
+    }//GEN-LAST:event_MenuTableMouseReleased
 
     private void editMenuItem() {
     int selectedRow = MenuTable.getSelectedRow();
@@ -350,7 +412,7 @@ private boolean menuIdExists(String menuId) {
     } catch (IOException e) {}}
     
     
-    private void deleteMenuItem() {
+private void deleteMenuItem() {
     int selectedRow = MenuTable.getSelectedRow();
     if (selectedRow == -1) {
         // No row selected
@@ -362,12 +424,17 @@ private boolean menuIdExists(String menuId) {
     // Remove the menu item from the file
     try {
         List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+
+        // Add the deleted menu ID to the list
+        deletedMenuIds.add(menuId);
+
+        // Create a new list for the updated lines
         List<String> updatedLines = new ArrayList<>();
 
         for (String line : lines) {
             String[] parts = line.split(",");
             if (!(parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(String.valueOf(vendorAcc.getVendorID())))) {
-                // Keep lines that don't match the menu ID and vendor ID
+                // Keep the line if it doesn't match the menu ID and vendor ID
                 updatedLines.add(line);
             }
         }
@@ -378,8 +445,11 @@ private boolean menuIdExists(String menuId) {
         // Refresh the menu table
         loadMenuData();
     } catch (IOException e) {
+        // Handle the exception (e.g., log or show an error message)
+        e.printStackTrace();
     }
 }
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

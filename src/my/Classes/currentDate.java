@@ -50,6 +50,4 @@ public class currentDate {
         return timeZone;
     }
     
-   
-    
 }

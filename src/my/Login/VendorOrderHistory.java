@@ -1,4 +1,5 @@
 package my.Login;
+import java.util.*;
 import my.Classes.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,6 +12,7 @@ import my.Classes.*;
  */
 public class VendorOrderHistory extends javax.swing.JFrame {
     Vendor vendorAcc;
+    private ArrayList<String> selectedOrder;
     /**
      * Creates new form VendorOrders
      */
@@ -39,6 +41,11 @@ public class VendorOrderHistory extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         OngoingOrderButton.setText("Ongoing Order");
+        OngoingOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OngoingOrderButtonActionPerformed(evt);
+            }
+        });
 
         OrderHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,6 +104,13 @@ public class VendorOrderHistory extends javax.swing.JFrame {
         hp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
+
+    private void OngoingOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OngoingOrderButtonActionPerformed
+        // TODO add your handling code here:
+        VendorOngoingOrder Onorder = new VendorOngoingOrder(vendorAcc, selectedOrder);
+        Onorder.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_OngoingOrderButtonActionPerformed
 
     /**
      * @param args the command line arguments

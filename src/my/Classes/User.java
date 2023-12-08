@@ -112,10 +112,4 @@ abstract class User implements FileLocationInterface {
           e.printStackTrace();
        }
     }
-    
-    
-    
-    
-    
-
 }

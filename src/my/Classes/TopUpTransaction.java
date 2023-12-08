@@ -81,6 +81,4 @@ public class TopUpTransaction implements FileLocationInterface{
        int availableId = biggestNum + 1;
        return availableId;
     }
-    
-    
 }

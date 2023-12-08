@@ -243,5 +243,5 @@ public class Administrator extends User implements FileLocationInterface {
         
         return finalInfo;
     }
-    
+     
 }

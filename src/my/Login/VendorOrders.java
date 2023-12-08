@@ -1,5 +1,12 @@
 package my.Login;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
+import static my.Classes.FileLocationInterface.ordersFilePath;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -9,8 +16,10 @@ import my.Classes.*;
  *
  * @author dvdmi
  */
+
 public class VendorOrders extends javax.swing.JFrame {
     Vendor vendorAcc;
+    private ArrayList<String> selectedOrder;
     /**
      * Creates new form VendorOrders
      */
@@ -21,6 +30,7 @@ public class VendorOrders extends javax.swing.JFrame {
     public VendorOrders(Vendor VendorAccount) {
         initComponents();
         this.vendorAcc = VendorAccount;
+        LoadVendorOrderData();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,25 +41,45 @@ public class VendorOrders extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        OpenDetailsButton = new javax.swing.JButton();
+        AcceptOrderButton = new javax.swing.JButton();
+        DeclineOrderButton = new javax.swing.JButton();
+        OngoingOrderButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        OrderTable = new javax.swing.JTable();
         BackButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Open Details");
+        OpenDetailsButton.setText("Open Details");
+        OpenDetailsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpenDetailsButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Accept Order");
+        AcceptOrderButton.setText("Accept Order");
+        AcceptOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcceptOrderButtonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Decline Order");
+        DeclineOrderButton.setText("Decline Order");
+        DeclineOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeclineOrderButtonActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Ongoing Order");
+        OngoingOrderButton.setText("Ongoing Order");
+        OngoingOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OngoingOrderButtonActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        OrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -57,12 +87,17 @@ public class VendorOrders extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "OrderID", "Date", "Time", "Customer Name", "Order Status"
+                "OrderID", "Date", "Time", "CustomerID", "Order Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        OrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                OrderTableMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(OrderTable);
 
-        BackButton.setText("BackButton");
+        BackButton.setText("Back");
         BackButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackButtonActionPerformed(evt);
@@ -80,17 +115,17 @@ public class VendorOrders extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton2)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16))))
+                                .addComponent(OpenDetailsButton)
+                                .addGap(35, 35, 35)
+                                .addComponent(AcceptOrderButton)
+                                .addGap(45, 45, 45)
+                                .addComponent(DeclineOrderButton)
+                                .addGap(36, 36, 36)
+                                .addComponent(OngoingOrderButton)
+                                .addGap(42, 42, 42))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(335, 335, 335)
-                        .addComponent(BackButton)))
+                        .addGap(310, 310, 310)
+                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(414, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -98,27 +133,126 @@ public class VendorOrders extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AcceptOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(OpenDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeclineOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(OngoingOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void LoadVendorOrderData() {
+    try {
+        File vOrder = new File(ordersFilePath);
+        Scanner scanner = new Scanner(vOrder);
+
+        ArrayList<ArrayList<String>> orderData = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String data = scanner.nextLine();
+            String[] dataArr = data.split(",");
+
+            // Ensure that the line has enough parts to avoid ArrayIndexOutOfBoundsException
+            if (dataArr.length >= 9) {
+                // Convert vendorAcc.getVendorID() to String for proper comparison
+                if (dataArr[4].equals(String.valueOf(vendorAcc.getVendorID()))) {
+                    // Add only the required columns to the list
+                    ArrayList<String> order = new ArrayList<>();
+                    order.add(dataArr[0]);
+                    order.add(dataArr[1]);
+                    order.add(dataArr[2]);
+                    order.add(dataArr[3]);
+                    order.add(dataArr[5]);
+
+                    orderData.add(order);
+                }
+            }
+        }
+
+        // Assuming you have a JTable component named NotificationTable
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("OrderID");
+        model.addColumn("Date");
+        model.addColumn("Time");
+        model.addColumn("CustomerID");
+        model.addColumn("OrderStatus");
+
+        for (ArrayList<String> order : orderData) {
+            model.addRow(order.toArray());
+        }
+
+        OrderTable.setModel(model);
+        
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }}
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
         VendorHomepage hp = new VendorHomepage(vendorAcc); // to go to the VendorMenu
         hp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
+
+    private void OpenDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenDetailsButtonActionPerformed
+        // TODO add your handling code here:
+        if (selectedOrder != null && !selectedOrder.isEmpty()) {
+        // Create a VendorOngoingOrder object and pass the selected order information
+        VendorOpenDetails OpenD = new VendorOpenDetails(vendorAcc, selectedOrder);
+        OpenD.setVisible(true);
+        this.dispose();}
+        else{
+            System.out.println("No order selected");
+        }
+    }//GEN-LAST:event_OpenDetailsButtonActionPerformed
+
+    private void AcceptOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptOrderButtonActionPerformed
+        // Check if an order is selected
+    if (selectedOrder != null && !selectedOrder.isEmpty()) {
+        // Create a VendorOngoingOrder object and pass the selected order information
+        VendorOngoingOrder ongoingOrderPage = new VendorOngoingOrder(vendorAcc, selectedOrder);
+        
+        // Show the VendorOngoingOrder page
+        ongoingOrderPage.setVisible(true);
+        this.dispose();
+
+        // Optionally, you can remove the selected order from the table
+        DefaultTableModel model = (DefaultTableModel) OrderTable.getModel();
+        model.removeRow(OrderTable.getSelectedRow());
+    }
+    }//GEN-LAST:event_AcceptOrderButtonActionPerformed
+
+    private void DeclineOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeclineOrderButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeclineOrderButtonActionPerformed
+
+    private void OngoingOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OngoingOrderButtonActionPerformed
+        // TODO add your handling code here:
+        VendorOngoingOrder Onorder = new VendorOngoingOrder(vendorAcc, selectedOrder);
+        Onorder.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_OngoingOrderButtonActionPerformed
+
+    private void OrderTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrderTableMouseReleased
+        // TODO add your handling code here:
+        int rowIndex = OrderTable.getSelectedRow();
+
+    if (rowIndex != -1) {
+        // Get the data of the selected order
+        ArrayList<String> rowData = new ArrayList<>();
+        for (int i = 0; i < OrderTable.getColumnCount(); i++) {
+            rowData.add(OrderTable.getValueAt(rowIndex, i).toString());
+        }
+
+        // Assign the local variable to the class-level variable
+        selectedOrder = rowData;
+    }
+    }//GEN-LAST:event_OrderTableMouseReleased
 
     /**
      * @param args the command line arguments
@@ -156,12 +290,12 @@ public class VendorOrders extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AcceptOrderButton;
     private javax.swing.JToggleButton BackButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton DeclineOrderButton;
+    private javax.swing.JButton OngoingOrderButton;
+    private javax.swing.JButton OpenDetailsButton;
+    private javax.swing.JTable OrderTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

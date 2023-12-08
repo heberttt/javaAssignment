@@ -1,5 +1,9 @@
 package my.Login;
-
+import java.io.*;
+import java.util.*;
+import javax.swing.table.DefaultTableModel;
+import my.Classes.*;
+import static my.Classes.FileLocationInterface.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,14 +14,180 @@ package my.Login;
  * @author dvdmi
  */
 public class VendorOpenDetails extends javax.swing.JFrame {
-
+    Vendor vendorAcc;
+    ArrayList<String> selectedOrder;
     /**
      * Creates new form VendorOpenDetails
      */
     public VendorOpenDetails() {
         initComponents();
     }
+    
+     public VendorOpenDetails(Vendor vendorAccount, ArrayList<String> selectedOrder) {
+        initComponents();
+        this.vendorAcc = vendorAccount;
+        this.selectedOrder = selectedOrder;
+        loadOrderDetails();
+    }
+     
+ private void loadOrderDetails() {
+    try {
+        // Read order details from the file
+        File ordersFile = new File(ordersFilePath);
+        Scanner scanner = new Scanner(ordersFile);
 
+        while (scanner.hasNextLine()) {
+            String orderData = scanner.nextLine();
+            String[] orderDetails = orderData.split(",");
+
+            // Check if the OrderID matches the selected order
+            if (orderDetails.length >= 9 && orderDetails[0].equals(selectedOrder.get(0))) {
+                displayMenuDetails(orderDetails);
+                break; // Exit the loop since the order is found
+            }
+        }
+        scanner.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+
+ private void displayMenuDetails(String[] orderDetails) {
+    // Check if the OrderID matches the selected order
+    if (orderDetails.length >= 9 && orderDetails[0].equals(selectedOrder.get(0))) {
+        // Display order details
+        lblOrderID.setText(orderDetails[0]);
+
+        // Fetch customer's full name from Users.txt based on CustomerID
+        String customerName = getCustomerFullName(orderDetails[3]);
+        lblCustName.setText(customerName);
+
+        // Create the table model and set column names
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("MenuID");
+        model.addColumn("Food Name");
+        model.addColumn("Quantity");
+        model.addColumn("Price");
+
+        // Display menu details in the table
+        String menus = orderDetails[6];
+        String[] menuItems = menus.split(";");
+
+        double totalPrice = 0; // Initialize total price
+
+        for (String menuItem : menuItems) {
+            // Split each menu item using "!" to get menuID and quantity
+            String[] menuDetails = menuItem.split("!");
+
+            if (menuDetails.length >= 2) {
+                String menuID = menuDetails[0];
+                String quantity = menuDetails[1];
+
+                // Calculate total price for the menu item
+                String price = getFoodPrice(menuID, orderDetails[4]);
+                model.addRow(new Object[]{menuID, getFoodName(menuID, orderDetails[4]), quantity, price});
+
+                // Increment total price
+                try {
+                    int quantityValue = Integer.parseInt(quantity);
+                    double priceValue = Double.parseDouble(price);
+                    totalPrice += quantityValue * priceValue;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // Set the model for the DetailsTable
+        DetailsTable.setModel(model);
+
+        // Set lblTotalPrice to the calculated total price
+        lblTotalPrice.setText(String.valueOf(totalPrice));
+        lblLocation.setText(orderDetails[8]);
+    }
+}
+
+
+    private String getCustomerFullName(String customerID) {
+        try {
+            File usersFile = new File(userFilePath);
+            Scanner scanner = new Scanner(usersFile);
+
+            while (scanner.hasNextLine()) {
+                String userData = scanner.nextLine();
+                String[] userDetails = userData.split(",");
+
+                if (userDetails.length >= 2 && userDetails[0].equals(customerID)) {
+                    return userDetails[1]; // Full name
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "Unknown";
+    }
+private String calculateTotalPrice(String menuID, String quantity, String vendorID) {
+    // Get the food price based on the menuID and vendorID
+    String foodPrice = getFoodPrice(menuID, vendorID);
+
+    // Parse the quantity and food price to calculate total price
+    try {
+        int quantityValue = Integer.parseInt(quantity);
+        double priceValue = Double.parseDouble(foodPrice);
+
+        double totalPrice = quantityValue * priceValue;
+        return String.valueOf(totalPrice);
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+    }
+    return "Unknown";
+}
+
+private String getFoodName(String menuID, String vendorID) {
+    try {
+        // Read food menu details from the file
+        File foodMenuFile = new File(foodMenuFilePath);
+        Scanner scanner = new Scanner(foodMenuFile);
+
+        while (scanner.hasNextLine()) {
+            String foodData = scanner.nextLine();
+            String[] foodDetails = foodData.split(",");
+
+            // Check if the menuID and vendorID match the desired menu
+            if (foodDetails.length >= 4 && foodDetails[0].equals(menuID) && foodDetails[3].equals(vendorID)) {
+                return foodDetails[1]; // Food name
+            }
+        }
+        scanner.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    return "Unknown";
+}
+private String getFoodPrice(String menuID, String vendorID) {
+    try {
+        // Read food menu details from the file
+        File foodMenuFile = new File(foodMenuFilePath);
+        Scanner scanner = new Scanner(foodMenuFile);
+
+        while (scanner.hasNextLine()) {
+            String foodData = scanner.nextLine();
+            String[] foodDetails = foodData.split(",");
+
+            // Check if the menuID and vendorID match the desired menu
+            if (foodDetails.length >= 4 && foodDetails[0].equals(menuID) && foodDetails[3].equals(vendorID)) {
+                return foodDetails[2]; // Food price
+            }
+        }
+        scanner.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    return "Unknown";
+}
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,8 +201,13 @@ public class VendorOpenDetails extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        DetailsTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        BackButton = new javax.swing.JButton();
+        lblOrderID = new javax.swing.JLabel();
+        lblCustName = new javax.swing.JLabel();
+        lblLocation = new javax.swing.JLabel();
+        lblTotalPrice = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,7 +217,7 @@ public class VendorOpenDetails extends javax.swing.JFrame {
 
         jLabel4.setText("Total Price: ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        DetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,12 +228,27 @@ public class VendorOpenDetails extends javax.swing.JFrame {
                 "MenuID", "Food Name", "Quantity", "Price"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane2.setViewportView(DetailsTable);
+        if (DetailsTable.getColumnModel().getColumnCount() > 0) {
+            DetailsTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
         jLabel5.setText("Location:");
+
+        BackButton.setText("Back");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
+
+        lblOrderID.setText("1");
+
+        lblCustName.setText("Thalia");
+
+        lblLocation.setText("APU");
+
+        lblTotalPrice.setText("100");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,38 +257,71 @@ public class VendorOpenDetails extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(268, Short.MAX_VALUE))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(lblOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCustName, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(lblTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(125, 125, 125)
+                                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(jLabel4)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(lblTotalPrice)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblOrderID))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblCustName))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblLocation))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66)))
                 .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+        VendorOrders Vorder = new VendorOrders(vendorAcc);
+        Vorder.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,13 +357,20 @@ public class VendorOpenDetails extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton;
+    private javax.swing.JTable DetailsTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCustName;
+    private javax.swing.JLabel lblLocation;
+    private javax.swing.JLabel lblOrderID;
+    private javax.swing.JLabel lblTotalPrice;
     // End of variables declaration//GEN-END:variables
 }

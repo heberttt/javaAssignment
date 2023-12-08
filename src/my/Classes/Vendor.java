@@ -195,5 +195,4 @@ public class Vendor extends User {
     public String getVendorID(){
         return this.id;
     }
-    
 }

@@ -222,6 +222,6 @@ public class Customer extends User{
     
     public void setContact(String newContact){
         this.contactNum = newContact;
-    }
+    } 
     
 }

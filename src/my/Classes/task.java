@@ -53,5 +53,4 @@ public class task {
         this.taskFinished = taskFinished;
     }
 
-    
 }

@@ -1,6 +1,7 @@
 package my.Login;
 import java.io.*;
 import java.util.*;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 import static my.Classes.FileLocationInterface.VendorNotificationFilePath;
 
@@ -16,9 +17,8 @@ public class VendorHomepage extends javax.swing.JFrame {
         this.vendorAcc = vendorAcc;
         lblWelcome.setText("Welcome " + vendorAcc.getFullName());
         
+        LoadVendorNotificationData();
     }
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,7 +95,7 @@ public class VendorHomepage extends javax.swing.JFrame {
 
         NotificationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
+                {null, null, ""},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null}
@@ -131,9 +131,9 @@ public class VendorHomepage extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,11 +179,23 @@ public class VendorHomepage extends javax.swing.JFrame {
                     notification.add(dataArr[0]);
                     notification.add(dataArr[1]);
                     notification.add(dataArr[5]);
-                    
+
                     notificationData.add(notification);
                 }
             }
         }
+
+        // Assuming you have a JTable component named NotificationTable
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("NotifID");
+        model.addColumn("SenderID");
+        model.addColumn("Messages");
+
+        for (ArrayList<String> notification : notificationData) {
+            model.addRow(notification.toArray());
+        }
+
+        NotificationTable.setModel(model);
 
     } catch (FileNotFoundException e) {
         e.printStackTrace();
@@ -225,8 +237,7 @@ public class VendorHomepage extends javax.swing.JFrame {
     }//GEN-LAST:event_RevenueDashboardButtonActionPerformed
 
     private void NotificationTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NotificationTableMouseReleased
-        // TODO add your handling code here:
-        
+        // TODO add your handling code here:   
     }//GEN-LAST:event_NotificationTableMouseReleased
 
     public static void main(String args[]) {
