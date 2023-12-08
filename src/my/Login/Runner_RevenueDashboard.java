@@ -26,7 +26,6 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
         this.runnerAcc = runnerAcc;
         int xyz = runnerAcc.getRevenue();
         RevenueBalance.setText(xyz +"");
-        //setText(runnerAcc.getRevenue().toString());
     }
     /**
      * This method is called from within the constructor to initialize the form.

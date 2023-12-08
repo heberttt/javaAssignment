@@ -1,6 +1,15 @@
 package my.Login;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
+import static my.Classes.FileLocationInterface.ordersFilePath;
+import static my.Classes.FileLocationInterface.reviewFilePath;
 import my.Classes.Runner;
+import my.Classes.RunnerReview;
+import my.Classes.runOrder;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,6 +23,8 @@ import my.Classes.Runner;
 public class Runner_Review extends javax.swing.JFrame {
 
     Runner runnerAcc;
+    ArrayList <RunnerReview> arrReview = new ArrayList<>();
+    DefaultTableModel dtm = new DefaultTableModel();
     /**
      * Creates new form Review
      */
@@ -23,6 +34,43 @@ public class Runner_Review extends javax.swing.JFrame {
     public Runner_Review(Runner runnerAcc) {
         initComponents();
         this.runnerAcc = runnerAcc;
+        loadDataReview();
+        showData();
+    }
+    
+    public void loadDataReview()
+    {
+        try{
+            File Review = new File(reviewFilePath);
+            Scanner myReader = new Scanner(Review);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrReview.add(new RunnerReview(dataArr[0],dataArr[1],
+                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6]));
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void showData()
+    {
+        Review_table.setModel(dtm);
+        dtm.addColumn("Customer ID");
+        dtm.addColumn("Date");
+        dtm.addColumn("Stars");
+        dtm.addColumn("Feedback");
+        for (int i = 0; i < arrReview.size(); i++) 
+        {
+            System.out.println(arrReview.get(i).getCustomerID());
+            System.out.println(arrReview.get(i).getDate());
+            System.out.println(arrReview.get(i).getStar());
+            System.out.println(arrReview.get(i).getFeedback());
+            dtm.addRow(new Object[]{arrReview.get(i).getCustomerID(), arrReview.get(i).getDate(), arrReview.get(i).getStar(), arrReview.get(i).getFeedback()});
+        }
     }
 
     /**
@@ -35,12 +83,12 @@ public class Runner_Review extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Review_table = new javax.swing.JTable();
         btnBTMReview = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Review_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -51,7 +99,7 @@ public class Runner_Review extends javax.swing.JFrame {
                 "OrderID", "Stars", "Feedback"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Review_table);
 
         btnBTMReview.setText("Back to Menu");
         btnBTMReview.addActionListener(new java.awt.event.ActionListener() {
@@ -129,8 +177,8 @@ public class Runner_Review extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Review_table;
     private javax.swing.JButton btnBTMReview;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
