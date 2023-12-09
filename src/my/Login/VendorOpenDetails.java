@@ -1,6 +1,7 @@
 package my.Login;
 import java.io.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 import static my.Classes.FileLocationInterface.*;
@@ -15,6 +16,7 @@ import static my.Classes.FileLocationInterface.*;
  */
 public class VendorOpenDetails extends javax.swing.JFrame {
     Vendor vendorAcc;
+    Customer custAcc;
     ArrayList<String> selectedOrder;
     /**
      * Creates new form VendorOpenDetails
@@ -73,7 +75,7 @@ public class VendorOpenDetails extends javax.swing.JFrame {
         String menus = orderDetails[6];
         String[] menuItems = menus.split(";");
 
-        double totalPrice = 0; // Initialize total price
+        int totalPrice = 0; // Initialize total price
 
         for (String menuItem : menuItems) {
             // Split each menu item using "!" to get menuID and quantity
@@ -90,7 +92,7 @@ public class VendorOpenDetails extends javax.swing.JFrame {
                 // Increment total price
                 try {
                     int quantityValue = Integer.parseInt(quantity);
-                    double priceValue = Double.parseDouble(price);
+                    int priceValue = Integer.parseInt(price);
                     totalPrice += quantityValue * priceValue;
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -208,6 +210,8 @@ private String getFoodPrice(String menuID, String vendorID) {
         lblCustName = new javax.swing.JLabel();
         lblLocation = new javax.swing.JLabel();
         lblTotalPrice = new javax.swing.JLabel();
+        AcceptButton = new javax.swing.JButton();
+        DeclineButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -250,6 +254,20 @@ private String getFoodPrice(String menuID, String vendorID) {
 
         lblTotalPrice.setText("100");
 
+        AcceptButton.setText("Accept");
+        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcceptButtonActionPerformed(evt);
+            }
+        });
+
+        DeclineButton.setText("Decline");
+        DeclineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeclineButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -265,21 +283,26 @@ private String getFoodPrice(String menuID, String vendorID) {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(lblOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCustName, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(lblLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(lblOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(71, 71, 71)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(lblTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(lblTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(125, 125, 125)
+                                .addGap(22, 22, 22)
+                                .addComponent(AcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(DeclineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
                                 .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(82, Short.MAX_VALUE))
@@ -287,30 +310,30 @@ private String getFoodPrice(String menuID, String vendorID) {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(lblTotalPrice)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(lblOrderID))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lblCustName))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(lblLocation))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblOrderID)
+                    .addComponent(jLabel4)
+                    .addComponent(lblTotalPrice))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblCustName))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lblLocation))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DeclineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(66, 66, 66)))
-                .addGap(25, 25, 25))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -318,10 +341,70 @@ private String getFoodPrice(String menuID, String vendorID) {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
-        VendorOrders Vorder = new VendorOrders(vendorAcc);
+        VendorOrders Vorder = new VendorOrders(vendorAcc, custAcc);
         Vorder.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
+
+    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
+        // TODO add your handling code here:
+    VendorFinishOrder Vorder = new VendorFinishOrder(vendorAcc, custAcc, selectedOrder);
+    Vorder.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_AcceptButtonActionPerformed
+
+    private void DeclineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeclineButtonActionPerformed
+        // TODO add your handling code here:
+        if (selectedOrder != null) {
+        // Get customer ID from the selected order
+        String customerID = selectedOrder.get(3);
+
+        updateOrderStatusToCancelled(selectedOrder.get(0));
+        String message = vendorAcc.getFullName() + " has declined the order.";
+        Notification notification = new Notification(vendorAcc.getId(), customerID, message);
+        notification.sendCustomer();
+        VendorOrders Vorder = new VendorOrders(vendorAcc, custAcc);
+        Vorder.setVisible(true);
+        this.dispose();
+        }else{
+        // Handle the case when custAcc is not initialized
+        JOptionPane.showMessageDialog(this, "Error: Customer information not available.");
+        }
+}
+        private void updateOrderStatusToCancelled(String orderID) {
+    try {
+        // Read the content of the Orders.txt file
+        File ordersFile = new File(ordersFilePath);
+        List<String> lines = new ArrayList<>();
+        Scanner scanner = new Scanner(ordersFile);
+
+        while (scanner.hasNextLine()) {
+            String orderData = scanner.nextLine();
+            String[] orderDetails = orderData.split(",");
+
+            // Check if the OrderID matches the desired order
+            if (orderDetails.length >= 9 && orderDetails[0].equals(orderID)) {
+                // Update the order status to "done"
+                orderDetails[5] = "cancelled";
+                orderData = String.join(",", orderDetails);
+            }
+
+            // Add the line to the list
+            lines.add(orderData);
+        }
+
+        scanner.close();
+
+        // Write the updated content back to the Orders.txt file
+        FileWriter writer = new FileWriter(ordersFile);
+        for (String line : lines) {
+            writer.write(line + System.lineSeparator());
+        }
+        writer.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_DeclineButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -361,7 +444,9 @@ private String getFoodPrice(String menuID, String vendorID) {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AcceptButton;
     private javax.swing.JButton BackButton;
+    private javax.swing.JButton DeclineButton;
     private javax.swing.JTable DetailsTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

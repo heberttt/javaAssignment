@@ -1,5 +1,9 @@
 package my.Login;
+import java.io.*;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
+import static my.Classes.FileLocationInterface.reviewFilePath;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -21,6 +25,40 @@ public class VendorCustReview extends javax.swing.JFrame {
     public VendorCustReview(Vendor vendorAccount) {
         initComponents();
         this.vendorAcc = vendorAccount;
+        loadReviews();
+    }
+    
+    private void loadReviews() {
+        try {
+            // Read review details from the review.txt file
+            File reviewFile = new File(reviewFilePath);
+            Scanner scanner = new Scanner(reviewFile);
+
+            // Create the table model and set column names
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("ReviewID");
+            model.addColumn("Date");
+            model.addColumn("Stars");
+            model.addColumn("Feedback");
+
+            while (scanner.hasNextLine()) {
+                String reviewData = scanner.nextLine();
+                String[] reviewDetails = reviewData.split(",");
+
+                // Check if the review belongs to the current vendor
+                if (reviewDetails.length >= 5 && reviewDetails[4].equals(vendorAcc.getVendorID())) {
+                    // Add review details to the table model
+                    model.addRow(new Object[]{reviewDetails[0], reviewDetails[1], reviewDetails[5], reviewDetails[6]});
+                }
+            }
+
+            scanner.close();
+
+            // Set the model for the jTable1
+            ReviewTable.setModel(model);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,12 +70,12 @@ public class VendorCustReview extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ReviewTable = new javax.swing.JTable();
         BackButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ReviewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -45,10 +83,10 @@ public class VendorCustReview extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ReviewID", "OrderID", "Stars", "Feedback"
+                "ReviewID", "Date", "Stars", "Feedback"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ReviewTable);
 
         BackButton.setText("Back");
         BackButton.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +166,7 @@ public class VendorCustReview extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BackButton;
+    private javax.swing.JTable ReviewTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

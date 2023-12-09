@@ -3,8 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/javaAssignment/src/my/Login/VendorOpenDetails.java</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/task.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/FileLocationInterface.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/VendorRevDashboard.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Orders.txt</file>
@@ -12,70 +12,16 @@
             <file>file:/C:/javaAssignment/src/my/Login/VendorOrders.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/currentDate.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/Notification.java</file>
+            <file>file:/C:/javaAssignment/src/my/Login/Runner_History.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/VendorHomepage.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/foodMenu.txt</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/User.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/VendorMenu.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/VendorNotifications.txt</file>
             <file>file:/C:/javaAssignment/src/my/Login/VendorOngoingOrder.java</file>
             <file>file:/C:/javaAssignment/src/my/Classes/runOrder.java</file>
             <file>file:/C:/javaAssignment/src/my/Login/VendorOrderHistory.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/C:/javaAssignment/src/my/Classes/task.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/FoodMenu.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/FileLocationInterface.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/LoginUI.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Orders.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_ViewTask.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Notification.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_History.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/RunnerReview.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/review.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_OngoingTask.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Runner.java</file>
-=======
-            <file>file:/C:/javaAssignment/src/my/Classes/CustomerNotifications.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteAdministrator.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminTopUpAmount.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/transactionReceipt.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Orders.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_ViewTask.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Customer.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerDETAILS.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/currentDate.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Runner.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/foodMenu.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/User.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerFEEDBACK.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/task.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerHISTORYDETAILS.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteVendor.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerMENU.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerVENDORS.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminTopUp.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminNewEditDeleteRunner.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerHOMEPAGE.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/task.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerTRANSACTION.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/TopUpTransaction.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/FoodMenu.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/FileLocationInterface.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/LoginUI.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerREVIEW.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/CustomerCART.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Notification.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_History.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/main.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Administrator.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdministratorHomepage.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/AdminUserRegistration.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/review.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_Menu.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/foodMenu.txt</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/User.java</file>
-            <file>file:/C:/javaAssignment/src/my/Login/Runner_Review.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/Vendor.java</file>
-            <file>file:/C:/javaAssignment/src/my/Classes/runOrder.java</file>
+            <file>file:/C:/javaAssignment/src/my/Classes/Users.txt</file>
             <file>file:/C:/javaAssignment/src/my/Classes/task.txt</file>
         </group>
     </open-files>

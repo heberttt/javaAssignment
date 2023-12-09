@@ -1,5 +1,10 @@
 package my.Login;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
+import static my.Classes.FileLocationInterface.ordersFilePath;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -21,7 +26,52 @@ public class VendorRevDashboard extends javax.swing.JFrame {
     public VendorRevDashboard(Vendor vendorAccount) {
         initComponents();
         this.vendorAcc = vendorAccount;
+        loadOrderData();
     }
+
+    private void loadOrderData() {
+        try {
+            // Read order details from the Orders.txt file
+            File orderFile = new File(ordersFilePath);
+            Scanner scanner = new Scanner(orderFile);
+
+            // Create the table model and set column names
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("OrderID");
+            model.addColumn("Income");
+            model.addColumn("Date");
+
+            double totalRevenue = 0;
+
+            while (scanner.hasNextLine()) {
+                String orderData = scanner.nextLine();
+                String[] orderDetails = orderData.split(",");
+
+                // Check if the order belongs to the current vendor and has "done" status
+                if (orderDetails.length >= 9 && orderDetails[4].equals(vendorAcc.getVendorID())
+                        && orderDetails[5].equals("done")) {
+                    // Add order details to the table model
+                    model.addRow(new Object[]{orderDetails[0], orderDetails[7], orderDetails[1]});
+                    System.out.println(orderDetails[7] + orderDetails[1]);
+                    // Sum the TotalPrice for calculating revenue
+                    totalRevenue += Double.parseDouble(orderDetails[7]);
+                }else {
+                    System.err.println("Invalid order format: " + orderData);}
+            }
+
+            scanner.close();
+
+            // Set the model for the jTable
+            RevDashboardTable.setModel(model);
+
+            // Set the total revenue in the JLabel
+            lblRevenue.setText("RM" + totalRevenue);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,7 +84,7 @@ public class VendorRevDashboard extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         RevDashboardTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblRevenue = new javax.swing.JLabel();
         BackButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,7 +104,7 @@ public class VendorRevDashboard extends javax.swing.JFrame {
 
         jLabel5.setText("Total Revenue:");
 
-        jLabel6.setText("\"REVENUE\"");
+        lblRevenue.setText("RM");
 
         BackButton.setText("Back");
         BackButton.addActionListener(new java.awt.event.ActionListener() {
@@ -68,16 +118,19 @@ public class VendorRevDashboard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(BackButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                        .addComponent(lblRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(307, 307, 307)
+                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,10 +140,10 @@ public class VendorRevDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(43, 43, 43)
+                    .addComponent(lblRevenue))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,7 +195,7 @@ public class VendorRevDashboard extends javax.swing.JFrame {
     private javax.swing.JToggleButton BackButton;
     private javax.swing.JTable RevDashboardTable;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblRevenue;
     // End of variables declaration//GEN-END:variables
 }

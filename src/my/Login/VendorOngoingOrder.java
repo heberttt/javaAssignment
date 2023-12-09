@@ -14,6 +14,7 @@ import my.Classes.*;
  */ 
 public class VendorOngoingOrder extends javax.swing.JFrame {
     Vendor vendorAcc;
+    Customer custAcc;
     ArrayList<String> selectedOrder;
     /**
      * Creates new form VendorOpenDetails
@@ -142,7 +143,7 @@ public class VendorOngoingOrder extends javax.swing.JFrame {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
-        VendorOrders Vorder = new VendorOrders(vendorAcc);
+        VendorOrders Vorder = new VendorOrders(vendorAcc, custAcc);
         Vorder.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
