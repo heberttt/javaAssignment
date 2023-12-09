@@ -78,7 +78,7 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable3.setModel(Model);
         jScrollPane3.setViewportView(jTable3);

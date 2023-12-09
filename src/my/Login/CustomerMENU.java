@@ -127,7 +127,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
 
         checkbox1.setLabel("checkbox1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblMenu.setText("MENU");
 

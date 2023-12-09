@@ -120,7 +120,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         Feedbackbtn = new javax.swing.JButton();
         reorderbtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         historyDetailsTable.setModel(Model);
         historyDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -320,7 +320,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
     private String selectedVendorId;
     
     private void historyDetailsTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyDetailsTableMouseReleased
-        this.row = historyDetailsTable.getSelectedRow();
+        /*this.row = historyDetailsTable.getSelectedRow();
         System.out.println(this.row);
         
         String menuId = historyDetailsTable.getValueAt(this.row, 0).toString();
@@ -330,12 +330,12 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
          if (vendorId != null) {
         System.out.println("Vendor ID: " + vendorId);
 
-         Vendor vendor = new Vendor(vendorId);
+        Vendor vendor = new Vendor(vendorId);
         vendor.getVdrDatafromID();
          }
          else {
         System.out.println("Vendor ID not found for Menu ID: " + menuId);
-    }
+        }*/
 
     }//GEN-LAST:event_historyDetailsTableMouseReleased
 

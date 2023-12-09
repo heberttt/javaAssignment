@@ -8,11 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import my.Classes.*;
-import static my.Login.CustomerREVIEW.fetchReviewsFromFeedbackFile;
 
 public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLocationInterface{
     Customer custAcc;
     String vendorId;
+    Vendor vendorAcc;
     /**
      * Creates new form FEEDBACK
      */
@@ -21,8 +21,11 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
     }
     
     public CustomerVENDORFEEDBACK(Customer custAcc, String VendorId){
-    this.custAcc = custAcc;
-    this.vendorId = vendorId;
+        this.custAcc = custAcc;
+        this.vendorId = VendorId;
+        vendorAcc = new Vendor(vendorId);
+        vendorAcc.getVdrDatafromID();
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,12 +45,9 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         feedbackTextField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
+        tfStars = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jTextPane1);
 
@@ -59,7 +59,7 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
 
         jRadioButton1.setText("jRadioButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         feedbackTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,27 +76,11 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
 
         jLabel1.setText("REVIEW:");
 
-        jRadioButton2.setText("1");
+        jLabel3.setText("(1-5)");
 
-        jRadioButton3.setText("2");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
+        tfStars.setText("jTextField1");
 
-        jRadioButton4.setText("3");
-
-        jRadioButton5.setText("4");
-        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton5ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton6.setText("5");
-
-        jLabel3.setText("RATE");
+        jLabel4.setText("RATE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,49 +88,48 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(feedbackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(86, 86, 86)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton6))
-                            .addComponent(feedbackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                                .addComponent(tfStars, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(47, 47, 47)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(355, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(feedbackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
+                        .addGap(160, 160, 160)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(feedbackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(82, 82, 82)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jRadioButton6)
-                            .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton3)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                            .addComponent(tfStars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(25, 25, 25))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(366, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(97, 97, 97)))
         );
 
         pack();
@@ -156,22 +139,15 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         // TODO add your handling code here:
     }//GEN-LAST:event_feedbackTextFieldActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-        
-    }//GEN-LAST:event_jRadioButton5ActionPerformed
-
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-     
-        Vendor vendor = new Vendor(vendorId);
-        vendor.getVdrDatafromID();
-        
-        CustomerMENU cm = new CustomerMENU(custAcc, vendor);
-        cm.setVisible(true);
-        
+        currentDate date = new currentDate();
+        int stars = Integer.parseInt(tfStars.getText());
+        String feedback = feedbackTextField.getText();
+        Review review = new Review(custAcc,vendorAcc, stars, feedback);
+        review.writeReview();
+        /*CustomerMENU cm = new CustomerMENU(custAcc, vendor);
+        cm.setVisible(true);*/
+        /*
         String feedback = feedbackTextField.getText();
         int rating = getSelectedRating();
 
@@ -182,7 +158,7 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         } else {
             saveFeedbackToFile(feedback, rating);
 
-        }
+        }*/
     }                                            
 
     private void saveFeedbackToFile(String feedback, int rating) {
@@ -194,23 +170,16 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         }
     }
 
-    private int getSelectedRating() {
-        if (jRadioButton2.isSelected()) return 1;
-        else if (jRadioButton3.isSelected()) return 2;
-        else if (jRadioButton4.isSelected()) return 3;
-        else if (jRadioButton5.isSelected()) return 4;
-        else if (jRadioButton6.isSelected()) return 5;
-        else return -1; // No rating selected
-    }                                            
+                                            
 
-    private void showCustomerREVIEW() {
+    /*private void showCustomerREVIEW() {
         CustomerREVIEW reviewPage = new CustomerREVIEW();
         List<String> reviews = fetchReviewsFromFeedbackFile(); 
         reviewPage.setReviews(reviews); 
         reviewPage.setVisible(true);
         this.dispose();
    
-    }
+    }*/
     
 /*
     private void showCustomerREVIEW() {
@@ -278,16 +247,13 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField tfStars;
     // End of variables declaration//GEN-END:variables
 }

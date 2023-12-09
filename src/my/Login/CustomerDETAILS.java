@@ -95,7 +95,7 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         detailsTable.setModel(Model);
         jScrollPane1.setViewportView(detailsTable);

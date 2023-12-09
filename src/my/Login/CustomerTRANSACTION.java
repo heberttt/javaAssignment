@@ -54,7 +54,7 @@ public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocat
         TransactionTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         TransactionTable.setModel(Model);
         jScrollPane1.setViewportView(TransactionTable);

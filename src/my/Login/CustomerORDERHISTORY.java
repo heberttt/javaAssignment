@@ -50,7 +50,7 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
         orderhistoryTable = new javax.swing.JTable();
         openHistoryDetails = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         orderhistoryTable.setModel(Model);
         jScrollPane1.setViewportView(orderhistoryTable);
