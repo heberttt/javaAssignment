@@ -37,6 +37,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.vendorAcc = vendorAcc;
         initComponents();
         displaytableMenu(vendorAcc.getId());
+        displaytableReview(vendorAcc.getId());
         lblMenu.setText(vendorAcc.getRestaurantName() + "'s Menu");
         
     }
@@ -47,9 +48,15 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
             return false;
         }
     };
-    
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
     private final String[] column = {"MenuID", "FoodName", "price"};
     
+     private final String[] Column = {"STARS", "CUSTOMERID", "FEEDBACK"};
     
        public CustomerMENU() {
         initComponents();
@@ -66,7 +73,11 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         custAcc.displaytableMenu(Model, vendorAcc.getId());
         tableMenu.setModel(Model);
     }
-
+    public void displaytableReview(String id){
+        model.setColumnIdentifiers(Column);
+        custAcc.displaytableReview(model, vendorAcc.getId());
+        feedbackTable.setModel(model);
+    }
 
     
     
@@ -104,7 +115,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         btnAdd = new javax.swing.JButton();
         btnOpenCart = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        feedbackTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -145,18 +156,8 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "STARS", "CUSTOMERID", "FEEDBACK"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable2);
+        feedbackTable.setModel(model);
+        jScrollPane3.setViewportView(feedbackTable);
 
         jLabel2.setText("jLabel2");
 
@@ -279,12 +280,12 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnOpenCart;
     private java.awt.Checkbox checkbox1;
+    private javax.swing.JTable feedbackTable;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JTable tableMenu;
     // End of variables declaration//GEN-END:variables

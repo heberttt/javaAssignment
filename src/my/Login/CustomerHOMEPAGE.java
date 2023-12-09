@@ -1,10 +1,14 @@
 package my.Login;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
+import static my.Login.CustomerREVIEW.fetchReviewsFromFeedbackFile;
 
  
 public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocationInterface {
     Customer custAcc;
+    Administrator adminAcc;
+        Customer searchedCust;
     private DefaultTableModel model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
@@ -171,7 +175,12 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnReviewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReviewsActionPerformed
-        // TODO add your handling code here:
+          CustomerREVIEW reviewPage = new CustomerREVIEW();
+        List<String> reviews = fetchReviewsFromFeedbackFile(); 
+        reviewPage.setReviews(reviews); 
+        reviewPage.setVisible(true);
+
+        
     }//GEN-LAST:event_jBtnReviewsActionPerformed
 
     private void jBtnVendorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVendorsActionPerformed
@@ -185,7 +194,12 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
     }//GEN-LAST:event_jBtnOrdersActionPerformed
 
     private void jBtnWalletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnWalletActionPerformed
-        // TODO add your handling code here:
+
+
+            CustomerTRANSACTION ct  = new CustomerTRANSACTION(custAcc);
+            ct.setVisible(true);
+            this.dispose();
+        
     }//GEN-LAST:event_jBtnWalletActionPerformed
 
     /**

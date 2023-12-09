@@ -5,15 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Mohamed Abdihakim
- */
 public class CustomerCART extends javax.swing.JFrame implements FileLocationInterface {
     ArrayList<FoodMenu> MenusInCart;
     private final String[] column = {"MenuID", "Name", "Price","Quantity"};

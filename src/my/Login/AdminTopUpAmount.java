@@ -155,7 +155,7 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(tfTopUpAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                         .addComponent(btnTopUp)
                         .addGap(64, 64, 64))))
         );

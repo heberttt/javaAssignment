@@ -1,25 +1,104 @@
 package my.Login;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- * 
- * @author Mohamed Abdihakim
- */
 public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLocationInterface{
 
-    /**
-     * Creates new form DETAILS
-     */
+    Customer custAcc;
+    Vendor vendorAcc;
+       private JTable JTable1;
+      private CustomerCART customerCart;
+    private String selectedID = "";
+    private String selectedFoodName = "";
+    private String selectedPrice = "";
+     private String selectedMenuId = "";
+     private int row = -1;
+    ArrayList<String> selectedMenus = new ArrayList<String>();
+    ArrayList<FoodMenu> MenuInCart = new ArrayList<FoodMenu>();
+        private FoodMenu foodItem;
+    private DefaultTableModel Model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+    }
+        
+    };
+    
     public CustomerHISTORYDETAILS() {
         initComponents();
+        jLabel5 = new JLabel();
+        jLabel6 = new JLabel();
+        jLabel7 = new JLabel();
+  
+        historyDetailsTable = new JTable(Model);
     }
 
+    private final String[] column = {"MENUID", "STATUS"};
+     
+     public CustomerHISTORYDETAILS(Customer custAccount){
+         initComponents();
+         this.custAcc = custAccount;
+         
+          JTable1 = new JTable(Model);
+          JTable1.setModel(Model);
+          displayreorder();
+          historyDetailsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            showOnLabel();
+        }
+    });
+          
+          
+          this.customerCart = new CustomerCART();
+          displayhistoryDetailsTable();
+          
+          
+     }
+     
+      public void displayreorder(){
+        Model.setColumnIdentifiers(column);
+        custAcc.displayreorder(Model,custAcc.getId());
+    }
+     
+     public void displayhistoryDetailsTable(){
+         Model.setColumnIdentifiers(column);
+         custAcc.displayorderhistorydetails(Model, "done");
+         
+     }
+      
+      private void showOnLabel() {
+    int selectedRow = historyDetailsTable.getSelectedRow();
+
+    if (selectedRow != -1) {
+        String orderId = (String) Model.getValueAt(selectedRow, 0);
+        
+ ArrayList<String> additionalDetails = custAcc.getAdditionalDetails(orderId);
+
+        
+        if (additionalDetails.size() >= 3) {
+            
+            jLabel5.setText(additionalDetails.get(0));
+            jLabel6.setText(additionalDetails.get(1));
+            jLabel7.setText(additionalDetails.get(2));
+        } 
+    }
+}
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +109,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        historyDetailsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -38,23 +117,18 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Feedbackbtn = new javax.swing.JButton();
+        reorderbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "MENU ID", "QUANTITY"
+        historyDetailsTable.setModel(Model);
+        historyDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                historyDetailsTableMouseReleased(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+        jScrollPane1.setViewportView(historyDetailsTable);
 
         jLabel1.setText("ORDERID");
 
@@ -68,45 +142,59 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
 
         jLabel7.setText("jLabel7");
 
-        jButton1.setText("GIVE FEEDBACK");
+        Feedbackbtn.setText("GIVE FEEDBACK");
+        Feedbackbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FeedbackbtnActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("RE-ORDER");
+        reorderbtn.setText("RE-ORDER");
+        reorderbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reorderbtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(58, 58, 58))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Feedbackbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -114,27 +202,166 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel7))
-                        .addGap(29, 29, 29)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Feedbackbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void FeedbackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FeedbackbtnActionPerformed
+         if (selectedVendorId != null) {
+        // Assuming custAcc is your customer account
+        CustomerVENDORFEEDBACK cf = new CustomerVENDORFEEDBACK(custAcc, selectedVendorId);
+        cf.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row in the history details table.");
+    }
+    }//GEN-LAST:event_FeedbackbtnActionPerformed
+
+   
+    private void reorderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reorderbtnActionPerformed
+
+        this.row = historyDetailsTable.getSelectedRow();
+        System.out.println(this.row);
+        String orderId = historyDetailsTable.getValueAt(this.row, 0).toString();
+        System.out.println(orderId);
+        
+        
+         Customer order = new Customer(orderId);
+        order.getorderDatafromID();
+
+
+        if (!(row == -1)){
+            if(!selectedMenus.contains(this.selectedID)){
+                selectedMenus.add(this.selectedID);
+                int quantity = showIntegerInputDialog("Enter amount: ");
+                FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
+                MenuInCart.add(aMenu);
+                JOptionPane.showMessageDialog(null, "Menu added to cart");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "You have selected that menu");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a menu");
+        }
+    }                 
+    
+    private int showIntegerInputDialog(String message){
+        int userInput = -1;
+        try {
+                String inputString = JOptionPane.showInputDialog(null, message);
+
+                userInput = Integer.parseInt(inputString);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please Enter an amount:");
+            }
+                CustomerCART cart = new CustomerCART(custAcc, vendorAcc, MenuInCart);
+        cart.setVisible(true);
+        
+        return userInput;
+        
+//        this.row = historyDetailsTable.getSelectedRow();
+//
+//    // Check if a row is selected
+//    if (row == -1) {
+//        // No row selected, handle this case if needed
+//        return;
+//    }
+//
+//    this.selectedID = historyDetailsTable.getValueAt(this.row, 0).toString();
+//
+//    Customer custAcc = new Customer(); // replace with your actual class name
+//
+//    // Call the readFoodMenuData method to get FoodMenu data based on the selected ID
+//    FoodMenu foodItem = custAcc.readFoodMenuData(selectedID);
+//
+//    // Assuming you have a method to populate data into the cart table
+//    populateCartTable(foodItem);
+    
+    
+      
+      
+  
+//    
+//    private int showIntegerInputDialog(String message){
+//        int userInput = -1;
+//        try {
+//                String inputString = JOptionPane.showInputDialog(null, message);
+//
+//                userInput = Integer.parseInt(inputString);
+//
+//            } catch (NumberFormatException e) {
+//                JOptionPane.showMessageDialog(null, "Please Enter an amount:");
+//            }
+//    
+//        
+//        return userInput;
+//        
+    }//GEN-LAST:event_reorderbtnActionPerformed
+
+    private String selectedVendorId;
+    
+    private void historyDetailsTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyDetailsTableMouseReleased
+        this.row = historyDetailsTable.getSelectedRow();
+        System.out.println(this.row);
+        
+        String menuId = historyDetailsTable.getValueAt(this.row, 0).toString();
+        System.out.println("Menu ID: " + menuId);
+        
+        String vendorId = getVendorIdFromMenuId(menuId);
+         if (vendorId != null) {
+        System.out.println("Vendor ID: " + vendorId);
+
+         Vendor vendor = new Vendor(vendorId);
+        vendor.getVdrDatafromID();
+         }
+         else {
+        System.out.println("Vendor ID not found for Menu ID: " + menuId);
+    }
+
+    }//GEN-LAST:event_historyDetailsTableMouseReleased
+
+    private String getVendorIdFromMenuId(String menuId) {
+    String vendorId = null;
+    try {
+        File myObj = new File(ordersFilePath); // Update with your actual file path
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            if (!data.isEmpty()) {
+                String[] dataArr = data.split(",");
+                if (dataArr[0].equals(menuId)) {
+                    vendorId = dataArr[6]; // Assuming vendor ID is in the second column
+                    break;
+                }
+            }
+        }
+        myReader.close();
+    } catch (FileNotFoundException e) {
+        System.out.println("An error occurred while retrieving vendor ID.");
+        e.printStackTrace();
+    }
+    return vendorId;
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -163,16 +390,16 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable() {   
+         public void run() {
                 new CustomerDETAILS().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton Feedbackbtn;
+    private javax.swing.JTable historyDetailsTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -181,6 +408,6 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton reorderbtn;
     // End of variables declaration//GEN-END:variables
 }

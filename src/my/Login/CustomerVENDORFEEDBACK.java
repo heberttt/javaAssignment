@@ -8,17 +8,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import my.Classes.*;
+import static my.Login.CustomerREVIEW.fetchReviewsFromFeedbackFile;
 
-public class CustomerFEEDBACK extends javax.swing.JFrame implements FileLocationInterface{
-    
- 
+public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLocationInterface{
+    Customer custAcc;
+    String vendorId;
     /**
      * Creates new form FEEDBACK
      */
-    public CustomerFEEDBACK() {
+    public CustomerVENDORFEEDBACK() {
         initComponents();
     }
-
+    
+    public CustomerVENDORFEEDBACK(Customer custAcc, String VendorId){
+    this.custAcc = custAcc;
+    this.vendorId = vendorId;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,12 +165,52 @@ public class CustomerFEEDBACK extends javax.swing.JFrame implements FileLocation
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-                                              
-      
+     
+        Vendor vendor = new Vendor(vendorId);
+        vendor.getVdrDatafromID();
+        
+        CustomerMENU cm = new CustomerMENU(custAcc, vendor);
+        cm.setVisible(true);
+        
+        String feedback = feedbackTextField.getText();
+        int rating = getSelectedRating();
+
+        if (feedback.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please provide feedback.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (rating == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a rating.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            saveFeedbackToFile(feedback, rating);
+
+        }
     }                                            
 
-   
+    private void saveFeedbackToFile(String feedback, int rating) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reviewFilePath, true))) {
+            writer.write("Rating: " + rating + "\n");
+            writer.write("Feedback: " + feedback + "\n\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private int getSelectedRating() {
+        if (jRadioButton2.isSelected()) return 1;
+        else if (jRadioButton3.isSelected()) return 2;
+        else if (jRadioButton4.isSelected()) return 3;
+        else if (jRadioButton5.isSelected()) return 4;
+        else if (jRadioButton6.isSelected()) return 5;
+        else return -1; // No rating selected
+    }                                            
+
+    private void showCustomerREVIEW() {
+        CustomerREVIEW reviewPage = new CustomerREVIEW();
+        List<String> reviews = fetchReviewsFromFeedbackFile(); 
+        reviewPage.setReviews(reviews); 
+        reviewPage.setVisible(true);
+        this.dispose();
+   
+    }
     
 /*
     private void showCustomerREVIEW() {
@@ -196,14 +241,22 @@ public class CustomerFEEDBACK extends javax.swing.JFrame implements FileLocation
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -216,7 +269,7 @@ public class CustomerFEEDBACK extends javax.swing.JFrame implements FileLocation
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerFEEDBACK().setVisible(true);
+                new CustomerVENDORFEEDBACK().setVisible(true);
             }
         });
 }

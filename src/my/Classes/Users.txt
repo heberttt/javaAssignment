@@ -1,6 +1,6 @@
 1,idkk,1,idk,Admin
 
-9,jovin gazani,r,11122233455,Customer,1113
+9,jovin gazani,r,11122233455,Customer,960
 
 14,akil,passworcc,12,Vendor,kebeb,20
 15,nanas,a23,12223,Vendor,nasi bakaraa,0
