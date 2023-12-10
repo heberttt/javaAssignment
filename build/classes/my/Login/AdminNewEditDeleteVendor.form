@@ -249,6 +249,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfRestaurantName">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfRestaurantNameActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
 import static my.Classes.FileLocationInterface.userFilePath;
-
+  
 /**
  *
  * @author himagi
@@ -104,7 +104,7 @@ abstract class User implements FileLocationInterface {
             if(biggestNum <= Integer.parseInt(data)){
                 biggestNum = Integer.parseInt(data);
             }
-        }
+        } 
         myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
@@ -112,7 +112,7 @@ abstract class User implements FileLocationInterface {
         } 
        int availableId = biggestNum + 1;
        return availableId;
-    }
+    } 
     
     
     public void deleteAccount(){

@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
- *
+ *   
  * @author himagi
  */
 public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
@@ -112,6 +112,12 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
+            }
+        });
+
+        tfRestaurantName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfRestaurantNameActionPerformed(evt);
             }
         });
 
@@ -318,6 +324,10 @@ public class AdminNewEditDeleteVendor extends javax.swing.JFrame {
         tfPassword.setText(selectedPassword);
         tfContact.setText(selectedContact);
     }//GEN-LAST:event_tableVendorMouseReleased
+
+    private void tfRestaurantNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRestaurantNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfRestaurantNameActionPerformed
 
     /**
      * @param args the command line arguments

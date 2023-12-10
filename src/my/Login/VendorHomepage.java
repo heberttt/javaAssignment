@@ -1,19 +1,25 @@
 package my.Login;
+import java.io.*;
+import java.util.*;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
+import static my.Classes.FileLocationInterface.VendorNotificationFilePath;
 
 public class VendorHomepage extends javax.swing.JFrame {
     Vendor vendorAcc;
+    Customer custAcc;
 
     public VendorHomepage() {
         initComponents();
     }
-    
+      
     public VendorHomepage(Vendor vendorAcc) {
         initComponents();
         this.vendorAcc = vendorAcc;
         lblWelcome.setText("Welcome " + vendorAcc.getFullName());
+        
+        LoadVendorNotificationData();
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,7 +96,7 @@ public class VendorHomepage extends javax.swing.JFrame {
 
         NotificationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
+                {null, null, ""},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null}
@@ -99,28 +105,36 @@ public class VendorHomepage extends javax.swing.JFrame {
                 "NotifID", "SenderID", "Messages"
             }
         ));
+        NotificationTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                NotificationTableMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(NotificationTable);
 
-        lblWelcome.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblWelcome.setText("WELCOME");
+        lblWelcome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblWelcome.setText("Welcome");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(MenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(OrdersButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(OrderHistoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CustomerReviewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RevenueDashboardButton))
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(MenuButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(OrdersButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(OrderHistoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CustomerReviewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(RevenueDashboardButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(282, 282, 282)
+                        .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,6 +160,48 @@ public class VendorHomepage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void LoadVendorNotificationData() {
+    try {
+        File Vfile = new File(VendorNotificationFilePath);
+        Scanner scanner = new Scanner(Vfile);
+
+        ArrayList<ArrayList<String>> notificationData = new ArrayList<ArrayList<String>>();
+
+        while (scanner.hasNextLine()) {
+            String data = scanner.nextLine();
+            String[] dataArr = data.split(",");
+
+            // Ensure that the line has enough parts to avoid ArrayIndexOutOfBoundsException
+            if (dataArr.length >= 3) {
+                // Convert vendorAcc.getVendorID() to String for proper comparison
+                if (dataArr[2].equals(String.valueOf(vendorAcc.getVendorID()))) {
+                    // Add only the required columns to the list
+                    ArrayList<String> notification = new ArrayList<String>();
+                    notification.add(dataArr[0]);
+                    notification.add(dataArr[1]);
+                    notification.add(dataArr[5]);
+
+                    notificationData.add(notification);
+                }
+            }
+        }
+
+        // Assuming you have a JTable component named NotificationTable
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("NotifID");
+        model.addColumn("SenderID");
+        model.addColumn("Messages");
+
+        for (ArrayList<String> notification : notificationData) {
+            model.addRow(notification.toArray());
+        }
+
+        NotificationTable.setModel(model);
+
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }}
+
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
         // TODO add your handling code here:
         VendorMenu menu = new VendorMenu(vendorAcc); // to go to the VendorMenu
@@ -155,27 +211,35 @@ public class VendorHomepage extends javax.swing.JFrame {
 
     private void OrdersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdersButtonActionPerformed
         // TODO add your handling code here:
-        VendorOrders order = new VendorOrders();
+        VendorOrders order = new VendorOrders(vendorAcc, custAcc);
         order.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_OrdersButtonActionPerformed
 
     private void OrderHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderHistoryButtonActionPerformed
         // TODO add your handling code here:
-        VendorOrderHistory orderH = new VendorOrderHistory();
+        VendorOrderHistory orderH = new VendorOrderHistory(vendorAcc);
         orderH.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_OrderHistoryButtonActionPerformed
 
     private void CustomerReviewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerReviewButtonActionPerformed
         // TODO add your handling code here:
-        VendorCustReview custRev = new VendorCustReview();
+        VendorCustReview custRev = new VendorCustReview(vendorAcc);
         custRev.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_CustomerReviewButtonActionPerformed
 
     private void RevenueDashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueDashboardButtonActionPerformed
         // TODO add your handling code here:
-        VendorRevDashboard revDash = new VendorRevDashboard();
+        VendorRevDashboard revDash = new VendorRevDashboard(vendorAcc);
         revDash.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_RevenueDashboardButtonActionPerformed
+
+    private void NotificationTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NotificationTableMouseReleased
+        // TODO add your handling code here:   
+    }//GEN-LAST:event_NotificationTableMouseReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

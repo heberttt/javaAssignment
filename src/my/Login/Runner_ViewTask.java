@@ -1,6 +1,24 @@
 package my.Login;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
+import my.Classes.Administrator;
+import my.Classes.Customer;
+import static my.Classes.FileLocationInterface.foodMenuFilePath;
+import static my.Classes.FileLocationInterface.ordersFilePath;
+import static my.Classes.FileLocationInterface.taskFilePath;
+import static my.Classes.FileLocationInterface.userFilePath;
+import my.Classes.FoodMenu;
 import my.Classes.Runner;
+import my.Classes.Vendor;
+import my.Classes.runOrder;
+import my.Classes.task;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,19 +29,194 @@ import my.Classes.Runner;
  *
  * @author Shenlung
  */
-public class Runner_ViewTask extends javax.swing.JFrame {
 
+public class Runner_ViewTask extends javax.swing.JFrame {
+    
+    ArrayList<task> arrTask = new ArrayList<>();
+    ArrayList<task> arrAllTask = new ArrayList<>();
+    ArrayList<Customer> arrCust = new ArrayList<>();
+    ArrayList<runOrder> arrOrders = new ArrayList<>();
+    ArrayList<FoodMenu> arrMenu = new ArrayList<>();
+    DefaultTableModel dtm = new DefaultTableModel();
     Runner runnerAcc;
+    ArrayList<Integer> idxTask = new ArrayList<>();
+    ArrayList<Integer> idxCust = new ArrayList<>();
+    ArrayList<Integer> idxOrder = new ArrayList<>();
+    
+    int posClick = -1;
+    
     /**
      * Creates new form Task
      */
     public Runner_ViewTask() {
         initComponents();
     }
+    public void loadDataTask()
+    {
+        try{
+            File task = new File(taskFilePath);
+            Scanner myReader = new Scanner(task);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[2].equalsIgnoreCase("none"))
+                {
+                    if(dataArr[3].equalsIgnoreCase("false"))
+                    {
+                        arrTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],dataArr[2],dataArr[3]));
+                    }
+                }
+                arrAllTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],dataArr[2],dataArr[3]));
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        
+    }
     
+    public void loadDataOrder()
+    {
+        try{
+            File Order = new File(ordersFilePath);
+            Scanner myReader = new Scanner(Order);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                if(!data.equals("")){
+                    String[] dataArr = data.split(",");
+                    arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
+                            dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[7]));
+                } else {
+                }
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    public void loadDataCustomer()
+    {
+        try{
+            File cust = new File(userFilePath);
+            Scanner myReader = new Scanner(cust);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                if(!data.equals(""))
+                {
+                    String[] dataArr = data.split(",");
+                    if (dataArr[4].equals("Customer")){
+                        arrCust.add(new Customer (dataArr[0],dataArr[1],
+                        dataArr[2],dataArr[3],Integer.parseInt(dataArr[5])));
+                    }
+                }
+            }
+            myReader.close();
+    }       catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    public void loadDataMenu()
+    {
+        try{
+            File Menu = new File(foodMenuFilePath);
+            Scanner myReader = new Scanner(Menu);
+            while(myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrMenu.add(new FoodMenu(dataArr[0],dataArr[1],dataArr[2],null));
+            }
+            myReader.close();
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void saveDataTask()
+    {
+        for (int i = 0; i < arrTask.size(); i++) {
+            System.out.println(arrAllTask.get(i).getOrderID());
+            System.out.println(arrAllTask.get(i).getStatus());
+            System.out.println(arrAllTask.get(i).getTaskFinished());
+        }
+        
+        for(int i=0; i<arrTask.size(); i++){
+            for (int j = 0; j < arrAllTask.size(); j++) {
+                if (arrTask.get(i).getOrderID() == arrAllTask.get(j).getOrderID()){
+                    arrAllTask.get(j).setStatus(arrTask.get(i).getStatus());
+                    arrAllTask.get(j).setTaskFinished(arrTask.get(i).getTaskFinished());
+                }
+                
+            }
+        }
+        
+        for (int i = 0; i < arrTask.size(); i++) {
+            System.out.println(arrAllTask.get(i).getOrderID());
+            System.out.println(arrAllTask.get(i).getStatus());
+            System.out.println(arrAllTask.get(i).getTaskFinished());
+        }
+        
+        try{
+            File f = new File(taskFilePath);
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+            String line = "";
+            for (int i = 0; i < arrAllTask.size(); i++) {
+                line = arrAllTask.get(i).getOrderID() + "," + 
+                       arrAllTask.get(i).getTime() + "," +
+                       arrAllTask.get(i).getStatus()+ "," +
+                       arrAllTask.get(i).getTaskFinished();
+                bw.write(line + "\n");
+            }
+            bw.close();
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    public void showData() 
+    {
+        ViewTask_table.setModel(dtm);
+        dtm.addColumn("OrderID");
+        dtm.addColumn("Time");
+        dtm.addColumn("Customer Name");
+        
+        String CustName = "";
+        idxCust.clear();
+        idxOrder.clear();
+        idxTask.clear();
+        for (int i = 0; i < arrTask.size(); i++) {
+                System.out.println(arrTask.get(i).getOrderID());
+                
+                for (int j = 0; j < arrOrders.size(); j++) {
+                    if(arrTask.get(i).getOrderID() == arrOrders.get(i).getOrderID()){
+                        String CustID = arrOrders.get(j).getCustomerID();
+                        
+                        for (int k = 0; k < arrCust.size(); k++) {
+                            if(arrCust.get(k).getId().equals(CustID)){
+                            CustName = arrCust.get(k).getFullName();
+                            idxTask.add(i);
+                            idxOrder.add(j);
+                            idxCust.add(k);
+                            }
+                        }
+                    }
+                }
+                dtm.addRow(new Object[]{arrTask.get(i).getOrderID(), arrTask.get(i).getTime(),
+                                    CustName});
+            }
+    }
     public Runner_ViewTask(Runner runnerAcc) {
         initComponents();
         this.runnerAcc = runnerAcc;
+        loadDataTask();
+        loadDataCustomer();
+        loadDataOrder();
+        loadDataMenu();
+        showData();
     }
 
     /**
@@ -57,7 +250,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnAcceptTask.setText("Accept");
+        btnAcceptTask.setText("View");
         btnAcceptTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAcceptTaskActionPerformed(evt);
@@ -72,9 +265,14 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "OrderDate", "OrderID", "CustomerID", "CustomerName", "Location"
+                "OrderDate", "Time", "OrderID", "CustomerName", "Location"
             }
         ));
+        ViewTask_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ViewTask_tableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(ViewTask_table);
 
         btnBTMView.setText("Back to Menu");
@@ -91,13 +289,13 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnBTMView)
                         .addGap(205, 205, 205)
-                        .addComponent(btnAcceptTask, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAcceptTask, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(167, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,10 +322,19 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBTMViewActionPerformed
 
     private void btnAcceptTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptTaskActionPerformed
-        Runner_OngoingTask ot = new Runner_OngoingTask(runnerAcc);
+        if(posClick > -1){
+        Runner_OngoingTask ot = new Runner_OngoingTask(runnerAcc,this);
         ot.setVisible(true);
         dispose();
+        }
+        
+        
+        
     }//GEN-LAST:event_btnAcceptTaskActionPerformed
+
+    private void ViewTask_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ViewTask_tableMouseClicked
+        posClick = ViewTask_table.getSelectedRow();
+    }//GEN-LAST:event_ViewTask_tableMouseClicked
 
     /**
      * @param args the command line arguments

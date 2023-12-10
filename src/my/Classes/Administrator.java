@@ -16,7 +16,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static my.Classes.FileLocationInterface.userFilePath;
-
+   
 /**
  *
  * @author himagi
@@ -510,4 +510,5 @@ public class Administrator extends User implements FileLocationInterface {
             table.addRow(finalData);
       }   	
     }
+     
 }

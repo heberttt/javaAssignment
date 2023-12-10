@@ -11,11 +11,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static my.Classes.FileLocationInterface.CustomerNotificationsFilePath;
 import static my.Classes.FileLocationInterface.userFilePath;
 
-/**
+/** 
  *
  * @author himagi
  */
@@ -23,8 +26,28 @@ public class Vendor extends User {
     
     String restaurantName;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getContactNum() {
+        return contactNum;
+    }
+
     public String getRestaurantName() {
         return restaurantName;
+    }
+
+    public int getRevenue() {
+        return revenue;
     }
     int revenue;
     
@@ -41,7 +64,7 @@ public class Vendor extends User {
         this.password = password;
         this.contactNum = contactNum;
         this.restaurantName = restaurantName;
-    }
+    }  
     
     public Vendor(String id, String fullName, String password, String contactNum, String restaurantName, String revenue){
         this.id = id;
@@ -55,8 +78,6 @@ public class Vendor extends User {
     public Vendor(String id){
         this.id = id;
     }
-    
-    
     @Override
     public void createAccount(){
         String accName = this.fullName;
@@ -178,6 +199,8 @@ public class Vendor extends User {
         return -1;
     }
     
+   
+    
     public void setFullName(String FullName){
         this.fullName = FullName;
     }
@@ -193,9 +216,10 @@ public class Vendor extends User {
     public void setRestaurantName(String RestaurantName){
         this.restaurantName = RestaurantName;
     }
+     
     
-    public String getFullName(){
-        return this.fullName;
+    public String getVendorID(){
+        return this.id;
     }
     
     public String getRole(){

@@ -11,7 +11,7 @@ import java.util.Date;
 public class currentDate {
     
     String currentDate,currentDay,currentMonth,currentYear,currentTime,timeZone;
-    
+      
     public currentDate(){
         java.util.Date date = new java.util.Date();
         String dates = date.toString();
@@ -24,7 +24,7 @@ public class currentDate {
         currentTime = dateArr[3];
         timeZone = dateArr[4];
         currentYear = dateArr[5];
-    }
+    } 
     
     public String getYear(){
         return currentYear;
@@ -48,8 +48,6 @@ public class currentDate {
     
     public String getTimeZone(){
         return timeZone;
-    }
-    
-   
+    } 
     
 }

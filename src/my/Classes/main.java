@@ -6,8 +6,8 @@ package my.Classes;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
+/**  
+ * 
  * @author himagi
  */
 public class main {
@@ -25,4 +25,4 @@ public class main {
         int a = receipt.availableId();
         System.out.println(a);
     }
-}
+} 

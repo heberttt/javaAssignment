@@ -10,10 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import static my.Classes.FileLocationInterface.transactionReceiptFilePath;
 
-/**
- *
+/** 
+ * 
  * @author himagi
  */
 public class Notification implements FileLocationInterface {
@@ -73,5 +72,50 @@ public class Notification implements FileLocationInterface {
         } 
        int availableId = biggestNum + 1;
        return availableId;
+    }
+      
+    protected int availableVendorNotificationsId(){
+       int biggestNum = 0;
+       try {
+        File myObj = new File(VendorNotificationsFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            if(data.equals("")){
+                continue;
+            }
+            String[] dataArr = data.split(",");
+            data = dataArr[0];
+            
+            if(biggestNum <= Integer.parseInt(data)){
+                biggestNum = Integer.parseInt(data);
+            }
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+       int availableId = biggestNum + 1;
+       return availableId;
+    }
+    
+    public void sendVendor(){
+        int notificationId = availableVendorNotificationsId();
+        
+        String finalNotification = String.valueOf(notificationId) + "," + senderID + "," + receiverID + "," + date + "," + time + "," + content;
+        
+        try {
+            // Create a BufferedWriter in append mode to write to the file
+            BufferedWriter writer = new BufferedWriter(new FileWriter(  VendorNotificationsFilePath, true));
+
+            writer.write(finalNotification + "\n");
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }

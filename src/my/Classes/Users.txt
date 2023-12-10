@@ -1,26 +1,13 @@
-1,heb,1,1,Admin
-9,jovin gazali,rounding,11122233455,Customer,2792
+1,idkk,1,idk,Admin
 
-14,ahmad,passworcc,12,Vendor, asdf,20
+9,jovin gazani,r,11122233455,Customer,919
+10,lala lolo,r,15522233477,Customer,1392
+
+
+14,akil,a,12,Vendor,kebeb,20
 15,nanas,a23,12223,Vendor,nasi bakaraa,0
+16,grabbb,googo,12212,Runner,20
+17,test,2,12123123,Runner,0
+18,hebe,1,1,Customer,0
+19,hebertg,1,1,Customer,0
 
-
-16,grab, ,12212,Runner,20
-17, te,2,12123123,Runner,0
-
-
-
-19,test,6,1235,Admin
-20,mickey,mouse,123,Customer,0
-
-22,as,as,as,Vendor,asa,0
-
-
-
-24,justina,seratuss,010266,Customer,0
-
-
-27,as,sad,12123123,Runner,0
-
-28,bv,asda,das,Vendor,asahi,0
-29,Hebert Pratama,123,0102665127,Admin
