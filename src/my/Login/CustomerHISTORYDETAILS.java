@@ -120,6 +120,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         jLabel7 = new javax.swing.JLabel();
         reorderbtn = new javax.swing.JButton();
         feedbackBtn = new javax.swing.JButton();
+        btnRunnerFeedback = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -157,6 +158,13 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
             }
         });
 
+        btnRunnerFeedback.setText("GIVE RUNNER FEEDBACK");
+        btnRunnerFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRunnerFeedbackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,6 +197,8 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(feedbackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRunnerFeedback)
+                        .addGap(54, 54, 54)
                         .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67))))
         );
@@ -217,7 +227,8 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(feedbackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(feedbackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRunnerFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -275,6 +286,41 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         JOptionPane.showMessageDialog(null, "Please select a row in the history details table.");
     }
     }//GEN-LAST:event_feedbackBtnActionPerformed
+
+    private void btnRunnerFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunnerFeedbackActionPerformed
+        int selectedRow = historyDetailsTable.getSelectedRow();
+        String selectedRunnerId = "";
+        if (selectedRow != -1) {
+            String menuId = historyDetailsTable.getValueAt(selectedRow, 0).toString();
+
+            try {
+                File myObj = new File(taskFilePath);
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                  String data = myReader.nextLine();
+                  if(data.equals("")){
+                      continue;
+                  }
+                  String[] dataArr = data.split(",");
+                  if(dataArr[0].equals(menuId)){
+                      selectedRunnerId = dataArr[2];
+                      CustomerRUNNERFEEDBACK c = new CustomerRUNNERFEEDBACK(custAcc, selectedRunnerId);
+                      
+                      c.setVisible(true);
+                      break;
+                           
+                  }
+                }
+            myReader.close();
+            } catch (FileNotFoundException e) {
+              System.out.println("An error occurred.");
+              e.printStackTrace();
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a row in the history details table.");
+        }
+    }//GEN-LAST:event_btnRunnerFeedbackActionPerformed
 
     //get vendor ID from Menu ID
     private String getVendorIdFromMenuId(String menuId) {
@@ -336,6 +382,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRunnerFeedback;
     private javax.swing.JButton feedbackBtn;
     private javax.swing.JTable historyDetailsTable;
     private javax.swing.JLabel jLabel1;

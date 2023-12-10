@@ -9,23 +9,24 @@ import java.io.IOException;
 import java.util.List;
 import my.Classes.*;
 
-public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLocationInterface{
+public class CustomerRUNNERFEEDBACK extends javax.swing.JFrame implements FileLocationInterface{
     Customer custAcc;
-    String vendorId;
-    Vendor vendorAcc;
+    String runnerId;
+    Runner runnerAcc;
     /**
      * Creates new form FEEDBACK
      */
-    public CustomerVENDORFEEDBACK() {
+    public CustomerRUNNERFEEDBACK() {
         initComponents();
     }
     // Constructor with parameters to initialize the form with customer and vendor information
-    public CustomerVENDORFEEDBACK(Customer custAcc, String VendorId){
+    public CustomerRUNNERFEEDBACK(Customer custAcc, String RunnerId){
         this.custAcc = custAcc;
-        this.vendorId = VendorId;
-        vendorAcc = new Vendor(vendorId);
-        vendorAcc.getVdrDatafromID();
+        this.runnerId = RunnerId;
+        runnerAcc = new Runner(this.runnerId);
+        int success = runnerAcc.getRunnerDataFromID();
         initComponents();
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -156,8 +157,8 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
             return;
         }
         // Create a Review object and write the review
-        Review review = new Review(custAcc,vendorAcc, stars, feedback);
-        review.writeReview();
+        Review review = new Review(custAcc,runnerAcc, stars, feedback);
+        review.writeRunnerReview();
         // Show success message and close the window
         JOptionPane.showMessageDialog(null, "Review submitted successfully!");
           this.dispose();
@@ -182,14 +183,30 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerRUNNERFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerRUNNERFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerRUNNERFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerVENDORFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerRUNNERFEEDBACK.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -210,7 +227,7 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerVENDORFEEDBACK().setVisible(true);
+                new CustomerRUNNERFEEDBACK().setVisible(true);
             }
         });
 }

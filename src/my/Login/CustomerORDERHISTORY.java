@@ -90,7 +90,6 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
 
      // Open the details window for the selected order
     private void openHistoryDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openHistoryDetailsActionPerformed
-
         CustomerHISTORYDETAILS chd = new CustomerHISTORYDETAILS(custAcc);
         chd.setVisible(true);
     }//GEN-LAST:event_openHistoryDetailsActionPerformed
