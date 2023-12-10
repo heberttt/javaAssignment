@@ -16,7 +16,7 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
             return false;
         }
     };
-    
+    // Column names for the order status table
     private final String[] column = {"ORDERID", "TIME", "TOTAL PRICE", "STATUS" };
     
     
@@ -24,14 +24,16 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         initComponents();
     }
 
-     public CustomerSTATUS(Customer custAccount) {
+    // Constructor with customer account parameter
+    public CustomerSTATUS(Customer custAccount) {
         initComponents();
         this.custAcc = custAccount;
         displayorderTable();
        
     }
      
-       public void displayorderTable(){
+    // Method to display order status in the table
+    public void displayorderTable(){
            Model.setColumnIdentifiers(column);
            custAcc.displayorderTable(Model, "ongoing");
            
@@ -130,13 +132,17 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Action performed when "ORDER HISTORY" button is clicked
     private void orderHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderHistoryActionPerformed
 
+        // Open the order history window
         CustomerORDERHISTORY chd = new CustomerORDERHISTORY(custAcc);
         chd.setVisible(true);
     }//GEN-LAST:event_orderHistoryActionPerformed
 
+    // Action performed when "OPEN DETAILS" button is clicked
     private void openDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDetailsActionPerformed
+       // Open the details window for the customer
         CustomerDETAILS cd = new CustomerDETAILS(custAcc);
         cd.setVisible(true);
     }//GEN-LAST:event_openDetailsActionPerformed

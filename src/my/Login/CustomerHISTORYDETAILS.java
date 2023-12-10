@@ -20,16 +20,14 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
 
     Customer custAcc;
     Vendor vendorAcc;
-       private JTable JTable1;
-      private CustomerCART customerCart;
-    private String selectedID = "";
-    private String selectedFoodName = "";
-    private String selectedPrice = "";
-     private String selectedMenuId = "";
-     private int row = -1;
+    private JTable JTable1;
+    private CustomerCART customerCart;
+
+    private String selectedMenuId = "";
+    private int row = -1;
     ArrayList<String> selectedMenus = new ArrayList<String>();
     ArrayList<FoodMenu> MenuInCart = new ArrayList<FoodMenu>();
-        private FoodMenu foodItem;
+    private FoodMenu foodItem;
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
@@ -49,13 +47,14 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
 
     private final String[] column = {"MENUID", "STATUS"};
      
-     public CustomerHISTORYDETAILS(Customer custAccount){
+    // Constructor with parameters for customer account
+    public CustomerHISTORYDETAILS(Customer custAccount){
          initComponents();
          this.custAcc = custAccount;
          
           JTable1 = new JTable(Model);
           JTable1.setModel(Model);
-          displayreorder();
+        //  displayreorder();
           historyDetailsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
@@ -70,18 +69,20 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
           
      }
      
-      public void displayreorder(){
-        Model.setColumnIdentifiers(column);
-        custAcc.displayreorder(Model,custAcc.getId());
-    }
+//      public void displayreorder(){
+//        Model.setColumnIdentifiers(column);
+//        custAcc.displayreorder(Model,custAcc.getId());
+//    }
      
-     public void displayhistoryDetailsTable(){
+     // Method to display order history details in the table
+    public void displayhistoryDetailsTable(){
          Model.setColumnIdentifiers(column);
          custAcc.displayorderhistorydetails(Model, "done");
          
      }
       
-      private void showOnLabel() {
+    // Method to show details on labels based on table selection
+    private void showOnLabel() {
     int selectedRow = historyDetailsTable.getSelectedRow();
 
     if (selectedRow != -1) {
@@ -117,8 +118,8 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        Feedbackbtn = new javax.swing.JButton();
         reorderbtn = new javax.swing.JButton();
+        feedbackBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,17 +143,17 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
 
         jLabel7.setText("jLabel7");
 
-        Feedbackbtn.setText("GIVE FEEDBACK");
-        Feedbackbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FeedbackbtnActionPerformed(evt);
-            }
-        });
-
         reorderbtn.setText("RE-ORDER");
         reorderbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reorderbtnActionPerformed(evt);
+            }
+        });
+
+        feedbackBtn.setText("GIVE FEEDBACK");
+        feedbackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                feedbackBtnActionPerformed(evt);
             }
         });
 
@@ -186,7 +187,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Feedbackbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(feedbackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67))))
@@ -215,112 +216,30 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
                         .addComponent(jLabel4)))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Feedbackbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(reorderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(feedbackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FeedbackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FeedbackbtnActionPerformed
-         if (selectedVendorId != null) {
-        // Assuming custAcc is your customer account
-        CustomerVENDORFEEDBACK cf = new CustomerVENDORFEEDBACK(custAcc, selectedVendorId);
-        cf.setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(null, "Please select a row in the history details table.");
-    }
-    }//GEN-LAST:event_FeedbackbtnActionPerformed
-
    
+    // Method to handle re-order button action
     private void reorderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reorderbtnActionPerformed
 
-        this.row = historyDetailsTable.getSelectedRow();
-        System.out.println(this.row);
-        String orderId = historyDetailsTable.getValueAt(this.row, 0).toString();
-        System.out.println(orderId);
-        
-        
-         Customer order = new Customer(orderId);
-        order.getorderDatafromID();
+        CustomerVENDORS cv = new CustomerVENDORS(custAcc);
+        cv.setVisible(true);
 
-
-        if (!(row == -1)){
-            if(!selectedMenus.contains(this.selectedID)){
-                selectedMenus.add(this.selectedID);
-                int quantity = showIntegerInputDialog("Enter amount: ");
-                FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
-                MenuInCart.add(aMenu);
-                JOptionPane.showMessageDialog(null, "Menu added to cart");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "You have selected that menu");
-            }
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Please select a menu");
-        }
-    }                 
-    
-    private int showIntegerInputDialog(String message){
-        int userInput = -1;
-        try {
-                String inputString = JOptionPane.showInputDialog(null, message);
-
-                userInput = Integer.parseInt(inputString);
-
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Please Enter an amount:");
-            }
-                CustomerCART cart = new CustomerCART(custAcc, vendorAcc, MenuInCart);
-        cart.setVisible(true);
-        
-        return userInput;
-        
-//        this.row = historyDetailsTable.getSelectedRow();
-//
-//    // Check if a row is selected
-//    if (row == -1) {
-//        // No row selected, handle this case if needed
-//        return;
-//    }
-//
-//    this.selectedID = historyDetailsTable.getValueAt(this.row, 0).toString();
-//
-//    Customer custAcc = new Customer(); // replace with your actual class name
-//
-//    // Call the readFoodMenuData method to get FoodMenu data based on the selected ID
-//    FoodMenu foodItem = custAcc.readFoodMenuData(selectedID);
-//
-//    // Assuming you have a method to populate data into the cart table
-//    populateCartTable(foodItem);
-    
-    
-      
-      
-  
-//    
-//    private int showIntegerInputDialog(String message){
-//        int userInput = -1;
-//        try {
-//                String inputString = JOptionPane.showInputDialog(null, message);
-//
-//                userInput = Integer.parseInt(inputString);
-//
-//            } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(null, "Please Enter an amount:");
-//            }
-//    
-//        
-//        return userInput;
-//        
+     
     }//GEN-LAST:event_reorderbtnActionPerformed
 
     private String selectedVendorId;
+
     
     private void historyDetailsTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyDetailsTableMouseReleased
-        /*this.row = historyDetailsTable.getSelectedRow();
+        System.out.println("Mouse released on historyDetailsTable");
+        this.row = historyDetailsTable.getSelectedRow();
         System.out.println(this.row);
         
         String menuId = historyDetailsTable.getValueAt(this.row, 0).toString();
@@ -335,21 +254,40 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
          }
          else {
         System.out.println("Vendor ID not found for Menu ID: " + menuId);
-        }*/
+        }
 
     }//GEN-LAST:event_historyDetailsTableMouseReleased
 
+    private void feedbackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feedbackBtnActionPerformed
+        int selectedRow = historyDetailsTable.getSelectedRow();
+    if (selectedRow != -1) {
+        String menuId = historyDetailsTable.getValueAt(selectedRow, 0).toString();
+        selectedVendorId = getVendorIdFromMenuId(menuId);
+
+        if (selectedVendorId != null) {
+            // Assuming custAcc is your customer account
+            CustomerVENDORFEEDBACK cf = new CustomerVENDORFEEDBACK(custAcc, selectedVendorId);
+            cf.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vendor ID not found for Menu ID: " + menuId);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row in the history details table.");
+    }
+    }//GEN-LAST:event_feedbackBtnActionPerformed
+
+    //get vendor ID from Menu ID
     private String getVendorIdFromMenuId(String menuId) {
     String vendorId = null;
     try {
-        File myObj = new File(ordersFilePath); // Update with your actual file path
+        File myObj = new File(ordersFilePath); 
         Scanner myReader = new Scanner(myObj);
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
             if (!data.isEmpty()) {
                 String[] dataArr = data.split(",");
-                if (dataArr[0].equals(menuId)) {
-                    vendorId = dataArr[6]; // Assuming vendor ID is in the second column
+                if (dataArr.length >= 7 && dataArr[0].equals(menuId)){
+                    vendorId = dataArr[4];
                     break;
                 }
             }
@@ -398,7 +336,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Feedbackbtn;
+    private javax.swing.JButton feedbackBtn;
     private javax.swing.JTable historyDetailsTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

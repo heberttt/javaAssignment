@@ -9,10 +9,7 @@ import my.Classes.*;
 
 public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationInterface{
 
-     Customer custAcc;
-
-   
-
+    Customer custAcc;
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
@@ -36,12 +33,14 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
   
 
     }
-     private final String[] column = {"MENUID", "QUANTITY"};
+     private final String[] column = {"MENUID", "QUANTITY"}; //column headers for detials table
      
+     // Constructor with parameters for customer account
      public CustomerDETAILS(Customer custAccount){
-         initComponents();
-         this.custAcc = custAccount;
-           detailsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        initComponents();
+        this.custAcc = custAccount;
+         // Add a list selection listener to handle table selection
+        detailsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             handleTableSelection();
@@ -51,25 +50,28 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
          displaydetailsTable();
      }
      
+     // Method to display details in the table
      public void displaydetailsTable(){
          Model.setColumnIdentifiers(column);
          custAcc.displaydetails(Model);
      }
      
+     // Method to handle table selection
     private void handleTableSelection() {
-    int selectedRow = detailsTable.getSelectedRow();
+        int selectedRow = detailsTable.getSelectedRow();
 
-    if (selectedRow != -1) {
-        String orderId = (String) Model.getValueAt(selectedRow, 0);
-        
- ArrayList<String> additionalDetails = custAcc.getAdditionalDetails(orderId);
-
-        
-        if (additionalDetails.size() >= 3) {
+        if (selectedRow != -1) {
+            String orderId = (String) Model.getValueAt(selectedRow, 0);
             
-            jLabel5.setText(additionalDetails.get(0));
-            jLabel6.setText(additionalDetails.get(1));
-            jLabel7.setText(additionalDetails.get(2));
+            // Get additional details for the selected order
+            ArrayList<String> additionalDetails = custAcc.getAdditionalDetails(orderId);
+
+            // Display additional details 
+            if (additionalDetails.size() >= 3) {
+            
+                jLabel5.setText(additionalDetails.get(0));
+                jLabel6.setText(additionalDetails.get(1));
+                jLabel7.setText(additionalDetails.get(2));
         } 
     }
 }
@@ -100,7 +102,7 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
         detailsTable.setModel(Model);
         jScrollPane1.setViewportView(detailsTable);
 
-        jLabel1.setText("ORDERID");
+        jLabel1.setText("MENUID");
 
         jLabel2.setText("STATUS:");
 

@@ -133,7 +133,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ORDERID"/>
+        <Property name="text" type="java.lang.String" value="MENUID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

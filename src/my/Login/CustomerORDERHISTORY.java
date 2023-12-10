@@ -7,14 +7,14 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
 
     Customer custAcc;
     
-    
+    // Table model for order history
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
-    
+    // Column names for the order history table
     private final String[] column = {"ORDERID", "DATE", "TIME", "TOTAL PRICE"};
     
     
@@ -28,7 +28,7 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
         this.custAcc = custAccount;
         displayorderhistoryTable();
     }
-    
+    // Method to display order history in the table
     public void displayorderhistoryTable(){
         Model.setColumnIdentifiers(column);
         custAcc.displayorderhistory(Model, "done");
@@ -88,6 +88,7 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     // Open the details window for the selected order
     private void openHistoryDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openHistoryDetailsActionPerformed
 
         CustomerHISTORYDETAILS chd = new CustomerHISTORYDETAILS(custAcc);

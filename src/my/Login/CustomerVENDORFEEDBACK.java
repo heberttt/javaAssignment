@@ -19,13 +19,13 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
     public CustomerVENDORFEEDBACK() {
         initComponents();
     }
-    
+    // Constructor with parameters to initialize the form with customer and vendor information
     public CustomerVENDORFEEDBACK(Customer custAcc, String VendorId){
         this.custAcc = custAcc;
         this.vendorId = VendorId;
         vendorAcc = new Vendor(vendorId);
         vendorAcc.getVdrDatafromID();
-        
+        initComponents();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,8 +77,6 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         jLabel1.setText("REVIEW:");
 
         jLabel3.setText("(1-5)");
-
-        tfStars.setText("jTextField1");
 
         jLabel4.setText("RATE");
 
@@ -139,59 +137,33 @@ public class CustomerVENDORFEEDBACK extends javax.swing.JFrame implements FileLo
         // TODO add your handling code here:
     }//GEN-LAST:event_feedbackTextFieldActionPerformed
 
+    // Event handler for submit button
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // Get the current date
         currentDate date = new currentDate();
+        // Get star rating and feedback from text fields
         int stars = Integer.parseInt(tfStars.getText());
         String feedback = feedbackTextField.getText();
+
+        // Validate star rating (1-5)
+        if (stars < 1 || stars > 5) {
+            JOptionPane.showMessageDialog(null, "Please enter a star rating between 1 and 5.");
+            return;
+        }
+         // Validate non-empty feedback
+        if (feedback.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter your feedback.");
+            return;
+        }
+        // Create a Review object and write the review
         Review review = new Review(custAcc,vendorAcc, stars, feedback);
         review.writeReview();
-        /*CustomerMENU cm = new CustomerMENU(custAcc, vendor);
-        cm.setVisible(true);*/
-        /*
-        String feedback = feedbackTextField.getText();
-        int rating = getSelectedRating();
-
-        if (feedback.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please provide feedback.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (rating == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a rating.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            saveFeedbackToFile(feedback, rating);
-
-        }*/
-    }                                            
-
-    private void saveFeedbackToFile(String feedback, int rating) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reviewFilePath, true))) {
-            writer.write("Rating: " + rating + "\n");
-            writer.write("Feedback: " + feedback + "\n\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-                                            
-
-    /*private void showCustomerREVIEW() {
-        CustomerREVIEW reviewPage = new CustomerREVIEW();
-        List<String> reviews = fetchReviewsFromFeedbackFile(); 
-        reviewPage.setReviews(reviews); 
-        reviewPage.setVisible(true);
-        this.dispose();
+        // Show success message and close the window
+        JOptionPane.showMessageDialog(null, "Review submitted successfully!");
+          this.dispose();
    
-    }*/
-    
-/*
-    private void showCustomerREVIEW() {
-   String feedback = "Thank you for your feedback!\n\n"; // You can load the actual feedback from the file
-    showCustomerREVIEW(feedback);
-        JOptionPane.showMessageDialog(this, "Thank you for your feedback!", "Review Page", JOptionPane.INFORMATION_MESSAGE);
-    
-
-    // ... (unchanged code)
-
     }//GEN-LAST:event_submitButtonActionPerformed
-    */
+
     
     /**
      * @param args the command line arguments

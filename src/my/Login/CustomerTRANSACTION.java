@@ -14,7 +14,7 @@ public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocat
             return false;
         }
     };
-    
+    //Column names for the transaction table
     private final String[] column = {"TRANSACTION ID", "DATE", "TIME", "TOP-UP AMOUNT", "ADMIN ID"};
     
     
@@ -27,7 +27,8 @@ public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocat
         
     }
 
-     public CustomerTRANSACTION(Customer custAccount){
+    // Constructor with customer account parameter
+    public CustomerTRANSACTION(Customer custAccount){
         initComponents();
         this.custAcc = custAccount;
 
@@ -36,7 +37,7 @@ public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocat
     }
     
   
-      
+      // Method to display transaction details in the table
     public void displaytransactionTable(){
         Model.setColumnIdentifiers(column);
         custAcc.displaytransactionTable(Model, "1");

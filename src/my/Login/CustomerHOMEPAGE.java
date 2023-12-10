@@ -2,7 +2,7 @@ package my.Login;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
-import static my.Login.CustomerREVIEW.fetchReviewsFromFeedbackFile;
+
 
  
 public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocationInterface {
@@ -30,7 +30,7 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
         displayNotification();
     }
     
-    
+    // Method to display notifications in the table
     public void displayNotification(){
         model.setColumnIdentifiers(column);
         custAcc.displayNotification(model, custAcc.getId());
@@ -55,7 +55,6 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
         jBtnVendors = new javax.swing.JButton();
         jBtnOrders = new javax.swing.JButton();
         jBtnWallet = new javax.swing.JButton();
-        jBtnReviews = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -108,13 +107,6 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
             }
         });
 
-        jBtnReviews.setText("REVIEWS");
-        jBtnReviews.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnReviewsActionPerformed(evt);
-            }
-        });
-
         jTable2.setModel(model);
         jScrollPane2.setViewportView(jTable2);
 
@@ -125,19 +117,22 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jBtnVendors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBtnOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBtnWallet, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jBtnReviews, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(80, 80, 80)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jBtnVendors, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(80, 80, 80))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBtnWallet, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -160,28 +155,17 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jBtnVendors, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(45, 45, 45)
                 .addComponent(jBtnOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addComponent(jBtnWallet, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnReviews, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addGap(128, 128, 128))
         );
 
         jBtnWallet.getAccessibleContext().setAccessibleName("btnWallet");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jBtnReviewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReviewsActionPerformed
-          CustomerREVIEW reviewPage = new CustomerREVIEW();
-        List<String> reviews = fetchReviewsFromFeedbackFile(); 
-        reviewPage.setReviews(reviews); 
-        reviewPage.setVisible(true);
-
-        
-    }//GEN-LAST:event_jBtnReviewsActionPerformed
 
     private void jBtnVendorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVendorsActionPerformed
         CustomerVENDORS cv = new CustomerVENDORS(custAcc);
@@ -194,7 +178,6 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
     }//GEN-LAST:event_jBtnOrdersActionPerformed
 
     private void jBtnWalletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnWalletActionPerformed
-
 
             CustomerTRANSACTION ct  = new CustomerTRANSACTION(custAcc);
             ct.setVisible(true);
@@ -302,7 +285,6 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnOrders;
-    private javax.swing.JButton jBtnReviews;
     private javax.swing.JButton jBtnVendors;
     private javax.swing.JButton jBtnWallet;
     private javax.swing.JLabel jLabel2;

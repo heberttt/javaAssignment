@@ -6,6 +6,8 @@ package my.Classes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import static my.Classes.FileLocationInterface.userFilePath;
 
@@ -32,6 +34,15 @@ public class Review implements FileLocationInterface{
     
     public void writeReview(){
         String finalFormat = String.valueOf(availableId()) + "," + current.getDate()+"/"+current.getMonth()+"/"+current.getYear() + "," + current.getCurrentTime()+ "," + custAcc.getId() + "," + vdrAcc.getId() + "," + String.valueOf(stars) + "," + feedback ;
+        try {
+            // Append the review to the file
+            FileWriter writer = new FileWriter(reviewFilePath, true);
+            writer.write(finalFormat + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the review.");
+            e.printStackTrace();
+        }
     }
     
     protected int availableId(){

@@ -456,38 +456,47 @@ public class Customer extends User{
        }
     }
     
-    private ArrayList<ArrayList<String>> getdetails(){ 
-        ArrayList<ArrayList<String>> finalInfo = new ArrayList<>();
-        try {
+    private ArrayList<ArrayList<String>> getdetails() {
+    ArrayList<ArrayList<String>> finalInfo = new ArrayList<>();
+    try {
         File myObj = new File(ordersFilePath);
         Scanner myReader = new Scanner(myObj);
         while (myReader.hasNextLine()) {
-            
+
             String data = myReader.nextLine();
-            
-            if (data.equals("")){
+
+            if (data.equals("")) {
                 continue;
             }
-            
+
             String[] dataArr = data.split(",");
-     
-                ArrayList<String> dataList = new ArrayList<String>();
-                dataList.add(dataArr[0]);
-                dataList.add(dataArr[6]);
-            
-                finalInfo.add(dataList);
-            
-            
+
+            ArrayList<String> dataList = new ArrayList<>();
+            dataList.add(dataArr[0]);
+
+            // Split array index 6 into menu and quantity
+           String[] menuQuantityArr = dataArr[6].split(";");
+            for (String menuQuantity : menuQuantityArr) {
+                String[] menuQuantityParts = menuQuantity.split("!");
+                if (menuQuantityParts.length == 2) {
+                    // Assuming menu ID is the first part and quantity is the second part
+                    String menuID = menuQuantityParts[0];
+                    String quantity = menuQuantityParts[1];
+                    dataList.add(menuID);
+                    dataList.add(quantity);
+                }
+            }
+
+            finalInfo.add(dataList);
         }
         myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        } 
-        
-        return finalInfo;
+    } catch (FileNotFoundException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
     }
-    
+
+    return finalInfo;
+}
     public ArrayList<String> getAdditionalDetails(String orderId) {
     ArrayList<String> additionalDetails = new ArrayList<>();
 
@@ -782,7 +791,7 @@ return new FoodMenu(itemId, itemName, itemPriceString, vendor, itemQuantity);
         return finalInfo;
     }
     
-     public int getorderDatafromID(){
+     private int getorderDatafromID(){
         String orderId = this.id;
         
         String Name = "";
