@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import my.Classes.*; 
 import static my.Classes.FileLocationInterface.ordersFilePath;
 import static my.Classes.FileLocationInterface.taskFilePath;
@@ -156,15 +157,15 @@ public class VendorFinishOrder extends javax.swing.JFrame {
                         break; // Exit the loop since we found the order
                     }
                 }
-
-                System.out.println("Entry added to task.txt");
+                JOptionPane.showMessageDialog(this,"Order is successfully Finished!");
+                //System.out.println("Entry added to task.txt"); 
             } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("Error appending to task.txt");
+                //System.err.println("Error appending to task.txt");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error reading from orders.txt");
+            //System.err.println("Error reading from orders.txt");
         }
     }//GEN-LAST:event_FinishButtonActionPerformed
 
