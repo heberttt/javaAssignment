@@ -6,7 +6,7 @@ package my.Login;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
-/** 
+/**  
  *
  * @author himagi
  */
@@ -81,6 +81,12 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
         jLabel4.setText("Password");
 
         jLabel5.setText("Contact Number");
+
+        tfFullName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfFullNameActionPerformed(evt);
+            }
+        });
 
         tpUserID.setEditable(false);
         jScrollPane2.setViewportView(tpUserID);
@@ -251,6 +257,10 @@ public class AdminNewEditDeleteAdministrator extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void tfFullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFullNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFullNameActionPerformed
 
     /**
      * @param args the command line arguments

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
 import static my.Classes.FileLocationInterface.userFilePath;
- 
+  
 /**
  *
  * @author himagi
@@ -112,10 +112,4 @@ abstract class User implements FileLocationInterface {
           e.printStackTrace();
        }
     }
-    
-    
-    
-    
-    
-
 }

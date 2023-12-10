@@ -183,6 +183,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfFullName">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfFullNameActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfContact">
     </Component>

@@ -5,7 +5,7 @@
 package my.Classes;
 
 /** 
- * 
+ *   
  * @author Shenlung
  */
 public class task {
@@ -53,5 +53,4 @@ public class task {
         this.taskFinished = taskFinished;
     }
 
-    
 }

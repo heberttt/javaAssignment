@@ -19,9 +19,26 @@ public class runOrder implements FileLocationInterface{
     private String OrderStatus;
     private String Menu;
     private String Location;
+    private int totalPrice;
     private Customer customer;
-    private Vendor vendor;
+    private Vendor vendor; 
     private ArrayList<FoodMenu> MenusInCart;
+    
+    public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, int totalPrice, String Location)
+    {
+        this.OrderID = OrderID;
+        this.date = date;
+        this.time = time;
+        this.CustomerID = CustomerID;
+        this.VendorID = VendorID;
+        this.OrderStatus = OrderStatus;
+        this.Menu = Menu;        
+        this.totalPrice = totalPrice;
+        this.Location = Location;
+
+        
+    
+    }
     
     public runOrder(int OrderID, String date, String time, String CustomerID, String VendorID, String OrderStatus, String Menu, String Location)
     {
@@ -31,9 +48,11 @@ public class runOrder implements FileLocationInterface{
         this.CustomerID = CustomerID;
         this.VendorID = VendorID;
         this.OrderStatus = OrderStatus;
-        this.Menu = Menu;
+        this.Menu = Menu;        
         this.Location = Location;
+
         
+    
     }
     
     public runOrder(Customer customer, Vendor vendor, ArrayList<FoodMenu> MenusInCart, String Location)
@@ -72,7 +91,11 @@ public class runOrder implements FileLocationInterface{
     public String getMenu() {
         return Menu;
     }
-
+    
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+    
     public String getLocation() {
         return Location;
     }
@@ -104,11 +127,69 @@ public class runOrder implements FileLocationInterface{
     public void setMenu(String Menu) {
         this.Menu = Menu;
     }
-
+    
+    public void setTotalPrice(int totalPrice) {
+           this.totalPrice = totalPrice;
+    }
+    
     public void setLocation(String Location) {
         this.Location = Location;
     }
     
+        public void calculateTotalPrice() {
+        // Split the Menu string into individual items
+        String[] menuItems = this.Menu.split(";");
+        int sum = 0;
+
+        for (String menuItem : menuItems) {
+            // Split each menu item using "!" to get menuID and quantity
+            String[] menuDetails = menuItem.split("!");
+
+            if (menuDetails.length >= 2) {
+                String menuID = menuDetails[0];
+                String quantity = menuDetails[1];
+
+                // Fetch food price based on menuID and vendorID
+                String foodPrice = getFoodPrice(menuID, this.VendorID);
+
+                // Parse the quantity and food price to calculate total price for the menu item
+                try {
+                    int quantityValue = Integer.parseInt(quantity);
+                    int priceValue = Integer.parseInt(foodPrice);
+
+                    int totalPrice = quantityValue * priceValue;
+                    sum += totalPrice;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // Set the calculated total price
+        this.totalPrice = sum;
+    }
+        
+        public String getFoodPrice(String menuID, String vendorID) {
+    try {
+        // Read food menu details from the file
+        File foodMenuFile = new File(foodMenuFilePath);
+        Scanner scanner = new Scanner(foodMenuFile);
+
+        while (scanner.hasNextLine()) {
+            String foodData = scanner.nextLine();
+            String[] foodDetails = foodData.split(",");
+
+            // Check if the menuID and vendorID match the desired menu
+            if (foodDetails.length >= 4 && foodDetails[0].equals(menuID) && foodDetails[3].equals(vendorID)) {
+                return foodDetails[2]; // Food price
+            }
+        }
+        scanner.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    return "Unknown";
+}
      
     public int placeOrder(){
         String Menus = "";

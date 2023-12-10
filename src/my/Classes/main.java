@@ -25,4 +25,4 @@ public class main {
         int a = receipt.availableId();
         System.out.println(a);
     }
-}
+} 

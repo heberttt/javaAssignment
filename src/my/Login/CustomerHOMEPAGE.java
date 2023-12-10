@@ -2,7 +2,7 @@ package my.Login;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
- 
+  
 public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocationInterface {
     Customer custAcc;
     private DefaultTableModel model = new DefaultTableModel(){

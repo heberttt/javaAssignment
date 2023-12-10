@@ -219,10 +219,10 @@ public class Customer extends User{
     public void setPassword(String newPassword){
         this.password = newPassword;
     }
-    
+     
     public void setContact(String newContact){
         this.contactNum = newContact;
-    }
+    } 
     
     
     public void displayNotification(DefaultTableModel table, String receiverID){    // takes the table model and role and add the role info in the table

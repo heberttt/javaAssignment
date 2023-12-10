@@ -11,7 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import static my.Classes.FileLocationInterface.userFilePath;
- 
+  
 /**
  *
  * @author himagi
@@ -81,6 +81,4 @@ public class TopUpTransaction implements FileLocationInterface{
        int availableId = biggestNum + 1;
        return availableId;
     }
-    
-    
 }

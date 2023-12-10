@@ -10,7 +10,7 @@ import my.Classes.*;
  * @author Mohamed Abdihakim
  */
 public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLocationInterface{
-
+ 
     
     /** 
      * Creates new form ORDERHISTORY

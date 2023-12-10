@@ -4,4 +4,5 @@
 15,duck fried,99,14
 1,curry,12,14
 2,nasi,9,14
-3,ayam,33,14
+3,ayama,33,14
+

@@ -1,22 +1,38 @@
 package my.Login;
-
+import java.awt.event.KeyEvent;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+import javax.swing.table.DefaultTableModel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
-/**
+import my.Classes.*;
+/** 
  *
  * @author dvdmi
  */
-public class VendorMenu extends javax.swing.JFrame {
-
+public class VendorMenu extends javax.swing.JFrame implements FileLocationInterface{
+    Vendor vendorAcc;
+    
+    int menuIdCounter = 0;
     /**
      * Creates new form Menu
      */
     public VendorMenu() {
         initComponents();
+        
     }
+    
+    public VendorMenu(Vendor vendorAccount) {
+        initComponents();
+        this.vendorAcc = vendorAccount;
+        loadMenuData();
+    }
+    
+    List<String> deletedMenuIds = new ArrayList<>();
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,24 +43,35 @@ public class VendorMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        CreateButton = new javax.swing.JButton();
+        DeleteButton = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        MenuTable = new javax.swing.JTable();
+        FoodNameLabel = new javax.swing.JLabel();
+        FoodName = new javax.swing.JTextField();
+        MenuID = new javax.swing.JLabel();
+        Price = new javax.swing.JLabel();
+        PriceBox = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        MenuIDTextPane = new javax.swing.JTextPane();
+        BackButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("Create");
+        CreateButton.setText("Create");
+        CreateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Delete");
+        DeleteButton.setText("Delete");
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteButtonActionPerformed(evt);
+            }
+        });
 
         ButtonEdit.setText("Edit");
         ButtonEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -53,7 +80,7 @@ public class VendorMenu extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        MenuTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -64,20 +91,45 @@ public class VendorMenu extends javax.swing.JFrame {
                 "MenuID", "Food Name", "Price"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        MenuTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                MenuTableMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(MenuTable);
 
-        jLabel1.setText("Food Name");
+        FoodNameLabel.setText("Food Name");
 
-        jTextField1.setText("jTextField1");
+        FoodName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FoodNameActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("MenuID");
+        MenuID.setText("MenuID");
 
-        jLabel3.setText("Price");
+        Price.setText("Price");
 
-        jTextField2.setText("jTextField1");
+        PriceBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PriceBoxActionPerformed(evt);
+            }
+        });
+        PriceBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PriceBoxKeyTyped(evt);
+            }
+        });
 
-        jTextPane1.setEditable(false);
-        jScrollPane3.setViewportView(jTextPane1);
+        MenuIDTextPane.setEditable(false);
+        jScrollPane3.setViewportView(MenuIDTextPane);
+
+        BackButton.setText("Back");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,54 +140,58 @@ public class VendorMenu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(MenuID, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FoodNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Price, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(FoodName)
+                            .addComponent(PriceBox, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 33, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 45, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CreateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)))
+                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(215, 215, 215))
+                .addGap(250, 250, 250))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(115, 115, 115))
+                            .addComponent(CreateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
+                                    .addComponent(MenuID)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(FoodNameLabel)
+                                    .addComponent(FoodName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(Price)
+                                    .addComponent(PriceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(104, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)))
+                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -143,11 +199,258 @@ public class VendorMenu extends javax.swing.JFrame {
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         // TODO add your handling code here:
+        editMenuItem();
     }//GEN-LAST:event_ButtonEditActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private boolean menuIdExists(String menuId, String vendorId) {
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(vendorId)) {
+                return true; // MenuID already exists for the current vendor
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return false; // MenuID doesn't exist for the current vendor
+}
+    
+    private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
+        // TODO add your handling code here:
+        // Generate MenuID automatically
+        // Get FoodName and Price from the text fields
+    String foodName = FoodName.getText();
+    int price = Integer.parseInt(PriceBox.getText());
+
+    // Generate or reuse MenuID
+    String menuId = generateOrReuseMenuId();
+    
+    // Check if the generated or reused menuId already exists for the current vendor
+    while (menuIdExists(menuId, String.valueOf(vendorAcc.getVendorID()))) {
+        // Keep generating or reusing until a non-existing menuId is found
+        menuId = generateOrReuseMenuId();
+    }
+
+    MenuIDTextPane.setText(menuId);
+
+    // Append the new entry to the foodMenu.txt file
+    appendToMenuFile(menuId, foodName, price, String.valueOf(vendorAcc.getVendorID()));
+
+    // Refresh the menu table
+    loadMenuData();
+} 
+
+    private String generateOrReuseMenuId() {
+    int i = 1;
+
+    do {
+        // Check if the current menuId is deleted and can be reused
+        if (deletedMenuIds.contains(String.valueOf(i))) {
+            deletedMenuIds.remove(String.valueOf(i));
+            return String.valueOf(i); // Return the reused menuId
+        }
+
+        i++;
+    } while (i <= menuIdCounter);
+
+    // Generate a new menuId
+    menuIdCounter++;
+    return String.valueOf(menuIdCounter);
+}
+    
+// Method to check if a given menuId already exists in the file
+private boolean menuIdExists(String menuId) {
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        for (String line : lines) {
+            String[] dataArr = line.split(",");
+            if (dataArr.length > 0 && dataArr[0].equals(menuId)) {
+                return true; // MenuID already exists
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return false; // MenuID doesn't exist
+    }//GEN-LAST:event_CreateButtonActionPerformed
+// Method to append a new entry to the foodMenu.txt file
+    private void appendToMenuFile(String menuId, String foodName, int price, String vendorId) {
+        try {
+        FileWriter fileWriter = new FileWriter(foodMenuFilePath, true);
+        BufferedWriter writer = new BufferedWriter(fileWriter);
+        writer.write(menuId + "," + foodName + "," + price + "," + vendorId);
+        writer.newLine();
+        writer.close();
+        System.out.println("Entry added to foodMenu.txt");
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.err.println("Error appending to foodMenu.txt");
+    }
+}
+
+    // Method to load existing menu data into the table
+    private void loadMenuData() {
+        try {
+        if (vendorAcc != null) {  // Check if vendorAcc is not null
+            List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+            List<String[]> filteredData = new ArrayList<>();
+
+            for (String line : lines) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4 && parts[3].equals(String.valueOf(vendorAcc.getVendorID()))) {
+                    // Check if the vendor ID matches the current vendor's ID
+                    filteredData.add(new String[]{parts[0], parts[1], parts[2]});
+                }
+            }
+
+            Object[][] data = new Object[filteredData.size()][3];
+            for (int i = 0; i < filteredData.size(); i++) {
+                data[i] = filteredData.get(i);
+            }
+
+            MenuTable.setModel(new javax.swing.table.DefaultTableModel(
+                    data,
+                    new String[]{"MenuID", "Food Name", "Price"}
+            ));
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+    private void FoodNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FoodNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FoodNameActionPerformed
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+        VendorHomepage hp = new VendorHomepage(vendorAcc); // go to the VendorMenu
+        hp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackButtonActionPerformed
+
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
+        // TODO add your handling code here:
+        deleteMenuItem();
+    }//GEN-LAST:event_DeleteButtonActionPerformed
+
+    private void PriceBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PriceBoxActionPerformed
+        // TODO add your handling code here:
+        try {
+        int price = Integer.parseInt(PriceBox.getText());
+        System.out.println("Valid integer input: " + price);
+
+    } catch (NumberFormatException e) {
+        System.err.println("Invalid input. Please enter a valid integer.");
+
+        PriceBox.setText("");
+    }
+    }//GEN-LAST:event_PriceBoxActionPerformed
+
+    private void PriceBoxKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PriceBoxKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+    
+    // Check if the entered character is a digit or the backspace key
+    if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+        // If the entered character is not a digit and not the backspace key,
+        // consume the event to prevent it from being processed
+        evt.consume();
+    }
+    }//GEN-LAST:event_PriceBoxKeyTyped
+    int row = -1;
+    private void MenuTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuTableMouseReleased
+        // TODO add your handling code here:
+        this.row = MenuTable.getSelectedRow();
+
+    // Check if row is valid
+    if (row != -1) {
+        DefaultTableModel model = (DefaultTableModel) MenuTable.getModel();
+        
+        String selectedId = String.valueOf(model.getValueAt(row, 0));
+        String selectedFoodName = String.valueOf(model.getValueAt(row, 1));
+        String selectedPrice = String.valueOf(model.getValueAt(row, 2));
+        
+        MenuIDTextPane.setText(selectedId);
+        FoodName.setText(selectedFoodName);
+        PriceBox.setText(selectedPrice);
+    }                      
+    }//GEN-LAST:event_MenuTableMouseReleased
+
+    private void editMenuItem() {
+    int selectedRow = MenuTable.getSelectedRow();
+    if (selectedRow == -1) {
+        // No row selected
+        return;
+    }
+
+    String menuId = MenuTable.getValueAt(selectedRow, 0).toString();
+    String foodName = FoodName.getText();
+    String price = PriceBox.getText();
+
+    // Update the menu item in the file
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+        List<String> updatedLines = new ArrayList<>();
+
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(String.valueOf(vendorAcc.getVendorID()))) {
+                // Found the menu item to edit
+                updatedLines.add(menuId + "," + foodName + "," + price + "," + vendorAcc.getVendorID());
+            } else {
+                updatedLines.add(line);
+            }
+        }
+
+        // Write the updated lines back to the file
+        Files.write(Paths.get(foodMenuFilePath), updatedLines);
+
+        // Refresh the menu table
+        loadMenuData();
+    } catch (IOException e) {}}
+    
+    
+private void deleteMenuItem() {
+    int selectedRow = MenuTable.getSelectedRow();
+    if (selectedRow == -1) {
+        // No row selected
+        return;
+    }
+
+    String menuId = MenuTable.getValueAt(selectedRow, 0).toString();
+
+    // Remove the menu item from the file
+    try {
+        List<String> lines = Files.readAllLines(Paths.get(foodMenuFilePath));
+
+        // Add the deleted menu ID to the list
+        deletedMenuIds.add(menuId);
+
+        // Create a new list for the updated lines
+        List<String> updatedLines = new ArrayList<>();
+
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (!(parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(String.valueOf(vendorAcc.getVendorID())))) {
+                // Keep the line if it doesn't match the menu ID and vendor ID
+                updatedLines.add(line);
+            }
+        }
+
+        // Write the updated lines back to the file
+        Files.write(Paths.get(foodMenuFilePath), updatedLines);
+
+        // Refresh the menu table
+        loadMenuData();
+    } catch (IOException e) {
+        // Handle the exception (e.g., log or show an error message)
+        e.printStackTrace();
+    }
+}
+
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -182,17 +485,18 @@ public class VendorMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton;
     private javax.swing.JButton ButtonEdit;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton CreateButton;
+    private javax.swing.JButton DeleteButton;
+    private javax.swing.JTextField FoodName;
+    private javax.swing.JLabel FoodNameLabel;
+    private javax.swing.JLabel MenuID;
+    private javax.swing.JTextPane MenuIDTextPane;
+    private javax.swing.JTable MenuTable;
+    private javax.swing.JLabel Price;
+    private javax.swing.JTextField PriceBox;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }
