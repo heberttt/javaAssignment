@@ -184,6 +184,10 @@ public class Runner extends User{
     {
         revenue += 5;
     }
+    public String getId() {
+        return id;
+    }
+    
 
     public ArrayList<runOrder> getArrHistoryOrder() {
         return arrHistoryOrder;
@@ -192,5 +196,8 @@ public class Runner extends User{
     public void setArrHistoryOrder(ArrayList<runOrder> arrHistoryOrder) {
         this.arrHistoryOrder = arrHistoryOrder;
     }
+
+
+    
     
 }

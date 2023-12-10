@@ -27,6 +27,9 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
         int xyz = runnerAcc.getRevenue();
         RevenueBalance.setText(xyz +"");
     }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +41,7 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Revenue_Table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         RevenueBalance = new javax.swing.JLabel();
 
@@ -51,7 +54,7 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Revenue_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -62,7 +65,7 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
                 "Order ID", "Amount"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Revenue_Table);
 
         jLabel1.setFont(new java.awt.Font("Gill Sans Ultra Bold", 0, 24)); // NOI18N
         jLabel1.setText("BALANCE");
@@ -152,9 +155,9 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel RevenueBalance;
+    private javax.swing.JTable Revenue_Table;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

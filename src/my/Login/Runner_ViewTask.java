@@ -33,6 +33,7 @@ import my.Classes.task;
 public class Runner_ViewTask extends javax.swing.JFrame {
     
     ArrayList<task> arrTask = new ArrayList<>();
+    ArrayList<task> arrAllTask = new ArrayList<>();
     ArrayList<Customer> arrCust = new ArrayList<>();
     ArrayList<runOrder> arrOrders = new ArrayList<>();
     ArrayList<FoodMenu> arrMenu = new ArrayList<>();
@@ -61,9 +62,12 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 
                 if(dataArr[2].equalsIgnoreCase("none"))
                 {
-                arrTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],
-                        dataArr[2],dataArr[3]));
+                    if(dataArr[3].equalsIgnoreCase("false"))
+                    {
+                        arrTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],dataArr[2],dataArr[3]));
+                    }
                 }
+                arrAllTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],dataArr[2],dataArr[3]));
             }
             myReader.close();
             
@@ -80,9 +84,12 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             Scanner myReader = new Scanner(Order);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
-                String[] dataArr = data.split(",");
-                arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
-                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
+                if(!data.equals("")){
+                    String[] dataArr = data.split(",");
+                    arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
+                            dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
+                } else {
+                }
             }
             myReader.close();
             
@@ -104,7 +111,6 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                         arrCust.add(new Customer (dataArr[0],dataArr[1],
                         dataArr[2],dataArr[3],Integer.parseInt(dataArr[5])));
                     }
-                
                 }
             }
             myReader.close();
@@ -131,16 +137,38 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     
     public void saveDataTask()
     {
+        for (int i = 0; i < arrTask.size(); i++) {
+            System.out.println(arrAllTask.get(i).getOrderID());
+            System.out.println(arrAllTask.get(i).getStatus());
+            System.out.println(arrAllTask.get(i).getTaskFinished());
+        }
+        
+        for(int i=0; i<arrTask.size(); i++){
+            for (int j = 0; j < arrAllTask.size(); j++) {
+                if (arrTask.get(i).getOrderID() == arrAllTask.get(j).getOrderID()){
+                    arrAllTask.get(j).setStatus(arrTask.get(i).getStatus());
+                    arrAllTask.get(j).setTaskFinished(arrTask.get(i).getTaskFinished());
+                }
+                
+            }
+        }
+        
+        for (int i = 0; i < arrTask.size(); i++) {
+            System.out.println(arrAllTask.get(i).getOrderID());
+            System.out.println(arrAllTask.get(i).getStatus());
+            System.out.println(arrAllTask.get(i).getTaskFinished());
+        }
+        
         try{
             File f = new File(taskFilePath);
             FileWriter fw = new FileWriter(f);
             BufferedWriter bw = new BufferedWriter(fw);
             String line = "";
-            for (int i = 0; i < arrTask.size(); i++) {
-                line = arrTask.get(i).getOrderID() + "," + 
-                       arrTask.get(i).getTime() + "," +
-                       arrTask.get(i).getStatus()+ "," +
-                       arrTask.get(i).getTaskFinished() + ",";
+            for (int i = 0; i < arrAllTask.size(); i++) {
+                line = arrAllTask.get(i).getOrderID() + "," + 
+                       arrAllTask.get(i).getTime() + "," +
+                       arrAllTask.get(i).getStatus()+ "," +
+                       arrAllTask.get(i).getTaskFinished();
                 bw.write(line + "\n");
             }
             bw.close();
@@ -148,9 +176,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
         }catch(IOException e){
             e.printStackTrace();
         }
-        
     }
-    
     public void showData()
     {
         ViewTask_table.setModel(dtm);
@@ -171,7 +197,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                         
                         for (int k = 0; k < arrCust.size(); k++) {
                             if(arrCust.get(k).getId().equals(CustID)){
-                            CustName = arrCust.get(i).getFullName();
+                            CustName = arrCust.get(k).getFullName();
                             idxTask.add(i);
                             idxOrder.add(j);
                             idxCust.add(k);
@@ -224,7 +250,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnAcceptTask.setText("Accept");
+        btnAcceptTask.setText("View");
         btnAcceptTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAcceptTaskActionPerformed(evt);
@@ -301,6 +327,8 @@ public class Runner_ViewTask extends javax.swing.JFrame {
         ot.setVisible(true);
         dispose();
         }
+        
+        
         
     }//GEN-LAST:event_btnAcceptTaskActionPerformed
 
