@@ -5,7 +5,7 @@
 package my.Classes;
  
 /**
- * 
+ *  
  * @author himagi
  */
 public interface FileLocationInterface {

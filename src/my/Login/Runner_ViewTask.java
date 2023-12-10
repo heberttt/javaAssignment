@@ -177,7 +177,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    public void showData()
+    public void showData() 
     {
         ViewTask_table.setModel(dtm);
         dtm.addColumn("OrderID");

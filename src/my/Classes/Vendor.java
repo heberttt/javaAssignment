@@ -64,7 +64,7 @@ public class Vendor extends User {
         this.password = password;
         this.contactNum = contactNum;
         this.restaurantName = restaurantName;
-    }
+    }  
     
     public Vendor(String id, String fullName, String password, String contactNum, String restaurantName, String revenue){
         this.id = id;

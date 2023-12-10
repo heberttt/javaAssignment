@@ -175,7 +175,7 @@ public class Runner extends User{
             e.printStackTrace();
         }
         return -1;
-    }
+    } 
 
     public int getRevenue() {
         return this.revenue;

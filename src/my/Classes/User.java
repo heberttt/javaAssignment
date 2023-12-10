@@ -79,7 +79,7 @@ abstract class User implements FileLocationInterface {
         } 
        int availableId = biggestNum + 1;
        return availableId;
-    }
+    } 
     
     
     public void deleteAccount(){

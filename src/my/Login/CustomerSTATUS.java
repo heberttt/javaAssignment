@@ -9,7 +9,7 @@ import my.Classes.*;
 public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationInterface{
     Customer custAcc;
     
-     
+      
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable

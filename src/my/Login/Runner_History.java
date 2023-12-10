@@ -69,7 +69,7 @@ public class Runner_History extends javax.swing.JFrame {
     }
     
     public void loadDataOrder()
-    { 
+    {  
         try{
             File Order = new File(ordersFilePath);
             Scanner myReader = new Scanner(Order);

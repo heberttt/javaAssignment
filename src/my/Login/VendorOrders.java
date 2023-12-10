@@ -156,7 +156,7 @@ public class VendorOrders extends javax.swing.JFrame {
         
     } catch (FileNotFoundException e) {
         e.printStackTrace();
-    }}
+    }} 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
         VendorHomepage hp = new VendorHomepage(vendorAcc); // to go to the VendorMenu

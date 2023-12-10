@@ -292,7 +292,7 @@ public class CustomerHISTORYDETAILS extends javax.swing.JFrame implements FileLo
         }
     } else {
         JOptionPane.showMessageDialog(null, "Please select a row in the history details table.");
-    }
+    } 
     }//GEN-LAST:event_feedbackBtnActionPerformed
 
     private void btnRunnerFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunnerFeedbackActionPerformed

@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
  
-
+ 
 public class CustomerMENU extends javax.swing.JFrame implements FileLocationInterface {
     // Instance variables
     Customer custAcc;

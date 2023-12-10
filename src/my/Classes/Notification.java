@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /** 
- *
+ * 
  * @author himagi
  */
 public class Notification implements FileLocationInterface {

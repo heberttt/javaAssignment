@@ -89,13 +89,8 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jBtnWallet" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                          <Component id="jBtnOrders" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jBtnWallet" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                  <Component id="jBtnOrders" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">

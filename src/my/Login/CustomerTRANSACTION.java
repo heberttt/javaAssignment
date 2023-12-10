@@ -4,7 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
 public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocationInterface{
-
+ 
     Customer custAcc;
     
     Customer searchedCust;
