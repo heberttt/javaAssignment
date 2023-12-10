@@ -198,7 +198,7 @@ public class AdminNewEditDeleteCustomer extends javax.swing.JFrame {
             if (custName.trim().equals("")){
                 throw new IllegalArgumentException("Username must have at least 1 alphabets");
             }
-            
+             
             
             Customer customerNewAcc = new Customer(custName,custPass,custContact);
             customerNewAcc.createAccount();

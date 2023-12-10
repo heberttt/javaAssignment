@@ -13,7 +13,7 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
         public boolean isCellEditable(int row, int column) {
             return false;
         }
-    };
+    }; 
     // Column names for the order history table
     private final String[] column = {"ORDERID", "DATE", "TIME", "TOTAL PRICE"};
     

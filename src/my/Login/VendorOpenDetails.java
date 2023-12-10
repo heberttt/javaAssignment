@@ -188,7 +188,7 @@ private String getFoodPrice(String menuID, String vendorID) {
         e.printStackTrace();
     }
     return "Unknown";
-} 
+}  
 
     
     /**

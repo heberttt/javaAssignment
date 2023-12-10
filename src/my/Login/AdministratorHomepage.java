@@ -126,7 +126,7 @@ public class AdministratorHomepage extends javax.swing.JFrame {
         AdminTopUp admin = new AdminTopUp(adminAccount);
         admin.setVisible(true);
     }//GEN-LAST:event_btnTopUpActionPerformed
-
+ 
     private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
         AdminSearchUser admin = new AdminSearchUser(adminAccount);
         admin.setVisible(true);

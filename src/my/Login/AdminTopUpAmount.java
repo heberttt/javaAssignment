@@ -244,7 +244,7 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
    
     private void btnTopUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTopUpActionPerformed
         int amount;
-        
+         
         try{
             amount = Integer.parseInt(tfTopUpAmount.getText());
             if (amount <= 0){

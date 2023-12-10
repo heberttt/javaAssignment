@@ -9,7 +9,7 @@ import my.Classes.*;
  * @author heber
  */
 public class AdminAdminInfo extends javax.swing.JFrame {
-    Administrator adminObj;
+    Administrator adminObj; 
     /**
      * Creates new form AdminCustomerInfo
      */

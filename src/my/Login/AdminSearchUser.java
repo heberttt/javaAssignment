@@ -6,7 +6,7 @@ package my.Login;
 import javax.swing.JOptionPane;
 import my.Classes.*;
 /**
- *
+ * 
  * @author heber
  */
 public class AdminSearchUser extends javax.swing.JFrame {

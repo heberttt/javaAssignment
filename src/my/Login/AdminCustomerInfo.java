@@ -10,7 +10,7 @@ import my.Classes.*;
  */
 public class AdminCustomerInfo extends javax.swing.JFrame {
     Customer custObj;
-    /**
+    /** 
      * Creates new form AdminCustomerInfo
      */
     public AdminCustomerInfo() {

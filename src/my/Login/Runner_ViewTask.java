@@ -46,7 +46,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     int posClick = -1;
     
     /**
-     * Creates new form Task
+     * Creates new form Task 
      */
     public Runner_ViewTask() {
         initComponents();
@@ -192,7 +192,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 System.out.println(arrTask.get(i).getOrderID());
                 
                 for (int j = 0; j < arrOrders.size(); j++) {
-                    if(arrTask.get(i).getOrderID() == arrOrders.get(i).getOrderID()){
+                    if(arrTask.get(i).getOrderID() == arrOrders.get(j).getOrderID()){
                         String CustID = arrOrders.get(j).getCustomerID();
                         
                         for (int k = 0; k < arrCust.size(); k++) {
