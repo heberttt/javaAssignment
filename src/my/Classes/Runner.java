@@ -21,7 +21,7 @@ import static my.Classes.FileLocationInterface.userFilePath;
  * @author himagi
  */
 public class Runner extends User{
-    int revenue;
+    private int revenue;
     ArrayList<runOrder> arrHistoryOrder = new ArrayList<runOrder>();
     
     public Runner(String id, String fullName, String password, String contactNum){
@@ -66,6 +66,8 @@ public class Runner extends User{
             writer.write(accountData + "\n");
 
             writer.close();
+            
+            JOptionPane.showMessageDialog(null, "The new ID assigned to this user is: " + accId);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,15 +177,23 @@ public class Runner extends User{
             e.printStackTrace();
         }
         return -1;
-    }
-
+    } 
+  
     public int getRevenue() {
         return this.revenue;
+    }
+    
+    public String getRole(){
+        return "Runner";
     }
     public void addRevenue()
     {
         revenue += 5;
     }
+    public String getId() {
+        return id;
+    }
+    
 
     public ArrayList<runOrder> getArrHistoryOrder() {
         return arrHistoryOrder;
@@ -192,5 +202,8 @@ public class Runner extends User{
     public void setArrHistoryOrder(ArrayList<runOrder> arrHistoryOrder) {
         this.arrHistoryOrder = arrHistoryOrder;
     }
+
+
+    
     
 }

@@ -1,25 +1,22 @@
 package my.Login;
 import java.util.ArrayList;
 import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.JTable; 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
-
+ 
 public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationInterface{
 
-     Customer custAcc;
-
-    
-
+    Customer custAcc;
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
             return false;
         }
         
-    };
+    };  
     /**
      * Creates new form DETAILS
      */
@@ -36,12 +33,14 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
   
 
     }
-     private final String[] column = {"MENUID", "QUANTITY"};
+     private final String[] column = {"MENUID", "QUANTITY"}; //column headers for detials table
      
+     // Constructor with parameters for customer account
      public CustomerDETAILS(Customer custAccount){
-         initComponents();
-         this.custAcc = custAccount;
-           detailsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        initComponents();
+        this.custAcc = custAccount;
+         // Add a list selection listener to handle table selection
+        detailsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             handleTableSelection();
@@ -51,25 +50,28 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
          displaydetailsTable();
      }
      
+     // Method to display details in the table
      public void displaydetailsTable(){
          Model.setColumnIdentifiers(column);
          custAcc.displaydetails(Model);
      }
      
+     // Method to handle table selection
     private void handleTableSelection() {
-    int selectedRow = detailsTable.getSelectedRow();
+        int selectedRow = detailsTable.getSelectedRow();
 
-    if (selectedRow != -1) {
-        String orderId = (String) Model.getValueAt(selectedRow, 0);
-        
- ArrayList<String> additionalDetails = custAcc.getAdditionalDetails(orderId);
-
-        
-        if (additionalDetails.size() >= 3) {
+        if (selectedRow != -1) {
+            String orderId = (String) Model.getValueAt(selectedRow, 0);
             
-            jLabel5.setText(additionalDetails.get(0));
-            jLabel6.setText(additionalDetails.get(1));
-            jLabel7.setText(additionalDetails.get(2));
+            // Get additional details for the selected order
+            ArrayList<String> additionalDetails = custAcc.getAdditionalDetails(orderId);
+
+            // Display additional details 
+            if (additionalDetails.size() >= 3) {
+            
+                jLabel5.setText(additionalDetails.get(0));
+                jLabel6.setText(additionalDetails.get(1));
+                jLabel7.setText(additionalDetails.get(2));
         } 
     }
 }
@@ -95,12 +97,12 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         detailsTable.setModel(Model);
         jScrollPane1.setViewportView(detailsTable);
 
-        jLabel1.setText("ORDERID");
+        jLabel1.setText("MENUID");
 
         jLabel2.setText("STATUS:");
 
@@ -125,16 +127,19 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(orderIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(orderIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(70, 70, 70)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(388, 388, 388)
@@ -146,20 +151,24 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(orderIdLabel)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(15, 15, 15)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(orderIdLabel))
+                                .addGap(33, 33, 33))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(statusLabel))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 27, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dateLabel)
@@ -170,7 +179,7 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
                         .addGap(9, 9, 9)))
                 .addGap(111, 111, 111)
                 .addComponent(jLabel4)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

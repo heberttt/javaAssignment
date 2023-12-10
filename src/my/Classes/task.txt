@@ -1,5 +1,3 @@
-18,20:11:02,none,false
-29,20:11:42,none,false
-19,23:03:18,none,false
-2,02:58:05,none,false
-3,03:29:22,none,false
+1,18:39:32,17,true
+2,18:41:53,17,true
+3,18:43:34,none,false

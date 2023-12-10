@@ -12,18 +12,21 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
  
-
+   
 public class CustomerMENU extends javax.swing.JFrame implements FileLocationInterface {
+    // Instance variables
     Customer custAcc;
     String vendorId;
     Vendor vendorAcc;
     
+    // Selected menu details
     String selectedID = "";
     String selectedFoodName = "";
     String selectedPrice = "";
     ArrayList<String> selectedMenus = new ArrayList<String>();
     ArrayList<FoodMenu> MenuInCart = new ArrayList<FoodMenu>();
     
+     // Constructor with customer account and vendor ID
     public CustomerMENU(Customer custAcc, String vendorId) {
         this.custAcc = custAcc;
         this.vendorId = vendorId;
@@ -31,25 +34,32 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         
     }
     
-    
+    // Constructor with customer account and vendor account
     public CustomerMENU(Customer custAcc, Vendor vendorAcc) {
         this.custAcc = custAcc;
         this.vendorAcc = vendorAcc;
         initComponents();
         displaytableMenu(vendorAcc.getId());
+        displaytableReview(vendorAcc.getId());
         lblMenu.setText(vendorAcc.getRestaurantName() + "'s Menu");
         
     }
-    
+    // Table models for menu and feedback
     private DefaultTableModel Model = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
             return false;
         }
     };
-    
+    private DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){  // turn table into non-editable
+            return false;
+        }
+    };
+    // Column names for tables
     private final String[] column = {"MenuID", "FoodName", "price"};
-    
+    private final String[] Column = {"STARS", "CUSTOMERID", "FEEDBACK"};
     
        public CustomerMENU() {
         initComponents();
@@ -61,31 +71,22 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
      
  }
  
+    // Method to display menu table
     public void displaytableMenu(String id){
         Model.setColumnIdentifiers(column);
         custAcc.displaytableMenu(Model, vendorAcc.getId());
         tableMenu.setModel(Model);
     }
-
+    // Method to display feedback table
+    public void displaytableReview(String id){
+        model.setColumnIdentifiers(Column);
+        custAcc.displaytableReview(model, vendorAcc.getId());
+        feedbackTable.setModel(model);
+    }
 
     
     
-//    public void CustomerMENU() {
-//        initComponents();
-//        tableMenu.setModel(Model);
-//        // Display the menu when the frame is created
-//        displaytableMenu("1");
-//    }
-//
-//    public CustomerMENU(Customer custAcc) {
-//        initComponents();
-//        this.custAcc = custAcc;
-//        // Set the model for the tableMenu
-//        tableMenu.setModel(Model);
-//        // Display the menu when the frame is created
-//        displaytableMenu("2");
-//    }
-//    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,7 +105,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         btnAdd = new javax.swing.JButton();
         btnOpenCart = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        feedbackTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -116,7 +117,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
 
         checkbox1.setLabel("checkbox1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblMenu.setText("MENU");
 
@@ -145,18 +146,8 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "STARS", "CUSTOMERID", "FEEDBACK"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable2);
+        feedbackTable.setModel(model);
+        jScrollPane3.setViewportView(feedbackTable);
 
         jLabel2.setText("jLabel2");
 
@@ -210,14 +201,17 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
      
     }//GEN-LAST:event_tableMenuMouseClicked
 
+    // Add to cart button action
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if (!(row == -1)){
             if(!selectedMenus.contains(this.selectedID)){
                 selectedMenus.add(this.selectedID);
                 int quantity = showIntegerInputDialog("Enter amount: ");
-                FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
-                MenuInCart.add(aMenu);
-                JOptionPane.showMessageDialog(null, "Menu added to cart");
+                if (quantity != -1){
+                    FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
+                    MenuInCart.add(aMenu);
+                    JOptionPane.showMessageDialog(null, "Menu added to cart");
+                }
             }
             else{
                 JOptionPane.showMessageDialog(null, "You have selected that menu");
@@ -227,6 +221,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
             JOptionPane.showMessageDialog(null, "Please select a menu");
         }
     }//GEN-LAST:event_btnAddActionPerformed
+    // Show input dialog to get integer input
     private int showIntegerInputDialog(String message){
         int userInput = -1;
         try {
@@ -242,6 +237,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         return userInput;
     }
     int row = -1;
+    // Get selected row details
     private void tableMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMenuMouseReleased
         this.row = tableMenu.getSelectedRow();
         this.selectedID = tableMenu.getValueAt(this.row, 0).toString();
@@ -249,6 +245,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         this.selectedPrice = tableMenu.getValueAt(this.row, 2).toString();
     }//GEN-LAST:event_tableMenuMouseReleased
 
+    // Open cart 
     private void btnOpenCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenCartActionPerformed
         CustomerCART cart = new CustomerCART(custAcc, vendorAcc, MenuInCart);
         cart.setVisible(true);
@@ -279,12 +276,12 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnOpenCart;
     private java.awt.Checkbox checkbox1;
+    private javax.swing.JTable feedbackTable;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JTable tableMenu;
     // End of variables declaration//GEN-END:variables

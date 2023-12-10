@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import my.Classes.*;
+import my.Classes.*; 
 import static my.Classes.FileLocationInterface.ordersFilePath;
 import static my.Classes.FileLocationInterface.taskFilePath;
 
 /**
- *
+ *  
  * @author dvdmi
  */
 public class VendorFinishOrder extends javax.swing.JFrame {

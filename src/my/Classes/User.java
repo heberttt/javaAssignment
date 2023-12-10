@@ -22,12 +22,45 @@ import static my.Classes.FileLocationInterface.userFilePath;
  */
 abstract class User implements FileLocationInterface {
     protected String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getContactNum() {
+        return contactNum;
+    }
+
+    public void setContactNum(String contactNum) {
+        this.contactNum = contactNum;
+    }
     protected String fullName;
     protected String password;
     protected String contactNum;
     
     abstract void createAccount();
     abstract void editAccount();
+    abstract String getRole();
     
     protected int getUserTextLine(String UserID){
        try {
@@ -53,7 +86,7 @@ abstract class User implements FileLocationInterface {
             e.printStackTrace();
         } 
         return 1;
-    }
+    }  
     
     protected int availableId(){
        int biggestNum = 0;
@@ -79,7 +112,7 @@ abstract class User implements FileLocationInterface {
         } 
        int availableId = biggestNum + 1;
        return availableId;
-    }
+    } 
     
     
     public void deleteAccount(){
@@ -112,4 +145,36 @@ abstract class User implements FileLocationInterface {
           e.printStackTrace();
        }
     }
+    
+    
+    public String getUserRole(String ID){
+        try {
+            File usertext = new File(userFilePath);
+            Scanner reader = new Scanner(usertext);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
+                String[] dataArr = data.split(",");
+                
+                if(dataArr[0].equals(ID)){
+                    reader.close();
+                    return dataArr[4];
+                }
+        }
+        reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+        String fail = "-1";
+        return fail;
+    }
+    
+    
+    
+    
+    
+
 }

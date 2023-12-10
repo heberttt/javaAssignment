@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
- *  
+ *     
  * @author himagi
  */
 public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
@@ -194,11 +194,28 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
         String rnrPass = tfPassword.getText();
         String rnrContact = tfContact.getText();
         
-        Runner runnerAcc = new Runner(rnrName,rnrPass,rnrContact);
-        runnerAcc.createAccount();
-        model.setRowCount(0);
-        displayRunner();
+        
+        try{
+            String checkSpecialCharacters = rnrName + rnrPass + rnrContact;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (rnrName.equals("") || rnrPass.equals("") || rnrContact.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (rnrName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
+            
+            Runner runnerAcc = new Runner(rnrName,rnrPass,rnrContact);
+            runnerAcc.createAccount();
+            model.setRowCount(0);
+            displayRunner();
         clearText();
+        }catch (IllegalArgumentException e){
+            String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+            JOptionPane.showMessageDialog(null, errMsgArr[1]);
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -209,6 +226,17 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
             String newPass = tfPassword.getText();
             String newContact = tfContact.getText();
         
+            try{
+            String checkSpecialCharacters = newName + newPass + newContact;
+            if (checkSpecialCharacters.contains(",")){
+                throw new IllegalArgumentException("The character \",\" is not allowed");
+            }  
+            if (newName.equals("") || newPass.equals("") || newContact.equals("")){
+                throw new IllegalArgumentException("Please fill all of the infomation first");
+            }
+            if (newName.trim().equals("")){
+                throw new IllegalArgumentException("Username must have at least 1 alphabets");
+            }
             Runner editedRnr = new Runner(rnrId);
             editedRnr.getRunnerDataFromID();
             editedRnr.setFullName(newName);
@@ -217,7 +245,12 @@ public class AdminNewEditDeleteRunner extends javax.swing.JFrame {
             editedRnr.editAccount();
         
             model.setRowCount(0);
-            displayRunner();  
+            displayRunner(); 
+            }catch (IllegalArgumentException e){
+                String[] errMsgArr = e.toString().split("java.lang.IllegalArgumentException: ");
+                JOptionPane.showMessageDialog(null, errMsgArr[1]);
+            }
+             
         }
         else{
             JOptionPane.showMessageDialog(null, "Please select the user first", "None selected", JOptionPane.INFORMATION_MESSAGE);

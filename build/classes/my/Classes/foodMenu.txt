@@ -1,8 +1,3 @@
-12,kebab,10,14
-13,kebab,10,2
-14,curry,12,14
-15,duck fried,99,14
-1,curry,12,14
-2,nasi,9,14
-3,ayama,33,14
-
+1,Chicken Rice,5,22
+2,Chicken Soup,8,22
+1,kebab,12,14

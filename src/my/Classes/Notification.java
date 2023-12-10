@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package my.Classes;
-
+  
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /** 
- *
+ * 
  * @author himagi
  */
 public class Notification implements FileLocationInterface {
-    String senderID,receiverID,content;
-    String date;
-    String time;
+    private String senderID,receiverID,content;
+    private String date;
+    private String time;
     
     public Notification(String senderID, String receiverID, String content){
         this.senderID = senderID;

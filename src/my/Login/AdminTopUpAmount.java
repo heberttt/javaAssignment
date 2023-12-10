@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.Login;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
@@ -20,6 +22,8 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         }
     };
     
+    ButtonGroup bg;
+    
     private final String[] column = {"TransactionID","date", "time", "AdminID", "Top-Up Amount"};
     /**
      * Creates new form AdminTopUp
@@ -32,9 +36,18 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         initComponents();
         this.adminAcc = adminAcc;
         this.searchedCust = searchedCust;
-        
+        bg = new ButtonGroup();
+        addButtonGroup(bg);
+        rbAll.setSelected(true);
         displayDetail();
         tableDisplayReceipt();
+    }
+    
+    public void addButtonGroup(ButtonGroup btnGrp){
+        btnGrp.add(rbAll);
+        btnGrp.add(rbYearly);
+        btnGrp.add(rbMonthly);
+        btnGrp.add(rbDaily);
     }
     
     public void displayDetail(){
@@ -43,10 +56,28 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
     }
     
     public void tableDisplayReceipt(){
+        model.setRowCount(0);
         model.setColumnIdentifiers(column);
         adminAcc.displayTopUpReceipt(model, searchedCust); 
     }
     
+    public void tableDisplayDailyReceipt(){
+        model.setRowCount(0);
+        model.setColumnIdentifiers(column);
+        adminAcc.displayDailyTopUpReceipt(model, searchedCust); 
+    }
+    
+    public void tableDisplayMonthlyReceipt(){
+        model.setRowCount(0);
+        model.setColumnIdentifiers(column);
+        adminAcc.displayMonthlyTopUpReceipt(model, searchedCust); 
+    }
+    
+    public void tableDisplayYearlyReceipt(){
+        model.setRowCount(0);
+        model.setColumnIdentifiers(column);
+        adminAcc.displayYearlyTopUpReceipt(model, searchedCust); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,6 +99,10 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableReceipt = new javax.swing.JTable();
+        rbAll = new javax.swing.JRadioButton();
+        rbYearly = new javax.swing.JRadioButton();
+        rbMonthly = new javax.swing.JRadioButton();
+        rbDaily = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -102,6 +137,34 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
         tableReceipt.setModel(model);
         jScrollPane1.setViewportView(tableReceipt);
 
+        rbAll.setText("All");
+        rbAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbAllActionPerformed(evt);
+            }
+        });
+
+        rbYearly.setText("Yearly");
+        rbYearly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbYearlyActionPerformed(evt);
+            }
+        });
+
+        rbMonthly.setText("Monthly");
+        rbMonthly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbMonthlyActionPerformed(evt);
+            }
+        });
+
+        rbDaily.setText("Daily");
+        rbDaily.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbDailyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,8 +192,18 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnTopUp)
                         .addGap(92, 92, 92)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(295, 295, 295)
+                .addComponent(rbAll, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(rbDaily, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(rbMonthly, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rbYearly, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,8 +211,14 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbAll)
+                            .addComponent(rbYearly)
+                            .addComponent(rbMonthly)
+                            .addComponent(rbDaily))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(36, 36, 36)
@@ -155,36 +234,77 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(tfTopUpAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
                         .addComponent(btnTopUp)
                         .addGap(64, 64, 64))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  
+   
     private void btnTopUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTopUpActionPerformed
-        int amount = Integer.parseInt(tfTopUpAmount.getText());
-        searchedCust.topUpCredit(amount);
-        int success = searchedCust.getCustDataFromId();
-        if (success == 0){
-            JOptionPane.showMessageDialog(null, "Top-Up successful");
+        int amount;
+          
+        try{
+            amount = Integer.parseInt(tfTopUpAmount.getText());
+            if (amount <= 0){
+            throw new IllegalArgumentException("Amount must be more than 0");
+            }
+            searchedCust.topUpCredit(amount);
+            int success = searchedCust.getCustDataFromId();
+            if (success == 0){
+                JOptionPane.showMessageDialog(null, "Top-Up successful");
+            }
+            displayDetail();
+            TopUpTransaction receipt = new TopUpTransaction(searchedCust, amount);
+            receipt.generateTransactionReceipt(adminAcc);
+            String notificationText = String.valueOf(amount) + " RM is added to your credit";
+            Notification notification = new Notification(adminAcc.getId(), searchedCust.getId(), notificationText);
+            notification.sendCustomer();
+            tfTopUpAmount.setText("");
+        
+            if(rbAll.isSelected()){
+                tableDisplayReceipt();
+            }
+            else if(rbDaily.isSelected()){
+                tableDisplayDailyReceipt();
+            }
+            else if(rbMonthly.isSelected()){
+                tableDisplayMonthlyReceipt();
+            }
+            else if(rbYearly.isSelected()){
+                tableDisplayYearlyReceipt();
+            }
+        
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(null, "Amount must be more than 0");
         }
-        displayDetail();
-        TopUpTransaction receipt = new TopUpTransaction(searchedCust, amount);
-        receipt.generateTransactionReceipt(adminAcc);
-        String notificationText = String.valueOf(amount) + " RM is added to your credit";
-        Notification notification = new Notification(adminAcc.getId(), searchedCust.getId(), notificationText);
-        notification.sendCustomer();
-        tfTopUpAmount.setText("");
-        model.setRowCount(0);
-        tableDisplayReceipt();
+        
+        
+        
  
     }//GEN-LAST:event_btnTopUpActionPerformed
 
     private void tfTopUpAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTopUpAmountActionPerformed
-        // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_tfTopUpAmountActionPerformed
+
+    private void rbAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAllActionPerformed
+       tableDisplayReceipt();
+    }//GEN-LAST:event_rbAllActionPerformed
+
+    private void rbDailyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDailyActionPerformed
+       tableDisplayDailyReceipt();
+    }//GEN-LAST:event_rbDailyActionPerformed
+
+    private void rbMonthlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbMonthlyActionPerformed
+       tableDisplayMonthlyReceipt();
+    }//GEN-LAST:event_rbMonthlyActionPerformed
+
+    private void rbYearlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbYearlyActionPerformed
+        tableDisplayYearlyReceipt();
+    }//GEN-LAST:event_rbYearlyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,6 +352,10 @@ public class AdminTopUpAmount extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCreditAmount;
     private javax.swing.JLabel lblUserID;
+    private javax.swing.JRadioButton rbAll;
+    private javax.swing.JRadioButton rbDaily;
+    private javax.swing.JRadioButton rbMonthly;
+    private javax.swing.JRadioButton rbYearly;
     private javax.swing.JTable tableReceipt;
     private javax.swing.JTextField tfTopUpAmount;
     // End of variables declaration//GEN-END:variables

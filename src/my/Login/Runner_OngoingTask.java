@@ -5,17 +5,24 @@
 package my.Login;
 
 import java.awt.Menu;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import my.Classes.Customer;
 import static my.Classes.FileLocationInterface.foodMenuFilePath;
+import static my.Classes.FileLocationInterface.taskFilePath;
 import my.Classes.FoodMenu;
 import my.Classes.Runner;
- 
-/**
+import my.Classes.runOrder;
+import my.Classes.task;
+
+/** 
  *
  * @author Shenlung
  */
@@ -25,6 +32,7 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     Runner_ViewTask rv;
     DefaultTableModel dtm = new DefaultTableModel();
     Runner_History rh;
+    ArrayList<task> allTask;
     
     /**
      * Creates new form Runner_ViewTask
@@ -38,9 +46,44 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
         this.runnerAcc = runnerAcc;
         this.rv = rv;
         OngoingTask_Table.setModel(dtm);
+        btnFinishTask.setText("Accept");
         showData();
     }
-    
+    public Runner_OngoingTask(Runner runnerAcc,ArrayList<Customer>arrCust, 
+            ArrayList<runOrder>arrOrders,  ArrayList<FoodMenu>arrMenu,
+            ArrayList<task> allTask)
+    {
+        initComponents();
+        this.runnerAcc = runnerAcc;
+        //this.rv = rv;
+        OngoingTask_Table.setModel(dtm);
+        btnFinishTask.setText("Finish");
+        OngoingTask_Table.setModel(dtm);
+        dtm.addColumn("MenuID");
+        dtm.addColumn("Menu Name");
+        dtm.addColumn("Quantity");
+
+        lblCustID.setText(arrCust.get(0).getId());
+        lblCustName.setText(arrCust.get(0).getFullName());
+        lblCustLocation.setText(arrOrders.get(0).getLocation());
+        lblCustContact.setText(arrCust.get(0).getContactNum());
+        String temp = arrOrders.get(0).getMenu();
+        String t[]= temp.split(";");
+        for (int i = 0; i < t.length; i++) {
+            String[]tt = t[i].split("!");
+            String menuName = "";
+            for (int j = 0; j < arrMenu.size(); j++) {
+                if(arrMenu.get(j).getId().equalsIgnoreCase(tt[0]))
+                {
+                    menuName = arrMenu.get(j).getName();
+                }
+                
+            }
+            dtm.addRow(new Object[]{tt[0], menuName ,tt[1]});
+        }
+        this.allTask = allTask;
+    }
+  
     public void showData()
     {
         OngoingTask_Table.setModel(dtm);
@@ -230,14 +273,51 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBTMOngoingActionPerformed
 
     private void btnFinishTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishTaskActionPerformed
-        rv.arrTask.get(rv.posClick).setTaskFinished("true");
-        lblStatus.setText("Delivered");
-        rv.saveDataTask();
-        JOptionPane.showMessageDialog(this,"Your task is successfully finished!");
-        runnerAcc.addRevenue();
+        if (btnFinishTask.getText().equalsIgnoreCase("Accept")){
+            rv.arrTask.get(rv.posClick).setStatus(rv.runnerAcc.getId());
+            rv.saveDataTask();
+            JOptionPane.showMessageDialog(this,"Your task is successfully Accepted!");
+            Runner_Menu m = new Runner_Menu (runnerAcc);
+            m.setVisible(true);
+            dispose();
+        }else{ //if finished
+            for (int i = 0; i < allTask.size(); i++) {
+                if (allTask.get(i).getStatus().equalsIgnoreCase(runnerAcc.getId()) &&
+                    allTask.get(i).getTaskFinished().equalsIgnoreCase("false")){
+                    allTask.get(i).setTaskFinished("true");
+                    lblStatus.setText("Delivered");
+                    runnerAcc.addRevenue();
+                    JOptionPane.showMessageDialog(this,"Your task is successfully Finished!");
+                    Runner_Menu m = new Runner_Menu (runnerAcc);
+                    m.setVisible(true);
+                    dispose();
+                }
+            } 
+            saveTask();
+        }
         
     }//GEN-LAST:event_btnFinishTaskActionPerformed
-
+    
+    public void saveTask()
+    {
+        try{
+            File f = new File(taskFilePath);
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+            String line = "";
+            for (int i = 0; i < allTask.size(); i++) {
+                line = allTask.get(i).getOrderID() + "," + 
+                       allTask.get(i).getTime() + "," +
+                       allTask.get(i).getStatus()+ "," +
+                       allTask.get(i).getTaskFinished();
+                bw.write(line + "\n");
+            }
+            bw.close();
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -275,7 +355,8 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable OngoingTask_Table;
     private javax.swing.JButton btnBTMOngoing;

@@ -67,17 +67,20 @@ public class Runner_History extends javax.swing.JFrame {
         }
         
     }
-    
+      
     public void loadDataOrder()
-    { 
+    {  
         try{
             File Order = new File(ordersFilePath);
             Scanner myReader = new Scanner(Order);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
                 String[] dataArr = data.split(",");
-                arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
-                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
+                if(!data.equals(""))
+                {
+                    arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
+                                               dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
+                }
             }
             myReader.close();
             
@@ -135,7 +138,7 @@ public class Runner_History extends javax.swing.JFrame {
                 line = arrTask.get(i).getOrderID() + "," + 
                        arrTask.get(i).getTime() + "," +
                        arrTask.get(i).getStatus()+ "," +
-                       arrTask.get(i).getTaskFinished() + ",";
+                       arrTask.get(i).getTaskFinished();
                 bw.write(line + "\n");
             }
             bw.close();
@@ -161,12 +164,12 @@ public class Runner_History extends javax.swing.JFrame {
                 System.out.println(arrTask.get(i).getOrderID());
                 
                 for (int j = 0; j < arrOrders.size(); j++) {
-                    if(arrTask.get(i).getOrderID() == arrOrders.get(i).getOrderID()){
+                    if(arrTask.get(i).getOrderID() == arrOrders.get(j).getOrderID()){
                         String CustID = arrOrders.get(j).getCustomerID();
                         
                         for (int k = 0; k < arrCust.size(); k++) {
                             if(arrCust.get(k).getId().equals(CustID)){
-                            CustName = arrCust.get(i).getFullName();
+                            CustName = arrCust.get(k).getFullName();
                             idxTask.add(i);
                             idxOrder.add(j);
                             idxCust.add(k);

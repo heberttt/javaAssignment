@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package my.Classes;
- 
+   
 /**
- * 
+ *  
  * @author himagi
  */
 public interface FileLocationInterface {
@@ -19,5 +19,6 @@ public interface FileLocationInterface {
     public final String ordersFilePath = path + "Orders.txt";
     public final String foodMenuFilePath = path + "foodMenu.txt";
     public final String VendorNotificationsFilePath = path + "VendorNotifications.txt";
+    public final String runnerReviewFilePath = path + "runnerReview.txt";
 }   
  

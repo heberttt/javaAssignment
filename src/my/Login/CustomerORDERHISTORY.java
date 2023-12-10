@@ -1,24 +1,42 @@
 package my.Login;
+import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Mohamed Abdihakim
- */
+
 public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLocationInterface{
- 
+
+    Customer custAcc;
     
+    // Table model for order history
+    private DefaultTableModel Model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };  
+    // Column names for the order history table
+    private final String[] column = {"ORDERID", "DATE", "TIME", "TOTAL PRICE"};
+    
+    
+    public CustomerORDERHISTORY() {
+        initComponents();
+        orderhistoryTable.setModel(Model);
+    }
+
+    public CustomerORDERHISTORY(Customer custAccount){
+        initComponents();
+        this.custAcc = custAccount;
+        displayorderhistoryTable();
+    }
+    // Method to display order history in the table
+    public void displayorderhistoryTable(){
+        Model.setColumnIdentifiers(column);
+        custAcc.displayorderhistory(Model, "done");
+    }
     /** 
      * Creates new form ORDERHISTORY
      */
-    public CustomerORDERHISTORY() {
-        initComponents();
-    }
-
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,28 +47,18 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        orderhistoryTable = new javax.swing.JTable();
+        openHistoryDetails = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ORDER ID", "DATE", "TIME", "RESTAURANT NAME", "TOTAL PRICE"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        orderhistoryTable.setModel(Model);
+        jScrollPane1.setViewportView(orderhistoryTable);
 
-        jButton2.setText("OPEN DETAILS");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        openHistoryDetails.setText("OPEN DETAILS");
+        openHistoryDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                openHistoryDetailsActionPerformed(evt);
             }
         });
 
@@ -60,7 +68,7 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(406, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(openHistoryDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -73,16 +81,18 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(openHistoryDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+     // Open the details window for the selected order
+    private void openHistoryDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openHistoryDetailsActionPerformed
+        CustomerHISTORYDETAILS chd = new CustomerHISTORYDETAILS(custAcc);
+        chd.setVisible(true);
+    }//GEN-LAST:event_openHistoryDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,8 +137,8 @@ public class CustomerORDERHISTORY extends javax.swing.JFrame implements FileLoca
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton openHistoryDetails;
+    private javax.swing.JTable orderhistoryTable;
     // End of variables declaration//GEN-END:variables
 }

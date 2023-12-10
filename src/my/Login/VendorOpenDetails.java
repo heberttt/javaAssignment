@@ -18,6 +18,7 @@ public class VendorOpenDetails extends javax.swing.JFrame {
     Vendor vendorAcc;
     Customer custAcc;
     ArrayList<String> selectedOrder;
+    int totalPrice = 0;
     /**
      * Creates new form VendorOpenDetails
      */
@@ -75,7 +76,7 @@ public class VendorOpenDetails extends javax.swing.JFrame {
         String menus = orderDetails[6];
         String[] menuItems = menus.split(";");
 
-        int totalPrice = 0; // Initialize total price
+         // Initialize total price
 
         for (String menuItem : menuItems) {
             // Split each menu item using "!" to get menuID and quantity
@@ -187,7 +188,7 @@ private String getFoodPrice(String menuID, String vendorID) {
         e.printStackTrace();
     }
     return "Unknown";
-}
+}   
 
     
     /**
@@ -363,6 +364,9 @@ private String getFoodPrice(String menuID, String vendorID) {
         String message = vendorAcc.getFullName() + " has declined the order.";
         Notification notification = new Notification(vendorAcc.getId(), customerID, message);
         notification.sendCustomer();
+        Customer customer = new Customer(customerID);
+        customer.getCustDataFromId();
+        customer.topUpCredit(totalPrice);
         VendorOrders Vorder = new VendorOrders(vendorAcc, custAcc);
         Vorder.setVisible(true);
         this.dispose();

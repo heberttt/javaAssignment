@@ -11,17 +11,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import static my.Classes.FileLocationInterface.userFilePath;
-  
+     
 /**
  *
  * @author himagi
  */
 public class TopUpTransaction implements FileLocationInterface{
-    int topUpTransactionID;
-    Customer custAcc;
-    String date;
-    String time;
-    int topUpAmount;
+    private int topUpTransactionID;
+    private Customer custAcc;
+    private String date;
+    private String time;
+    private int topUpAmount;
     
     public TopUpTransaction(Customer custAcc, int topUpAmount){
         this.custAcc = custAcc;
@@ -80,5 +80,30 @@ public class TopUpTransaction implements FileLocationInterface{
         } 
        int availableId = biggestNum + 1;
        return availableId;
+    }
+    
+     public void generateReceipt(Administrator adminAcc, Customer custAcc){
+        this.topUpTransactionID = availableId();
+        
+        String receiptId = String.valueOf(this.topUpTransactionID);
+        String custId = custAcc.getId();
+        String receiptDate = this.date;
+        String receiptTime = this.time;
+        String receiptAmount = String.valueOf(topUpAmount);
+        
+        String receiptData = receiptId + "," + receiptDate + "," + receiptTime + "," + adminAcc.getId() + "," + custId + "," + receiptAmount;//continue
+        
+        try {
+            // Create a BufferedWriter in append mode to write to the file
+            BufferedWriter writer = new BufferedWriter(new FileWriter(transactionReceiptFilePath, true));
+
+            writer.write(receiptData + "\n");
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }

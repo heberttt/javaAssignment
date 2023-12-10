@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
- 
+    
  
 public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationInterface{
     Customer custAcc;
@@ -18,12 +18,6 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
             return false;
         }
     };
-//    private DefaultTableModel vendorMenuModel = new DefaultTableModel(){
-//        @Override
-//        public boolean isCellEditable(int row, int column){  // turn table into non-editable
-//            return false;
-//        }
-//    };
     /**
      * Creates new form VENDORS
      */
@@ -32,8 +26,9 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
     public CustomerVENDORS() {
         initComponents();
     }
+    //vendor table column headers
     private final String[] column = {"USERID", "NAME", "CONTACT NUMBER"};
-    
+     // Constructor with parameters to initialize the form with customer information
     public CustomerVENDORS(Customer custAcc) {
         initComponents();
         this.custAcc = custAcc;
@@ -43,7 +38,7 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
     tableMenu.setModel(Model);
         displayVendor();
     }
-    
+    // Method to display vendors in the table
     public void displayVendor(){
         Model.setColumnIdentifiers(column);
         custAcc.displayVendor(Model, "Vendor");
@@ -60,20 +55,17 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
 
         list1 = new java.awt.List();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        vendorTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(Model);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        vendorTable.setModel(Model);
+        vendorTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                vendorTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton2.setText("SELECT");
+        jScrollPane1.setViewportView(vendorTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,9 +73,7 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -91,42 +81,27 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     int row = -1;
-    
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    // Event handler for mouse click on vendorTable
+    private void vendorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vendorTableMouseClicked
        
-        this.row = jTable1.getSelectedRow();
-        System.out.println(this.row);
-        String vendorId = jTable1.getValueAt(this.row, 0).toString();
-        System.out.println(vendorId);
-        
+        this.row = vendorTable.getSelectedRow();
+
+        String vendorId = vendorTable.getValueAt(this.row, 0).toString();
+
+        // Create a Vendor object and display the menu
         Vendor vendor = new Vendor(vendorId);
         vendor.getVdrDatafromID();
-        
+        // Open the CustomerMENU window
         CustomerMENU cm = new CustomerMENU(custAcc, vendor);
         cm.setVisible(true);
-        
-
-//    if (vendorId.equals("15")) {
-//   
-//    } else if (vendorId.equals("14")) {
-//       
-//        Customer cMenu = new Customer("14");
-//        JTable tableMenu = new JTable();
-//        DefaultTableModel vendorMenuModel = new DefaultTableModel();
-//        tableMenu.setModel(vendorMenuModel);
-//        cMenu.displaytableMenu(vendorMenuModel, "14");
-//        tableMenu.setVisible(true);
-//    }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_vendorTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -171,9 +146,8 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private java.awt.List list1;
+    private javax.swing.JTable vendorTable;
     // End of variables declaration//GEN-END:variables
 }

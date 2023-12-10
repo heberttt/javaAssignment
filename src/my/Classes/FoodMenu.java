@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package my.Classes;
-
+   
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author heber
  */
 public class FoodMenu implements FileLocationInterface {
-    String id;
+    private String id;
 
     public String getId() {
         return id;

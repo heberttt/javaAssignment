@@ -24,7 +24,7 @@ import static my.Classes.FileLocationInterface.userFilePath;
  */
 public class Vendor extends User {
     
-    String restaurantName;
+    private String restaurantName;
 
     public String getId() {
         return id;
@@ -46,9 +46,7 @@ public class Vendor extends User {
         return restaurantName;
     }
 
-    public int getRevenue() {
-        return revenue;
-    }
+     
     int revenue;
     
     public Vendor(String id, String fullName, String password, String contactNum, String restaurantName){
@@ -64,7 +62,7 @@ public class Vendor extends User {
         this.password = password;
         this.contactNum = contactNum;
         this.restaurantName = restaurantName;
-    }
+    }  
     
     public Vendor(String id, String fullName, String password, String contactNum, String restaurantName, String revenue){
         this.id = id;
@@ -96,6 +94,8 @@ public class Vendor extends User {
             writer.write(accountData + "\n");
 
             writer.close();
+            
+            JOptionPane.showMessageDialog(null, "The new ID assigned to this user is: " + accId);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -220,5 +220,11 @@ public class Vendor extends User {
         return this.id;
     }
     
+    public String getRole(){
+        return "Vendor";
+    }
     
+    public String getRevenue(){
+        return String.valueOf(revenue);
+    }
 }
