@@ -207,9 +207,7 @@ public class Customer extends User{
        }
     }
 
-    public String getFullName() {
-        return fullName;
-    }
+    
 
     public String getContactNum() {
         return contactNum;

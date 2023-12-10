@@ -178,7 +178,7 @@ public class Runner extends User{
         }
         return -1;
     } 
-
+ 
     public int getRevenue() {
         return this.revenue;
     }

@@ -86,7 +86,7 @@ abstract class User implements FileLocationInterface {
             e.printStackTrace();
         } 
         return 1;
-    }
+    } 
     
     protected int availableId(){
        int biggestNum = 0;
