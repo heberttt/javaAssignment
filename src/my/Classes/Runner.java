@@ -21,7 +21,7 @@ import static my.Classes.FileLocationInterface.userFilePath;
  * @author himagi
  */
 public class Runner extends User{
-    int revenue;
+    private int revenue;
     ArrayList<runOrder> arrHistoryOrder = new ArrayList<runOrder>();
     
     public Runner(String id, String fullName, String password, String contactNum){

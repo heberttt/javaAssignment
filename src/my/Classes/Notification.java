@@ -16,9 +16,9 @@ import java.util.Scanner;
  * @author himagi
  */
 public class Notification implements FileLocationInterface {
-    String senderID,receiverID,content;
-    String date;
-    String time;
+    private String senderID,receiverID,content;
+    private String date;
+    private String time;
     
     public Notification(String senderID, String receiverID, String content){
         this.senderID = senderID;

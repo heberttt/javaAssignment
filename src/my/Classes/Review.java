@@ -15,13 +15,13 @@ import java.util.Scanner;
  * @author heber
  */
 public class Review implements FileLocationInterface{
-    String ReviewID;
-    currentDate current;
-    Customer custAcc;
-    Vendor vdrAcc;
-    Runner rnrAcc;
-    int stars;
-    String feedback;
+    private String ReviewID;
+    private currentDate current;
+    private Customer custAcc;
+    private Vendor vdrAcc;
+    private Runner rnrAcc;
+    private int stars;
+    private String feedback;
     
     
     public Review(Customer custAcc, Vendor vdrAcc, int stars, String feedback){

@@ -17,11 +17,11 @@ import static my.Classes.FileLocationInterface.userFilePath;
  * @author himagi
  */
 public class TopUpTransaction implements FileLocationInterface{
-    int topUpTransactionID;
-    Customer custAcc;
-    String date;
-    String time;
-    int topUpAmount;
+    private int topUpTransactionID;
+    private Customer custAcc;
+    private String date;
+    private String time;
+    private int topUpAmount;
     
     public TopUpTransaction(Customer custAcc, int topUpAmount){
         this.custAcc = custAcc;

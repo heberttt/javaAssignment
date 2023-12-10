@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author heber
  */
 public class FoodMenu implements FileLocationInterface {
-    String id;
+    private String id;
 
     public String getId() {
         return id;

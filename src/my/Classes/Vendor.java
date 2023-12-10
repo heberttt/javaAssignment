@@ -24,7 +24,7 @@ import static my.Classes.FileLocationInterface.userFilePath;
  */
 public class Vendor extends User {
     
-    String restaurantName;
+    private String restaurantName;
 
     public String getId() {
         return id;
