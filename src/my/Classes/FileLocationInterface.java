@@ -8,7 +8,8 @@ package my.Classes;
  *  
  * @author himagi
  */
-public interface FileLocationInterface {
+public interface FileLocationInterface { 
+    // this interface is to simplify different paths during reading and writing text files
     final String path = "C:\\javaAssignment\\src\\my\\Classes\\";
     public final String userFilePath = path + "Users.txt";
     public final String transactionReceiptFilePath = path + "transactionReceipt.txt";

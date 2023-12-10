@@ -201,7 +201,7 @@ public class Administrator extends User implements FileLocationInterface {
        
     }
     
-    public void displayTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and role and add the role info in the table
+    public void displayTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and customer object then display it with the table model
         ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
         fullData = getTopUpReceipt(custAcc);
         
@@ -215,7 +215,7 @@ public class Administrator extends User implements FileLocationInterface {
     
     
     
-    public ArrayList<ArrayList<String>> getTopUpReceipt(Customer custAcc){
+    public ArrayList<ArrayList<String>> getTopUpReceipt(Customer custAcc){ //get all top up receipt in transactionReceipt.txt then put it inside a nested arraylist
         ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
         try {
         File myObj = new File(transactionReceiptFilePath);
@@ -255,7 +255,7 @@ public class Administrator extends User implements FileLocationInterface {
     }
     
     
-    public Customer getCustomerData(String userID){
+    public Customer getCustomerData(String userID){ //return a customer data based on the userID argument
         Customer custObj = new Customer("-1");
         try {
             File usertext = new File(userFilePath);
@@ -281,7 +281,7 @@ public class Administrator extends User implements FileLocationInterface {
         return custObj;
     }
     
-    public Vendor getVendorData(String userID){
+    public Vendor getVendorData(String userID){   //return vendor object from id
         Vendor vendObj = new Vendor("-1");
         try {
             File usertext = new File(userFilePath);
@@ -307,7 +307,7 @@ public class Administrator extends User implements FileLocationInterface {
         return vendObj;
     }
     
-    public Runner getRunnerData(String userID){
+    public Runner getRunnerData(String userID){ //return runner object from user ID
         Runner runnerObj = new Runner("-1");
         try {
             File usertext = new File(userFilePath);
@@ -333,7 +333,7 @@ public class Administrator extends User implements FileLocationInterface {
         return runnerObj;
     }
     
-    public Administrator getAdminData(String userID){
+    public Administrator getAdminData(String userID){ //return admin object based on the userID
         Administrator admObj = new Administrator("-1");
         try {
             File usertext = new File(userFilePath);
@@ -360,7 +360,7 @@ public class Administrator extends User implements FileLocationInterface {
     }
     
     
-    public ArrayList<ArrayList<String>> getDailyTopUpReceipt(Customer custAcc){
+    public ArrayList<ArrayList<String>> getDailyTopUpReceipt(Customer custAcc){ //get and return nested arraylist filled with top up receipt with the same day as today specific to the customer from the parameter 
         ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
         try {
         File myObj = new File(transactionReceiptFilePath);
@@ -396,7 +396,7 @@ public class Administrator extends User implements FileLocationInterface {
         return finalInfo;
     }
     
-    public void displayDailyTopUpReceipt(DefaultTableModel table, Customer custAcc){    // takes the table model and role and add the role info in the table
+    public void displayDailyTopUpReceipt(DefaultTableModel table, Customer custAcc){    //  take table model and customer as arguments and use it to display the top up receipt table with the same day as today
         ArrayList<ArrayList<String>> fullData = new ArrayList<ArrayList<String>>();
         fullData = getDailyTopUpReceipt(custAcc);
         
@@ -408,7 +408,7 @@ public class Administrator extends User implements FileLocationInterface {
       }   	
     }
     
-    public ArrayList<ArrayList<String>> getMonthlyTopUpReceipt(Customer custAcc){
+    public ArrayList<ArrayList<String>> getMonthlyTopUpReceipt(Customer custAcc){ // get all topup receipt on the current month and put it inside a nested array list
         ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
         try {
         File myObj = new File(transactionReceiptFilePath);
@@ -460,7 +460,7 @@ public class Administrator extends User implements FileLocationInterface {
     }
     
     
-    public ArrayList<ArrayList<String>> getYearlyTopUpReceipt(Customer custAcc){
+    public ArrayList<ArrayList<String>> getYearlyTopUpReceipt(Customer custAcc){ // get top up receipt information based on current date
         ArrayList<ArrayList<String>> finalInfo = new ArrayList<ArrayList<String>>();
         try {
         File myObj = new File(transactionReceiptFilePath);

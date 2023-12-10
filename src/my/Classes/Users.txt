@@ -1,16 +1,21 @@
-1,Hebert,1,idk,Admin
+1,Hebert,1,012335444,Admin
 
 9,jovin gazani,r,11122233455,Customer,943
-10,lala lolo,r,15522233477,Customer,1387
 
 
-14,akil,a,12,Vendor,kebeb,20
-15,nanas,a23,12223,Vendor,nasi bakaraa,0
+
+
+
 16,grabbb,googo,12212,Runner,20
-17,test,2,12123123,Runner,0
-18,hebe,1,1,Customer,0
-19,hebertg,1,1,Customer,0
 
-20,heberts,asd,123,Customer,0
-21,fasdfasf,safsfafa,1111,Customer,0
-22,man,123,010233332,Vendor,KFC,0
+
+
+
+
+
+22,man,123,010233332,Vendor,Texas,0
+
+
+
+
+23,jake,12,232324211,Runner,0
