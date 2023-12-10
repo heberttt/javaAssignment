@@ -16,7 +16,7 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
             return false;
         }
     };
-    
+    // Column names for the order status table
     private final String[] column = {"ORDERID", "TIME", "TOTAL PRICE", "STATUS" };
     
     
@@ -24,14 +24,16 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         initComponents();
     }
 
-     public CustomerSTATUS(Customer custAccount) {
+    // Constructor with customer account parameter
+    public CustomerSTATUS(Customer custAccount) {
         initComponents();
         this.custAcc = custAccount;
         displayorderTable();
        
     }
      
-       public void displayorderTable(){
+    // Method to display order status in the table
+    public void displayorderTable(){
            Model.setColumnIdentifiers(column);
            custAcc.displayorderTable(Model, "ongoing");
            
@@ -47,8 +49,8 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         jTable2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        orderHistory = new javax.swing.JButton();
+        openDetails = new javax.swing.JButton();
 
         label6.setText("label6");
 
@@ -78,22 +80,22 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable3.setModel(Model);
         jScrollPane3.setViewportView(jTable3);
 
-        jButton1.setText("ORDER HISTORY");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        orderHistory.setText("ORDER HISTORY");
+        orderHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                orderHistoryActionPerformed(evt);
             }
         });
 
-        jButton2.setText("OPEN DETAILS");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        openDetails.setText("OPEN DETAILS");
+        openDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                openDetailsActionPerformed(evt);
             }
         });
 
@@ -105,10 +107,10 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(openDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 255, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(orderHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
@@ -119,26 +121,31 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(orderHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(openDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       CustomerORDERHISTORY co = new CustomerORDERHISTORY();
-       co.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    // Action performed when "ORDER HISTORY" button is clicked
+    private void orderHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderHistoryActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Open the order history window
+        CustomerORDERHISTORY chd = new CustomerORDERHISTORY(custAcc);
+        chd.setVisible(true);
+    }//GEN-LAST:event_orderHistoryActionPerformed
+
+    // Action performed when "OPEN DETAILS" button is clicked
+    private void openDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDetailsActionPerformed
+       // Open the details window for the customer
         CustomerDETAILS cd = new CustomerDETAILS(custAcc);
         cd.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_openDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,8 +184,6 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -186,5 +191,7 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private java.awt.Label label6;
+    private javax.swing.JButton openDetails;
+    private javax.swing.JButton orderHistory;
     // End of variables declaration//GEN-END:variables
 }

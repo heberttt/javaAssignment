@@ -5,18 +5,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author Mohamed Abdihakim
- */
 public class CustomerCART extends javax.swing.JFrame implements FileLocationInterface {
     ArrayList<FoodMenu> MenusInCart;
-    private final String[] column = {"MenuID", "Name", "Price","Quantity"};
+    private final String[] column = {"MenuID", "Name", "Price","Quantity"}; // Column headers for the cart table
     Customer custAcc;
     Vendor vdrAcc;
     private DefaultTableModel model = new DefaultTableModel(){
@@ -32,6 +24,7 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
         initComponents();
     }
     
+    // Constructor with parameters for customer account, vendor account, and menus in the cart
     public CustomerCART(Customer customerAcc,Vendor vendorAcc, ArrayList<FoodMenu> MenusInCart) {
         initComponents();
         this.custAcc = customerAcc;
@@ -40,14 +33,14 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
         displayCart();
     }
     
-    
+    // Method to initialize and display the cart
     public void displayCart(){
         model.setColumnIdentifiers(column);
         displayMenu(model, MenusInCart); 
     }
     
+    // Method to display the menu in the table
     public void displayMenu(DefaultTableModel table, ArrayList<FoodMenu> f){   
-        
         for (int counter = 0; counter < f.size(); counter++) { 		      
             FoodMenu Data;
             Data = f.get(counter);
@@ -134,6 +127,10 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         String location = tfLocation.getText();
+        if (location.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a location for the order.");
+        return; // Stop further execution if the location is empty
+    }
         runOrder newOrder = new runOrder(custAcc, vdrAcc, MenusInCart, location);
         int totalPrice = newOrder.placeOrder();
         custAcc.reduceCredit(totalPrice);
