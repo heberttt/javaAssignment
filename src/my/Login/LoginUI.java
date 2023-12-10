@@ -135,7 +135,7 @@ public class LoginUI extends javax.swing.JFrame implements FileLocationInterface
                         customer.setVisible(true);
                         this.dispose();
                         break;
-                    }  
+                    }   
                     else if (dataArr[4].equals("Admin")){
                         Administrator adminAccount = new Administrator(dataArr[0],dataArr[1],dataArr[2],dataArr[3]);
                         AdministratorHomepage admin = new AdministratorHomepage(adminAccount);

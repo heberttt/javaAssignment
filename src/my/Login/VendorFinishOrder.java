@@ -16,7 +16,7 @@ import static my.Classes.FileLocationInterface.ordersFilePath;
 import static my.Classes.FileLocationInterface.taskFilePath;
 
 /**
- * 
+ *  
  * @author dvdmi
  */
 public class VendorFinishOrder extends javax.swing.JFrame {

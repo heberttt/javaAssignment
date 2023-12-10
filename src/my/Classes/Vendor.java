@@ -46,7 +46,7 @@ public class Vendor extends User {
         return restaurantName;
     }
 
-    
+     
     int revenue;
     
     public Vendor(String id, String fullName, String password, String contactNum, String restaurantName){

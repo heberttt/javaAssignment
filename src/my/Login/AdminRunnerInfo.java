@@ -7,7 +7,7 @@ package my.Login;
 import my.Classes.*;
 
 /** 
- *
+ *  
  * @author heber
  */
 public class AdminRunnerInfo extends javax.swing.JFrame {

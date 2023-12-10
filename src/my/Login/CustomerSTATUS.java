@@ -15,7 +15,7 @@ public class CustomerSTATUS extends javax.swing.JFrame implements FileLocationIn
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
             return false;
         }
-    }; 
+    };  
     // Column names for the order status table
     private final String[] column = {"ORDERID", "TIME", "TOTAL PRICE", "STATUS" };
     

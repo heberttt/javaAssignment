@@ -20,7 +20,7 @@ import my.Classes.*;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
  
-/** 
+/**  
  * 
  * @author Mohamed Abdihakim
  */

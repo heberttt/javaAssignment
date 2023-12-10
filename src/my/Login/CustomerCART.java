@@ -16,7 +16,7 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
         public boolean isCellEditable(int row, int column){  // turn table into non-editable
             return false;
         }
-    }; 
+    };  
     /**
      * Creates new form CART
      */

@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
 /**
- *    
+ *     
  * @author himagi
  */
 public class AdminNewEditDeleteVendor extends javax.swing.JFrame {

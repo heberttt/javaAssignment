@@ -16,7 +16,7 @@ public class CustomerDETAILS extends javax.swing.JFrame implements FileLocationI
             return false;
         }
         
-    }; 
+    };  
     /**
      * Creates new form DETAILS
      */

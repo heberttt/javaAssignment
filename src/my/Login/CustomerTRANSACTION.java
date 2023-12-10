@@ -12,7 +12,7 @@ public class CustomerTRANSACTION extends javax.swing.JFrame implements FileLocat
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
-        } 
+        }  
     };
     //Column names for the transaction table
     private final String[] column = {"TRANSACTION ID", "DATE", "TIME", "TOP-UP AMOUNT", "ADMIN ID"};

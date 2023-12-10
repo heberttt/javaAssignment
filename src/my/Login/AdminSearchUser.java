@@ -8,7 +8,7 @@ import my.Classes.*;
 /**
  * 
  * @author heber
- */
+ */ 
 public class AdminSearchUser extends javax.swing.JFrame {
     Administrator adminAcc;
     /**

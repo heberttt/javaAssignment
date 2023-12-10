@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import my.Classes.*;
  
-  
+   
 public class CustomerMENU extends javax.swing.JFrame implements FileLocationInterface {
     // Instance variables
     Customer custAcc;
@@ -207,9 +207,11 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
             if(!selectedMenus.contains(this.selectedID)){
                 selectedMenus.add(this.selectedID);
                 int quantity = showIntegerInputDialog("Enter amount: ");
-                FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
-                MenuInCart.add(aMenu);
-                JOptionPane.showMessageDialog(null, "Menu added to cart");
+                if (quantity != -1){
+                    FoodMenu aMenu = new FoodMenu(this.selectedID,this.selectedFoodName, this.selectedPrice, vendorAcc, quantity);
+                    MenuInCart.add(aMenu);
+                    JOptionPane.showMessageDialog(null, "Menu added to cart");
+                }
             }
             else{
                 JOptionPane.showMessageDialog(null, "You have selected that menu");

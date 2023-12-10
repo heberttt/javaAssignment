@@ -20,7 +20,7 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
     public CustomerHOMEPAGE() {
         initComponents();
     }
-     
+      
     public CustomerHOMEPAGE(Customer custAccount) {
         initComponents();
         this.custAcc = custAccount;
@@ -179,7 +179,6 @@ public class CustomerHOMEPAGE extends javax.swing.JFrame implements FileLocation
 
             CustomerTRANSACTION ct  = new CustomerTRANSACTION(custAcc);
             ct.setVisible(true);
-            this.dispose();
         
     }//GEN-LAST:event_jBtnWalletActionPerformed
 
