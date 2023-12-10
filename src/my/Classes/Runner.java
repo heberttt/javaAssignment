@@ -177,4 +177,8 @@ public class Runner extends User{
     public int getRevenue() {
         return this.revenue;
     }
+
+    public String getId() {
+        return id;
+    }
 }
