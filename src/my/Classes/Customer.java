@@ -341,7 +341,7 @@ public class Customer extends User{
             eachData = fullData.get(counter);
             String[] finalData = {eachData.get(0),eachData.get(1),eachData.get(2),eachData.get(3)};
             table.addRow(finalData);
-            System.out.println(eachData.get(1));
+
             
        }   	
         
@@ -696,7 +696,7 @@ public class Customer extends User{
         while (myReader.hasNextLine()) {
             
             String data = myReader.nextLine();
-             System.out.println("Data read from file: " + data);
+
             if (data.equals("")){
                 continue;
             }
