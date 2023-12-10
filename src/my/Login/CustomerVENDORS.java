@@ -92,9 +92,9 @@ public class CustomerVENDORS extends javax.swing.JFrame implements FileLocationI
     private void vendorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vendorTableMouseClicked
        
         this.row = vendorTable.getSelectedRow();
-        System.out.println(this.row);
+
         String vendorId = vendorTable.getValueAt(this.row, 0).toString();
-        System.out.println(vendorId);
+
         // Create a Vendor object and display the menu
         Vendor vendor = new Vendor(vendorId);
         vendor.getVdrDatafromID();
