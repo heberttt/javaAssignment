@@ -1,7 +1,7 @@
-1,idkk,1,idk,Admin
+1,heb,1,1,Admin
 9,jovin gazali,rounding,11122233455,Customer,2792
 
-14,akill,passworcc,12,Vendor, asdf,20
+14,ahmad,passworcc,12,Vendor, asdf,20
 15,nanas,a23,12223,Vendor,nasi bakaraa,0
 
 
@@ -9,17 +9,18 @@
 17, te,2,12123123,Runner,0
 
 
-18,justin,seratuss,010266,Customer,92
+
 19,test,6,1235,Admin
 20,mickey,mouse,123,Customer,0
-21,karennnn,123,1,Admin
+
 22,as,as,as,Vendor,asa,0
-23,author,monkey,12,Admin
+
 
 
 24,justina,seratuss,010266,Customer,0
-25,authora,monkey,12,Admin
-26,a,ab,a,Admin
+
+
 27,as,sad,12123123,Runner,0
 
 28,bv,asda,das,Vendor,asahi,0
+29,Hebert Pratama,123,0102665127,Admin
