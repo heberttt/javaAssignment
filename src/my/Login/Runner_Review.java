@@ -7,6 +7,7 @@ import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
 import static my.Classes.FileLocationInterface.ordersFilePath;
 import static my.Classes.FileLocationInterface.reviewFilePath;
+import static my.Classes.FileLocationInterface.runnerReviewFilePath;
 import my.Classes.Runner;
 import my.Classes.RunnerReview;
 import my.Classes.runOrder;
@@ -41,11 +42,13 @@ public class Runner_Review extends javax.swing.JFrame {
     public void loadDataReview()
     {
         try{
-            File Review = new File(reviewFilePath);
+            File Review = new File(runnerReviewFilePath);
             Scanner myReader = new Scanner(Review);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
                 String[] dataArr = data.split(",");
+                if(dataArr[4].equalsIgnoreCase(runnerAcc.getId()))
+                
                 arrReview.add(new RunnerReview(dataArr[0],dataArr[1],
                         dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6]));
             }

@@ -1,12 +1,17 @@
 package my.Login;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.table.DefaultTableModel;
+import static my.Classes.FileLocationInterface.taskFilePath;
 import my.Classes.Runner;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *   
  * @author Shenlung
@@ -14,22 +19,60 @@ import my.Classes.Runner;
 public class Runner_RevenueDashboard extends javax.swing.JFrame {
 
     Runner runnerAcc;
+    ArrayList<String> orderID = new ArrayList<>();
+    DefaultTableModel dtm = new DefaultTableModel();
+
     /**
      * Creates new form RevenueDashboard
      */
     public Runner_RevenueDashboard() {
         initComponents();
     }
-    
+
     public Runner_RevenueDashboard(Runner runnerAcc) {
         initComponents();
         this.runnerAcc = runnerAcc;
         int xyz = runnerAcc.getRevenue();
-        RevenueBalance.setText(xyz +"");
+        RevenueBalance.setText(xyz + "");
+        loadDataTask();
+        showData();
+    }
+
+    public void loadDataTask() {
+        try {
+            File task = new File(taskFilePath);
+            Scanner myReader = new Scanner(task);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                if (!data.equals("")) {
+
+                    if (dataArr[2].equalsIgnoreCase(runnerAcc.getId())
+                            && dataArr[3].equalsIgnoreCase("true")) {
+                        orderID.add(dataArr[0]);
+                    }
+                }
+
+            }
+            myReader.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
-    
-    
+    public void showData()
+    {
+        Revenue_Table.setModel(dtm);
+        dtm.addColumn("OrderID");
+        dtm.addColumn("Income");
+
+        for (int i = 0; i < orderID.size(); i++) {
+            
+            dtm.addRow(new Object[]{orderID.get(i), "5"});
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,7 +153,7 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Runner_Menu m = new Runner_Menu (runnerAcc);
+        Runner_Menu m = new Runner_Menu(runnerAcc);
         m.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
