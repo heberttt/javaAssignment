@@ -1,4 +1,5 @@
 package my.Login;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import static my.Classes.FileLocationInterface.foodMenuFilePath;
 import static my.Classes.FileLocationInterface.ordersFilePath;
 import static my.Classes.FileLocationInterface.taskFilePath;
 import static my.Classes.FileLocationInterface.userFilePath;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -17,7 +19,11 @@ import static my.Classes.FileLocationInterface.userFilePath;
  *
  * @author Shenlung
  */
+
+// This class represents the main menu for a Runner user in a GUI application.
 public class Runner_Menu extends javax.swing.JFrame {
+    
+    // Instance variables to store information about the runner, tasks, orders, customers, and menus.
     Runner runnerAcc;
     ArrayList<task> arrTask = new ArrayList<>();
     ArrayList<task> arrAllTask = new ArrayList<>();
@@ -25,110 +31,112 @@ public class Runner_Menu extends javax.swing.JFrame {
     ArrayList<runOrder> arrOrders = new ArrayList<>();
     ArrayList<FoodMenu> arrMenu = new ArrayList<>();
     
+    // Index variables to keep track of the selected task, customer, and order.
     int idxTask = -1;
     int idxCust = -1;
     int idxOrder = -1;
     
+    // Strings to store the current order and customer IDs.
     String orderID = "";
     String customerID = "";
     
+    // Boolean flag to indicate whether the runner is on duty.
     boolean onDuty = false;
-    
+
     public Runner_Menu() {
         initComponents();
     }
     
     public Runner_Menu(Runner runnerAcc) {
         initComponents();
-        this.runnerAcc = runnerAcc; 
+        this.runnerAcc = runnerAcc;
     }
     
-    public void loadDataOrder()
-    {
-        
-        try{
+    // Method to load order data from a file.
+    public void loadDataOrder() {
+
+        try {
             File Order = new File(ordersFilePath);
             Scanner myReader = new Scanner(Order);
-            while(myReader.hasNextLine()){
+            while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                if(!data.equals("")){
+                if (!data.equals("")) {
                     String[] dataArr = data.split(",");
-                    System.out.println("Tracing Order ID" + dataArr[0] + " - " + orderID);
-                    if (dataArr[0].equalsIgnoreCase(orderID)){
-                        arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
-                                dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
+                    if (dataArr[0].equalsIgnoreCase(orderID)) {
+                        arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]), dataArr[1],
+                                dataArr[2], dataArr[3], dataArr[4], dataArr[5], dataArr[6], dataArr[8]));
                         customerID = dataArr[3];
                     }
-                } 
+                }
             }
             myReader.close();
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-    public void loadDataCustomer()
-    {
-        try{
+    
+    // Method to load Customer data from a file.
+    public void loadDataCustomer() {
+        try {
             File cust = new File(userFilePath);
             Scanner myReader = new Scanner(cust);
-            while(myReader.hasNextLine()){
+            while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                if(!data.equals(""))
-                {
+                if (!data.equals("")) {
                     String[] dataArr = data.split(",");
-                    if (dataArr[4].equals("Customer")){
-                        if (dataArr[0].equalsIgnoreCase(customerID)){
-                            arrCust.add(new Customer (dataArr[0],dataArr[1],
-                            dataArr[2],dataArr[3],Integer.parseInt(dataArr[5])));
+                    if (dataArr[4].equals("Customer")) {
+                        if (dataArr[0].equalsIgnoreCase(customerID)) {
+                            arrCust.add(new Customer(dataArr[0], dataArr[1],
+                                    dataArr[2], dataArr[3], Integer.parseInt(dataArr[5])));
                         }
                     }
                 }
             }
             myReader.close();
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }   
-    }
-    
-    public void loadDataMenu()
-    {
-        try{
-            File Menu = new File(foodMenuFilePath);
-            Scanner myReader = new Scanner(Menu);
-            while(myReader.hasNextLine()){
-                String data = myReader.nextLine();
-                String[] dataArr = data.split(",");
-                arrMenu.add(new FoodMenu(dataArr[0],dataArr[1],dataArr[2],null));
-            }
-            myReader.close();
-            
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-       
-    public void loadDataTask()
-    {
-        try{
+    
+    // Method to load Menu data from a file.
+    public void loadDataMenu() {
+        try {
+            File Menu = new File(foodMenuFilePath);
+            Scanner myReader = new Scanner(Menu);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataArr = data.split(",");
+                arrMenu.add(new FoodMenu(dataArr[0], dataArr[1], dataArr[2], null));
+            }
+            myReader.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Method to load Task data from a file.
+    public void loadDataTask() {
+        try {
             File task = new File(taskFilePath);
             Scanner myReader = new Scanner(task);
             arrAllTask.clear();
-            while(myReader.hasNextLine()){
+            while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] dataArr = data.split(",");
-                
-                if(dataArr[2].equalsIgnoreCase(runnerAcc.getId()) && dataArr[3].equalsIgnoreCase("false"))
-                {
+
+                if (dataArr[2].equalsIgnoreCase(runnerAcc.getId()) && dataArr[3].equalsIgnoreCase("false")) {
                     onDuty = true;
                     orderID = dataArr[0];
                 }
-                arrAllTask.add(new task(Integer.parseInt(dataArr[0]),dataArr[1],dataArr[2],dataArr[3]));
+                arrAllTask.add(new task(Integer.parseInt(dataArr[0]), dataArr[1], dataArr[2], dataArr[3]));
             }
             myReader.close();
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -215,39 +223,43 @@ public class Runner_Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- 
+    
+    // Event handler for the "View Task" button.
     private void btnViewTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTaskActionPerformed
-       loadDataTask();
-        if (onDuty){
-            
+        // Load task data and decide whether the runner is on duty.
+        loadDataTask();
+        
+        // If on duty, load order, customer, and menu data.
+        if (onDuty) {
             loadDataOrder();
-            System.out.println("order " + arrOrders.size());
             loadDataCustomer();
-            System.out.println("cust " +arrCust.size());
             loadDataMenu();
-            System.out.println("menu " + arrMenu.size());
             Runner_OngoingTask rot = new Runner_OngoingTask(runnerAcc, arrCust, arrOrders, arrMenu, arrAllTask);
             rot.setVisible(true);
-        }else{
+        } else {
+            // If not on duty, open the View Task window.
             Runner_ViewTask rvt = new Runner_ViewTask(runnerAcc);
             rvt.setVisible(true);
         }
-       dispose();
-       
-    }//GEN-LAST:event_btnViewTaskActionPerformed
+        dispose();
 
+    }//GEN-LAST:event_btnViewTaskActionPerformed
+    
+    // Event handler for the "Review" button.
     private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         Runner_Review r = new Runner_Review(runnerAcc);
         r.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnReviewActionPerformed
-
+    
+    // Event handler for the "Task History" button.
     private void btnTaskHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaskHistoryActionPerformed
         Runner_History h = new Runner_History(runnerAcc);
         h.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnTaskHistoryActionPerformed
 
+     // Event handler for the "Revenue Dashboard" button.
     private void btnRevenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevenueActionPerformed
         Runner_RevenueDashboard rd = new Runner_RevenueDashboard(runnerAcc);
         rd.setVisible(true);
