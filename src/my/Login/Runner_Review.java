@@ -46,11 +46,16 @@ public class Runner_Review extends javax.swing.JFrame {
             Scanner myReader = new Scanner(Review);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
+                if(data.equals("")){
+                    continue;
+                }
                 String[] dataArr = data.split(",");
-                if(dataArr[4].equalsIgnoreCase(runnerAcc.getId()))
+                if(dataArr[4].equalsIgnoreCase(runnerAcc.getId())){
+                    arrReview.add(new RunnerReview(dataArr[0],dataArr[1],
+                    dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6]));
+                }
                 
-                arrReview.add(new RunnerReview(dataArr[0],dataArr[1],
-                        dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6]));
+                
             }
             myReader.close();
             

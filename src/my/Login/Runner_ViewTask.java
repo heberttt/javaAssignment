@@ -147,6 +147,9 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             Scanner myReader = new Scanner(Menu);
             while(myReader.hasNextLine()){
                 String data = myReader.nextLine();
+                if (data.equals("")){
+                    continue;
+                }
                 String[] dataArr = data.split(",");
                 arrMenu.add(new FoodMenu(dataArr[0],dataArr[1],dataArr[2],null));
             }
