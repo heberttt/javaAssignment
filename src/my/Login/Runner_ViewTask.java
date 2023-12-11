@@ -32,17 +32,21 @@ import my.Classes.task;
 
 public class Runner_ViewTask extends javax.swing.JFrame {
     
+    // Instance variables to store task, order, customer, and menu data.
     ArrayList<task> arrTask = new ArrayList<>();
     ArrayList<task> arrAllTask = new ArrayList<>();
     ArrayList<Customer> arrCust = new ArrayList<>();
     ArrayList<runOrder> arrOrders = new ArrayList<>();
     ArrayList<FoodMenu> arrMenu = new ArrayList<>();
-    DefaultTableModel dtm = new DefaultTableModel();
-    Runner runnerAcc;
+    // ArrayLists to store the indices of selected tasks, customers, and orders.
     ArrayList<Integer> idxTask = new ArrayList<>();
     ArrayList<Integer> idxCust = new ArrayList<>();
     ArrayList<Integer> idxOrder = new ArrayList<>();
+    // DefaultTableModel for displaying data in a JTable.
+    DefaultTableModel dtm = new DefaultTableModel();
+    Runner runnerAcc;
     
+    // Variable to track the clicked position in the table.
     int posClick = -1;
     
     /**
@@ -51,6 +55,19 @@ public class Runner_ViewTask extends javax.swing.JFrame {
     public Runner_ViewTask() {
         initComponents();
     }
+    
+    // Constructor with a Runner parameter.
+    public Runner_ViewTask(Runner runnerAcc) {
+        initComponents();
+        this.runnerAcc = runnerAcc;
+        loadDataTask();
+        loadDataCustomer();
+        loadDataOrder();
+        loadDataMenu();
+        showData();
+    }
+    
+    // Method to load task data from a file.
     public void loadDataTask()
     {
         try{
@@ -77,6 +94,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
         
     }
     
+    // Method to load Order data from a file.
     public void loadDataOrder()
     {
         try{
@@ -87,7 +105,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 if(!data.equals("")){
                     String[] dataArr = data.split(",");
                     arrOrders.add(new runOrder(Integer.parseInt(dataArr[0]),dataArr[1],
-                            dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[7]));
+                            dataArr[2],dataArr[3],dataArr[4],dataArr[5],dataArr[6],dataArr[8]));
                 } else {
                 }
             }
@@ -97,6 +115,8 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    // Method to load Customer data from a file.
     public void loadDataCustomer()
     {
         try{
@@ -118,6 +138,8 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    // Method to load Menu data from a file.
     public void loadDataMenu()
     {
         try{
@@ -135,6 +157,7 @@ public class Runner_ViewTask extends javax.swing.JFrame {
         }
     }
     
+    // Method to save task data from a file.
     public void saveDataTask()
     {
         for (int i = 0; i < arrTask.size(); i++) {
@@ -177,6 +200,8 @@ public class Runner_ViewTask extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    // Method to display task data in the JTable.
     public void showData() 
     {
         ViewTask_table.setModel(dtm);
@@ -208,15 +233,6 @@ public class Runner_ViewTask extends javax.swing.JFrame {
                 dtm.addRow(new Object[]{arrTask.get(i).getOrderID(), arrTask.get(i).getTime(),
                                     CustName});
             }
-    }
-    public Runner_ViewTask(Runner runnerAcc) {
-        initComponents();
-        this.runnerAcc = runnerAcc;
-        loadDataTask();
-        loadDataCustomer();
-        loadDataOrder();
-        loadDataMenu();
-        showData();
     }
 
     /**
