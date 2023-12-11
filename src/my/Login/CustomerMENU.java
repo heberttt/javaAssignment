@@ -149,7 +149,7 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
         feedbackTable.setModel(model);
         jScrollPane3.setViewportView(feedbackTable);
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("FEEDBACK");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,8 +170,8 @@ public class CustomerMENU extends javax.swing.JFrame implements FileLocationInte
                 .addGap(281, 281, 281)
                 .addComponent(lblMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(338, 338, 338))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(293, 293, 293))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
