@@ -76,7 +76,7 @@ public class Customer extends User{
     
     
     @Override
-    public void editAccount(){
+    public void editAccount(){ //change a customer info
        int lineNum = getUserTextLine(this.id);
        String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Customer," + String.valueOf(credit);
        
@@ -111,7 +111,7 @@ public class Customer extends User{
        
     }
     
-    public int getCustDataFromId(){
+    public int getCustDataFromId(){ //fetch all other attributes from the users.txt based on the id
         String userId = this.id;
         
         String userFullName= "";
@@ -173,7 +173,7 @@ public class Customer extends User{
         return id;
     }
     
-    public void topUpCredit(int amount){
+    public void topUpCredit(int amount){ //add customer credit in the users.txt
        int updatedCredit = credit + amount;
        int lineNum = getUserTextLine(this.id);
        String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Customer,"+ String.valueOf(updatedCredit);
