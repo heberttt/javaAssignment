@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -283,10 +284,8 @@ private boolean menuIdExists(String menuId) {
         writer.write(menuId + "," + foodName + "," + price + "," + vendorId);
         writer.newLine();
         writer.close();
-        System.out.println("Entry added to foodMenu.txt");
     } catch (IOException e) {
         e.printStackTrace();
-        System.err.println("Error appending to foodMenu.txt");
     }
 }
 
@@ -304,7 +303,6 @@ private boolean menuIdExists(String menuId) {
                     filteredData.add(new String[]{parts[0], parts[1], parts[2]});
                 }
             }
-
             Object[][] data = new Object[filteredData.size()][3];
             for (int i = 0; i < filteredData.size(); i++) {
                 data[i] = filteredData.get(i);
@@ -312,8 +310,9 @@ private boolean menuIdExists(String menuId) {
 
             MenuTable.setModel(new javax.swing.table.DefaultTableModel(
                     data,
-                    new String[]{"MenuID", "Food Name", "Price"}
+                    new String[]{"MenuID", "Food Name", "Price"}    
             ));
+            
         }
     } catch (IOException e) {
         e.printStackTrace();
@@ -342,8 +341,6 @@ private boolean menuIdExists(String menuId) {
         System.out.println("Valid integer input: " + price);
 
     } catch (NumberFormatException e) {
-        System.err.println("Invalid input. Please enter a valid integer.");
-
         PriceBox.setText("");
     }
     }//GEN-LAST:event_PriceBoxActionPerformed
@@ -382,6 +379,7 @@ private boolean menuIdExists(String menuId) {
     int selectedRow = MenuTable.getSelectedRow();
     if (selectedRow == -1) {
         // No row selected
+        JOptionPane.showMessageDialog(this,"No menu is selected!");
         return;
     }
 
@@ -399,6 +397,7 @@ private boolean menuIdExists(String menuId) {
             if (parts.length >= 4 && parts[0].equals(menuId) && parts[3].equals(String.valueOf(vendorAcc.getVendorID()))) {
                 // Found the menu item to edit
                 updatedLines.add(menuId + "," + foodName + "," + price + "," + vendorAcc.getVendorID());
+                JOptionPane.showMessageDialog(this,"Menu Successfully Edited!");
             } else {
                 updatedLines.add(line);
             }
@@ -406,16 +405,19 @@ private boolean menuIdExists(String menuId) {
 
         // Write the updated lines back to the file
         Files.write(Paths.get(foodMenuFilePath), updatedLines);
-
         // Refresh the menu table
         loadMenuData();
-    } catch (IOException e) {}}
+    } catch (IOException e){
+        e.printStackTrace();
+    }
+}
     
     
 private void deleteMenuItem() {
     int selectedRow = MenuTable.getSelectedRow();
     if (selectedRow == -1) {
         // No row selected
+        JOptionPane.showMessageDialog(this,"No menu is selected!");
         return;
     }
 
@@ -438,10 +440,10 @@ private void deleteMenuItem() {
                 updatedLines.add(line);
             }
         }
-
+        JOptionPane.showMessageDialog(this,"Menu Successfully Deleted!");
         // Write the updated lines back to the file
         Files.write(Paths.get(foodMenuFilePath), updatedLines);
-
+        
         // Refresh the menu table
         loadMenuData();
     } catch (IOException e) {

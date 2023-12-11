@@ -40,6 +40,8 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
     public Runner_OngoingTask() {
         initComponents();
     }
+    
+    // Constructor with Runner and Runner_ViewTask parameters.
     public Runner_OngoingTask(Runner runnerAcc,Runner_ViewTask rv)
     {
         initComponents();
@@ -47,8 +49,11 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
         this.rv = rv;
         OngoingTask_Table.setModel(dtm);
         btnFinishTask.setText("Accept");
+        lblStatus.setText("Searching for driver...");
         showData();
     }
+    
+    // Constructor with Runner and data parameters.
     public Runner_OngoingTask(Runner runnerAcc,ArrayList<Customer>arrCust, 
             ArrayList<runOrder>arrOrders,  ArrayList<FoodMenu>arrMenu,
             ArrayList<task> allTask)
@@ -84,6 +89,7 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
         this.allTask = allTask;
     }
   
+     // Method to display task data in the JTable.
     public void showData()
     {
         OngoingTask_Table.setModel(dtm);
@@ -208,17 +214,19 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
                                     .addComponent(lblCustID)
                                     .addComponent(lblCustLocation))
                                 .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblStatus)))
+                                        .addComponent(lblStatus))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblCustContact)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblCustContact)
-                                    .addComponent(jLabel4))))
-                        .addContainerGap(121, Short.MAX_VALUE))
+                                .addComponent(jLabel4)))
+                        .addContainerGap(123, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnFinishTask, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -277,6 +285,7 @@ public class Runner_OngoingTask extends javax.swing.JFrame {
             rv.arrTask.get(rv.posClick).setStatus(rv.runnerAcc.getId());
             rv.saveDataTask();
             JOptionPane.showMessageDialog(this,"Your task is successfully Accepted!");
+            lblStatus.setText("Ongoing...");
             Runner_Menu m = new Runner_Menu (runnerAcc);
             m.setVisible(true);
             dispose();

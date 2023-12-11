@@ -47,7 +47,8 @@ public class VendorOrderHistory extends javax.swing.JFrame {
                 String[] orderDetails = orderData.split(",");
 
                 // Check if the order status is "done"
-                if (orderDetails.length >= 9 && orderDetails[5].equals("done")) {
+                if (orderDetails.length >= 9 && orderDetails[4].equals(vendorAcc.getVendorID()) 
+                    && orderDetails[5].equals("done")) {
                     // Fetch customer's full name from Users.txt based on CustomerID
                     String customerName = getCustomerFullName(orderDetails[3]);
 

@@ -32,9 +32,13 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
     public Runner_RevenueDashboard(Runner runnerAcc) {
         initComponents();
         this.runnerAcc = runnerAcc;
-        int xyz = runnerAcc.getRevenue();
-        RevenueBalance.setText(xyz + "");
+        // Get the current revenue balance of the Runner.
+        int currentRevenue = runnerAcc.getRevenue();
+        // Set the revenue balance label.
+        RevenueBalance.setText(currentRevenue + "");
+        // Load task data to identify completed tasks and their order IDs.
         loadDataTask();
+        // Display the loaded data in the table.
         showData();
     }
 
@@ -113,8 +117,8 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Gill Sans Ultra Bold", 0, 24)); // NOI18N
         jLabel1.setText("BALANCE");
 
-        RevenueBalance.setFont(new java.awt.Font("Perpetua", 0, 18)); // NOI18N
-        RevenueBalance.setText("jLabel2");
+        RevenueBalance.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        RevenueBalance.setText("revenue");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,7 +135,7 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
                         .addGap(236, 236, 236)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(285, 285, 285)
+                        .addGap(278, 278, 278)
                         .addComponent(RevenueBalance)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
@@ -146,7 +150,7 @@ public class Runner_RevenueDashboard extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jButton1)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
