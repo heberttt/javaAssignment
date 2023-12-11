@@ -172,7 +172,7 @@ public class VendorOrders extends javax.swing.JFrame {
         OpenD.setVisible(true);
         this.dispose();}
         else{
-            System.out.println("No order selected");
+            JOptionPane.showMessageDialog(this,"No order selected!");
         }
     }//GEN-LAST:event_OpenDetailsButtonActionPerformed
 

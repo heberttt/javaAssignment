@@ -52,11 +52,9 @@ public class VendorRevDashboard extends javax.swing.JFrame {
                         && orderDetails[5].equals("done")) {
                     // Add order details to the table model
                     model.addRow(new Object[]{orderDetails[0], orderDetails[7], orderDetails[1]});
-                    System.out.println(orderDetails[7] + orderDetails[1]);
                     // Sum the TotalPrice for calculating revenue
                     totalRevenue += Double.parseDouble(orderDetails[7]);
-                }else {
-                    System.err.println("Invalid order format: " + orderData);}
+                }   
             }
 
             scanner.close();
