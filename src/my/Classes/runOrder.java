@@ -202,6 +202,9 @@ public class runOrder implements FileLocationInterface{
             }
             totalPrice += Integer.parseInt(menu.getPrice()) * menu.getQuantity();
         }
+        if(totalPrice > customer.getCredit()){
+            return -1;
+        }
         currentDate d = new currentDate();
         String date = d.getDate() + "/" + d.getMonth() + "/" + d.getYear();
         String finalOrder = String.valueOf(availableId()) + "," + date +  "," + d.getCurrentTime() + "," + customer.getId() + "," + vendor.getId() + ","+ "ongoing" + "," + Menus + "," + totalPrice + "," + Location;//continue

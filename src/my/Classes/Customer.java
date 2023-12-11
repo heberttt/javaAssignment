@@ -48,14 +48,14 @@ public class Customer extends User{
     }
     
     @Override
-    public void createAccount(){
+    public void createAccount(){ //write account inside the Users.txt
         String accName = this.fullName;
         String accPassword = this.password;
         String contactNum = this.contactNum;
         
         String accId = String.valueOf(availableId());
         
-        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Customer,0";//continue
+        String accountData = accId + "," + accName + "," + accPassword + "," + contactNum + ",Customer,0";
         
         try {
             // Create a BufferedWriter in append mode to write to the file
@@ -439,7 +439,7 @@ public class Customer extends User{
     }
       
     public void reduceCredit(int amount){
-       int updatedCredit = credit - amount;
+       int updatedCredit = credit - amount - 5;
        int lineNum = getUserTextLine(this.id);
        String newText = this.id + "," + this.fullName + "," + this.password + "," + this.contactNum + ",Customer,"+ String.valueOf(updatedCredit);
        

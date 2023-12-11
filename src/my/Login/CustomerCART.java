@@ -133,12 +133,17 @@ public class CustomerCART extends javax.swing.JFrame implements FileLocationInte
     }
         runOrder newOrder = new runOrder(custAcc, vdrAcc, MenusInCart, location);
         int totalPrice = newOrder.placeOrder();
-        custAcc.reduceCredit(totalPrice);
-        String message = custAcc.getFullName() + " has made a request order.";
-        Notification notification = new Notification(custAcc.getId(), vdrAcc.getId(), message);
-        notification.sendVendor();
-        JOptionPane.showMessageDialog(null, "Order sent");
-        this.dispose();
+        if (totalPrice != -1){
+            custAcc.reduceCredit(totalPrice);
+            String message = custAcc.getFullName() + " has made a request order.";
+            Notification notification = new Notification(custAcc.getId(), vdrAcc.getId(), message);
+            notification.sendVendor();
+            JOptionPane.showMessageDialog(null, "Order sent");
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Credit not enough");
+        }
+        
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     /**

@@ -1,3 +1,4 @@
-1,Chicken Rice,5,22
-2,Chicken Soup,8,22
-1,kebab,12,14
+1,Spicy chicken,10,3
+2,Original Chicken,20,3
+3,Sushi,32,5
+4,Teriyaki,12,5

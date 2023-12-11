@@ -1,21 +1,5 @@
 1,Hebert,1,012335444,Admin
-
-9,jovin gazani,r,11122233455,Customer,943
-
-
-
-
-
-16,grabbb,googo,12212,Runner,20
-
-
-
-
-
-
-22,man,123,010233332,Vendor,Texas,0
-
-
-
-
-23,jake,12,232324211,Runner,0
+2,Jake,abcd,010231232,Customer,28
+3,Donald,chicken,34384813419,Vendor,KFC,0
+4,Ray,123,31263981236,Runner,0
+5,David,passwordd,12312312321,Vendor,Sushi Hiro,0

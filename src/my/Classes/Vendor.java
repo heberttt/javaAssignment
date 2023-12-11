@@ -227,4 +227,30 @@ public class Vendor extends User {
     public String getRevenue(){
         return String.valueOf(revenue);
     }
+    
+    public int availableMenuId(){
+       int biggestNum = 0;
+       try {
+        File myObj = new File(foodMenuFilePath);
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            if(data.equals("")){
+                continue;
+            }
+            String[] dataArr = data.split(",");
+            data = dataArr[0];
+            
+            if(biggestNum <= Integer.parseInt(data)){
+                biggestNum = Integer.parseInt(data);
+            }
+        }
+        myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } 
+       int availableId = biggestNum + 1;
+       return availableId;
+    }
 }

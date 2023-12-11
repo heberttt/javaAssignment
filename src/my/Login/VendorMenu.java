@@ -225,13 +225,13 @@ public class VendorMenu extends javax.swing.JFrame implements FileLocationInterf
     int price = Integer.parseInt(PriceBox.getText());
 
     // Generate or reuse MenuID
-    String menuId = generateOrReuseMenuId();
+    String menuId = String.valueOf(vendorAcc.availableMenuId());
     
     // Check if the generated or reused menuId already exists for the current vendor
-    while (menuIdExists(menuId, String.valueOf(vendorAcc.getVendorID()))) {
+    /*while (menuIdExists(menuId, String.valueOf(vendorAcc.getVendorID()))) {
         // Keep generating or reusing until a non-existing menuId is found
         menuId = generateOrReuseMenuId();
-    }
+    }*/
 
     MenuIDTextPane.setText(menuId);
 
